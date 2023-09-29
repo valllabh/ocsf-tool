@@ -1,0 +1,8 @@
+# This file is used for JSON analysis using JQ
+
+# jq '[.[] | .attributes]'
+# /workspaces/ocsf-schema-processor/ocsf/schema.json
+
+
+jq 'map(keys, .types[].caption)'
+/workspaces/ocsf-schema-processor/ocsf/schema.json

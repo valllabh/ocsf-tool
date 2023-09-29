@@ -1,0 +1,429 @@
+message Fingerprint {
+	string value = 1;
+	optional string algorithm = 2;
+	int32 algorithm_id = 3;
+}
+
+message Policy {
+	optional string name = 1;
+	optional string version = 2;
+	optional Group group = 3;
+	optional string desc = 4;
+	optional string uid = 5;
+}
+
+message Container {
+	optional string orchestrator = 1;
+	optional string runtime = 2;
+	optional int64 size = 3;
+	optional Fingerprint hash = 4;
+	optional Image image = 5;
+	optional string network_driver = 6;
+	optional string pod_uuid = 7;
+	optional string name = 8;
+	optional string tag = 9;
+	string uid = 10;
+}
+
+message KeyboardInfo {
+	optional string keyboard_layout = 1;
+	optional int32 keyboard_subtype = 2;
+	optional string keyboard_type = 3;
+	optional int32 function_keys = 4;
+	optional string ime = 5;
+}
+
+message Organization {
+	optional string name = 1;
+	optional string uid = 2;
+	optional string ou_name = 3;
+	optional string ou_uid = 4;
+}
+
+message Location {
+	optional string continent = 1;
+	optional string provider = 2;
+	optional string region = 3;
+	optional string city = 4;
+	optional string country = 5;
+	optional bool is_on_premises = 6;
+	optional string isp = 7;
+	optional string postal_code = 8;
+	optional string desc = 9;
+	repeated float32 coordinates = 10;
+}
+
+message Object {
+}
+
+message Authorization {
+	optional Policy policy = 1;
+	optional string decision = 2;
+}
+
+message Extension {
+	string name = 1;
+	string version = 2;
+	string uid = 3;
+}
+
+message Metadata {
+	string version = 1;
+	optional int32 sequence = 2;
+	optional string correlation_uid = 3;
+	optional string event_code = 4;
+	optional int64 logged_time = 5;
+	optional Extension extension = 6;
+	optional string uid = 7;
+	optional repeated string labels = 8;
+	optional string log_name = 9;
+	optional string log_version = 10;
+	optional int64 modified_time = 11;
+	optional int64 processed_time = 12;
+	Product product = 13;
+	optional repeated string profiles = 14;
+	optional string log_provider = 15;
+	optional string original_time = 16;
+}
+
+message Api {
+	optional string version = 1;
+	optional Request request = 2;
+	optional Service service = 3;
+	optional Response response = 4;
+	string operation = 5;
+}
+
+message Os {
+	optional string sp_name = 1;
+	string name = 2;
+	int32 type_id = 3;
+	optional string lang = 4;
+	optional int32 cpu_bits = 5;
+	optional string edition = 6;
+	optional string type = 7;
+	optional string version = 8;
+	optional string build = 9;
+	optional string country = 10;
+	optional int32 sp_ver = 11;
+}
+
+message Device {
+	optional int64 created_time = 1;
+	optional string hostname = 2;
+	optional string uid_alt = 3;
+	optional DeviceHwInfo hw_info = 4;
+	optional string vpc_uid = 5;
+	optional string risk_level = 6;
+	optional string ip = 7;
+	optional string name = 8;
+	optional bool is_trusted = 9;
+	optional int64 first_seen_time = 10;
+	optional string mac = 11;
+	optional Organization org = 12;
+	optional string vlan_uid = 13;
+	int32 type_id = 14;
+	optional string autoscale_uid = 15;
+	optional string subnet_uid = 16;
+	optional repeated NetworkInterface network_interfaces = 17;
+	optional string type = 18;
+	optional repeated Group groups = 19;
+	optional string interface_uid = 20;
+	optional int32 risk_level_id = 21;
+	optional string interface_name = 22;
+	optional int32 risk_score = 23;
+	optional string imei = 24;
+	optional Os os = 25;
+	optional int64 modified_time = 26;
+	optional string hypervisor = 27;
+	optional string desc = 28;
+	optional string domain = 29;
+	optional string uid = 30;
+	optional int64 last_seen_time = 31;
+	optional Image image = 32;
+	optional string subnet = 33;
+	optional bool is_personal = 34;
+	optional bool is_compliant = 35;
+	optional string region = 36;
+	optional bool is_managed = 37;
+	optional string instance_uid = 38;
+	optional Location location = 39;
+}
+
+message Account {
+	optional string name = 1;
+	optional string type = 2;
+	optional string uid = 3;
+	optional int32 type_id = 4;
+}
+
+message User {
+	optional string name = 1;
+	optional string type = 2;
+	optional string uid = 3;
+	optional repeated Group groups = 4;
+	optional string full_name = 5;
+	optional Account account = 6;
+	optional string domain = 7;
+	optional Organization org = 8;
+	int32 type_id = 9;
+	optional string credential_uid = 10;
+	optional string email_addr = 11;
+	optional string uid_alt = 12;
+}
+
+message FileActivity {
+	int64 time = 1;
+	optional repeated Observable observables = 2;
+	Metadata metadata = 3;
+	optional Api api = 4;
+	optional string status_code = 5;
+	optional repeated Enrichment enrichments = 6;
+	optional string type_name = 7;
+	optional int32 timezone_offset = 8;
+	int32 severity_id = 9;
+	Device device = 10;
+	optional string status_detail = 11;
+	File file = 12;
+	optional string status = 13;
+	optional File file_result = 14;
+	optional string class_name = 15;
+	int32 class_uid = 16;
+	optional string activity_name = 17;
+	optional int32 access_mask = 18;
+	optional string connection_uid = 19;
+	optional int64 end_time = 20;
+	int32 activity_id = 21;
+	optional int32 duration = 22;
+	optional string category_name = 23;
+	Cloud cloud = 24;
+	optional string component = 25;
+	optional string message = 26;
+	optional int32 count = 27;
+	optional string create_mask = 28;
+	optional Object unmapped = 29;
+	optional string file_diff = 30;
+	optional int64 start_time = 31;
+	int32 category_uid = 32;
+	int32 type_uid = 33;
+	Actor actor = 34;
+	optional int32 status_id = 35;
+	optional string severity = 36;
+	optional string raw_data = 37;
+}
+
+message Cloud {
+	optional Account account = 1;
+	optional string project_uid = 2;
+	string provider = 3;
+	optional string region = 4;
+	optional string zone = 5;
+	optional Organization org = 6;
+}
+
+message Idp {
+	optional string name = 1;
+	optional string uid = 2;
+}
+
+message Actor {
+	optional repeated Authorization authorizations = 1;
+	optional Idp idp = 2;
+	optional string invoked_by = 3;
+	optional Process process = 4;
+	optional User user = 5;
+	optional Session session = 6;
+}
+
+message Service {
+	optional string name = 1;
+	optional string version = 2;
+	optional string uid = 3;
+	optional repeated string labels = 4;
+}
+
+message Enrichment {
+	string data = 1;
+	string name = 2;
+	optional string type = 3;
+	string value = 4;
+	optional string provider = 5;
+}
+
+message Display {
+	optional int32 physical_width = 1;
+	optional int32 scale_factor = 2;
+	optional int32 color_depth = 3;
+	optional int32 physical_height = 4;
+	optional int32 physical_orientation = 5;
+}
+
+message NetworkInterface {
+	optional string ip = 1;
+	optional string hostname = 2;
+	optional string name = 3;
+	optional string type = 4;
+	optional string uid = 5;
+	optional string mac = 6;
+	optional string namespace = 7;
+	int32 type_id = 8;
+	optional int32 subnet_prefix = 9;
+}
+
+message File {
+	optional int32 attributes = 1;
+	optional string version = 2;
+	optional DigitalSignature signature = 3;
+	optional string company_name = 4;
+	optional string mime_type = 5;
+	optional string security_descriptor = 6;
+	optional int64 size = 7;
+	optional string desc = 8;
+	int32 type_id = 9;
+	optional User accessor = 10;
+	optional string path = 11;
+	optional User modifier = 12;
+	optional User creator = 13;
+	optional int64 accessed_time = 14;
+	optional int64 modified_time = 15;
+	optional string type = 16;
+	optional Object xattributes = 17;
+	string name = 18;
+	optional int32 confidentiality_id = 19;
+	optional User owner = 20;
+	optional Product product = 21;
+	optional string uid = 22;
+	optional string parent_folder = 23;
+	optional string confidentiality = 24;
+	optional repeated Fingerprint hashes = 25;
+	optional bool is_system = 26;
+	optional int64 created_time = 27;
+}
+
+message Product {
+	optional string name = 1;
+	optional string version = 2;
+	optional string path = 3;
+	optional string uid = 4;
+	optional Feature feature = 5;
+	optional string lang = 6;
+	optional string url_string = 7;
+	string vendor_name = 8;
+}
+
+message Certificate {
+	optional int64 created_time = 1;
+	optional int64 expiration_time = 2;
+	string serial_number = 3;
+	optional string version = 4;
+	optional string subject = 5;
+	string issuer = 6;
+	repeated Fingerprint fingerprints = 7;
+}
+
+message DigitalSignature {
+	optional string developer_uid = 1;
+	optional Fingerprint digest = 2;
+	optional Certificate certificate = 3;
+	optional string algorithm = 4;
+	int32 algorithm_id = 5;
+	optional int64 created_time = 6;
+}
+
+message Session {
+	optional int64 created_time = 1;
+	optional string credential_uid = 2;
+	optional int64 expiration_time = 3;
+	optional bool is_remote = 4;
+	optional string uid = 5;
+	optional string uuid = 6;
+	optional string issuer = 7;
+}
+
+message Reputation {
+	int32 score_id = 1;
+	float32 base_score = 2;
+	optional string provider = 3;
+	optional string score = 4;
+}
+
+message Request {
+	optional repeated string flags = 1;
+	string uid = 2;
+}
+
+message DeviceHwInfo {
+	optional string bios_date = 1;
+	optional int32 cpu_bits = 2;
+	optional int32 cpu_speed = 3;
+	optional int32 ram_size = 4;
+	optional string bios_ver = 5;
+	optional string chassis = 6;
+	optional int32 cpu_count = 7;
+	optional string cpu_type = 8;
+	optional KeyboardInfo keyboard_info = 9;
+	optional string serial_number = 10;
+	optional string bios_manufacturer = 11;
+	optional int32 cpu_cores = 12;
+	optional Display desktop_display = 13;
+}
+
+message Group {
+	optional string uid = 1;
+	optional repeated string privileges = 2;
+	optional string name = 3;
+	optional string type = 4;
+	optional string desc = 5;
+}
+
+message Image {
+	optional string name = 1;
+	optional string tag = 2;
+	optional string path = 3;
+	string uid = 4;
+	optional repeated string labels = 5;
+}
+
+message Observable {
+	optional string value = 1;
+	int32 type_id = 2;
+	optional Reputation reputation = 3;
+	string name = 4;
+	optional string type = 5;
+}
+
+message Feature {
+	optional string version = 1;
+	optional string uid = 2;
+	optional string name = 3;
+}
+
+message Response {
+	optional string error = 1;
+	optional int32 code = 2;
+	optional repeated string flags = 3;
+	optional string message = 4;
+	optional string error_message = 5;
+}
+
+message Process {
+	optional File file = 1;
+	optional string uid = 2;
+	optional Container container = 3;
+	optional int64 created_time = 4;
+	optional string integrity = 5;
+	optional string name = 6;
+	optional User user = 7;
+	optional Session session = 8;
+	optional string cmd_line = 9;
+	optional string sandbox = 10;
+	optional repeated string lineage = 11;
+	optional int32 namespace_pid = 12;
+	optional int64 terminated_time = 13;
+	optional Object xattributes = 14;
+	optional int32 pid = 15;
+	optional int32 tid = 16;
+	optional repeated string loaded_modules = 17;
+	optional int32 integrity_id = 18;
+	optional Process parent_process = 19;
+}

@@ -1,3 +1,2 @@
-To Generate Proto Files
-
-protoc --go_out=. security-events.proto 
+schema.json is exported from below API
+https://schema.ocsf.io/export/schema?profiles=cloud,container
