@@ -17,7 +17,12 @@ func (m *Message) AddField(field *Field) {
 
 func (m *Message) Marshal() string {
 	content := []string{}
-	content = append(content, "// "+m.GroupKey)
+	if len(m.Comment) > 0 {
+		for k, v := range m.Comment {
+			content = append(content, fmt.Sprintf("// %s: %s", k, v))
+		}
+	}
+
 	content = append(content, fmt.Sprintf("message %s {", m.proto.ToMessageName(m.Name)))
 	for i, f := range m.fields {
 		content = append(content, "\t"+f.Marshal(i+1))

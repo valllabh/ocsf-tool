@@ -1,6 +1,7 @@
 package protobuff
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -39,7 +40,12 @@ func (mapper *mapper) Marshal(events []ocsf.Event) string {
 		m := v3.Message{
 			Name:     event.Name,
 			GroupKey: "Event: " + event.Category,
+			Comment:  commons.Comment{},
 		}
+
+		m.Comment["Event"] = event.Category
+		m.Comment["Event UID"] = fmt.Sprintf("%d", event.Uid)
+		m.Comment["URL"] = fmt.Sprintf("https://schema.ocsf.io/%s/classes/%s", mapper.Schema.Version, event.Name)
 
 		mapper.populateFieldsFromAttributes(&m, event.Attributes)
 

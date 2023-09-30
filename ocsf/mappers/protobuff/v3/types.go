@@ -41,6 +41,7 @@ type Message struct {
 	fields   Fields
 	proto    *Proto
 	GroupKey string
+	Comment  commons.Comment
 }
 
 type Field struct {
