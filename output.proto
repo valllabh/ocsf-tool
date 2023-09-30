@@ -1,429 +1,2715 @@
-message Fingerprint {
-	string value = 1;
-	optional string algorithm = 2;
-	int32 algorithm_id = 3;
+syntax = "proto3";
+
+// Event: application
+message ApiActivity {
+	string class_name = 1; // Caption: Class;
+	int64 start_time = 2; // Caption: Start Time;
+	NetworkEndpoint src_endpoint = 3; // Caption: Source Endpoint;
+	NetworkEndpoint dst_endpoint = 4; // Caption: Destination Endpoint;
+	Api api = 5; // Caption: API Details;
+	int32 duration = 6; // Caption: Duration;
+	repeated ResourceDetails resources = 7; // Caption: Resources Array;
+	Object unmapped = 8; // Caption: Unmapped Data;
+	STATUS_ID status_id = 9; // Caption: Status ID;
+	int32 timezone_offset = 10; // Caption: Timezone Offset;
+	string raw_data = 11; // Caption: Raw Data;
+	string status_code = 12; // Caption: Status Code;
+	TYPE_UID type_uid = 13; // Caption: Type ID;
+	repeated Enrichment enrichments = 14; // Caption: Enrichments;
+	string type_name = 15; // Caption: Type Name;
+	string status = 16; // Caption: Status;
+	Cloud cloud = 17; // Caption: Cloud; Profile: cloud;
+	CLASS_UID class_uid = 18; // Caption: Class ID;
+	string message = 19; // Caption: Message;
+	Metadata metadata = 20; // Caption: Metadata;
+	ACTIVITY_ID activity_id = 21; // Caption: Activity ID;
+	HttpRequest http_request = 22; // Caption: HTTP Request;
+	SEVERITY_ID severity_id = 23; // Caption: Severity ID;
+	string severity = 24; // Caption: Severity;
+	CATEGORY_UID category_uid = 25; // Caption: Category ID;
+	int64 time = 26; // Caption: Event Time;
+	Actor actor = 27; // Caption: Actor;
+	repeated Observable observables = 28; // Caption: Observables;
+	string status_detail = 29; // Caption: Status Details;
+	string category_name = 30; // Caption: Category;
+	int64 end_time = 31; // Caption: End Time;
+	string activity_name = 32; // Caption: Activity;
+	int32 count = 33; // Caption: Count;
 }
 
-message Policy {
-	optional string name = 1;
-	optional string version = 2;
-	optional Group group = 3;
-	optional string desc = 4;
-	optional string uid = 5;
+// Event: application
+message ApplicationLifecycle {
+	string status_detail = 1; // Caption: Status Details;
+	int64 time = 2; // Caption: Event Time;
+	int64 start_time = 3; // Caption: Start Time;
+	CLASS_UID class_uid = 4; // Caption: Class ID;
+	SEVERITY_ID severity_id = 5; // Caption: Severity ID;
+	int32 duration = 6; // Caption: Duration;
+	int32 timezone_offset = 7; // Caption: Timezone Offset;
+	string raw_data = 8; // Caption: Raw Data;
+	Product app = 9; // Caption: Application;
+	repeated Enrichment enrichments = 10; // Caption: Enrichments;
+	string status_code = 11; // Caption: Status Code;
+	STATUS_ID status_id = 12; // Caption: Status ID;
+	string message = 13; // Caption: Message;
+	string type_name = 14; // Caption: Type Name;
+	Object unmapped = 15; // Caption: Unmapped Data;
+	CATEGORY_UID category_uid = 16; // Caption: Category ID;
+	int32 count = 17; // Caption: Count;
+	string status = 18; // Caption: Status;
+	string severity = 19; // Caption: Severity;
+	TYPE_UID type_uid = 20; // Caption: Type ID;
+	Metadata metadata = 21; // Caption: Metadata;
+	repeated Observable observables = 22; // Caption: Observables;
+	string activity_name = 23; // Caption: Activity;
+	Cloud cloud = 24; // Caption: Cloud; Profile: cloud;
+	Api api = 25; // Caption: API Details; Profile: cloud;
+	string category_name = 26; // Caption: Category;
+	string class_name = 27; // Caption: Class;
+	ACTIVITY_ID activity_id = 28; // Caption: Activity ID;
+	int64 end_time = 29; // Caption: End Time;
 }
 
+// Event: application
+message WebResourceAccessActivity {
+	TYPE_UID type_uid = 1; // Caption: Type ID;
+	HttpResponse http_response = 2; // Caption: HTTP Response;
+	string severity = 3; // Caption: Severity;
+	Cloud cloud = 4; // Caption: Cloud; Profile: cloud;
+	CATEGORY_UID category_uid = 5; // Caption: Category ID;
+	NetworkEndpoint src_endpoint = 6; // Caption: Source Endpoint;
+	int32 count = 7; // Caption: Count;
+	Tls tls = 8; // Caption: TLS;
+	repeated WebResource web_resources = 9; // Caption: Web Resources;
+	string status_code = 10; // Caption: Status Code;
+	int32 duration = 11; // Caption: Duration;
+	NetworkProxy proxy = 12; // Caption: Proxy;
+	SEVERITY_ID severity_id = 13; // Caption: Severity ID;
+	string status = 14; // Caption: Status;
+	string category_name = 15; // Caption: Category;
+	int64 end_time = 16; // Caption: End Time;
+	string type_name = 17; // Caption: Type Name;
+	string activity_name = 18; // Caption: Activity;
+	ACTIVITY_ID activity_id = 19; // Caption: Activity ID;
+	int32 timezone_offset = 20; // Caption: Timezone Offset;
+	string raw_data = 21; // Caption: Raw Data;
+	int64 time = 22; // Caption: Event Time;
+	repeated Observable observables = 23; // Caption: Observables;
+	STATUS_ID status_id = 24; // Caption: Status ID;
+	HttpRequest http_request = 25; // Caption: HTTP Request;
+	string class_name = 26; // Caption: Class;
+	repeated Enrichment enrichments = 27; // Caption: Enrichments;
+	string message = 28; // Caption: Message;
+	Object unmapped = 29; // Caption: Unmapped Data;
+	Api api = 30; // Caption: API Details; Profile: cloud;
+	Metadata metadata = 31; // Caption: Metadata;
+	int64 start_time = 32; // Caption: Start Time;
+	string status_detail = 33; // Caption: Status Details;
+	CLASS_UID class_uid = 34; // Caption: Class ID;
+}
+
+// Event: application
+message WebResourcesActivity {
+	int64 start_time = 1; // Caption: Start Time;
+	ACTIVITY_ID activity_id = 2; // Caption: Activity ID;
+	int32 timezone_offset = 3; // Caption: Timezone Offset;
+	string status_detail = 4; // Caption: Status Details;
+	STATUS_ID status_id = 5; // Caption: Status ID;
+	int64 time = 6; // Caption: Event Time;
+	NetworkEndpoint dst_endpoint = 7; // Caption: Destination Endpoint;
+	repeated Enrichment enrichments = 8; // Caption: Enrichments;
+	NetworkEndpoint src_endpoint = 9; // Caption: Source Endpoint;
+	CATEGORY_UID category_uid = 10; // Caption: Category ID;
+	string status = 11; // Caption: Status;
+	TYPE_UID type_uid = 12; // Caption: Type ID;
+	string raw_data = 13; // Caption: Raw Data;
+	repeated WebResource web_resources = 14; // Caption: Web Resources;
+	int32 count = 15; // Caption: Count;
+	repeated Observable observables = 16; // Caption: Observables;
+	SEVERITY_ID severity_id = 17; // Caption: Severity ID;
+	string status_code = 18; // Caption: Status Code;
+	Object unmapped = 19; // Caption: Unmapped Data;
+	Cloud cloud = 20; // Caption: Cloud; Profile: cloud;
+	string message = 21; // Caption: Message;
+	Metadata metadata = 22; // Caption: Metadata;
+	Api api = 23; // Caption: API Details; Profile: cloud;
+	CLASS_UID class_uid = 24; // Caption: Class ID;
+	repeated WebResource web_resources_result = 25; // Caption: Web Resources Result;
+	string severity = 26; // Caption: Severity;
+	string type_name = 27; // Caption: Type Name;
+	string category_name = 28; // Caption: Category;
+	string class_name = 29; // Caption: Class;
+	int32 duration = 30; // Caption: Duration;
+	string activity_name = 31; // Caption: Activity;
+	int64 end_time = 32; // Caption: End Time;
+}
+
+// Event: discovery
+message ConfigState {
+	repeated Enrichment enrichments = 1; // Caption: Enrichments;
+	string status = 2; // Caption: Status;
+	int64 start_time = 3; // Caption: Start Time;
+	repeated Observable observables = 4; // Caption: Observables;
+	CATEGORY_UID category_uid = 5; // Caption: Category ID;
+	Object unmapped = 6; // Caption: Unmapped Data;
+	string activity_name = 7; // Caption: Activity;
+	Cloud cloud = 8; // Caption: Cloud; Profile: cloud;
+	int64 end_time = 9; // Caption: End Time;
+	Metadata metadata = 10; // Caption: Metadata;
+	string severity = 11; // Caption: Severity;
+	ACTIVITY_ID activity_id = 12; // Caption: Activity ID;
+	string class_name = 13; // Caption: Class;
+	int32 timezone_offset = 14; // Caption: Timezone Offset;
+	Actor actor = 15; // Caption: Actor;
+	Api api = 16; // Caption: API Details; Profile: cloud;
+	TYPE_UID type_uid = 17; // Caption: Type ID;
+	int64 time = 18; // Caption: Event Time;
+	int32 duration = 19; // Caption: Duration;
+	string category_name = 20; // Caption: Category;
+	CisBenchmarkResult cis_benchmark_result = 21; // Caption: CIS Benchmark Result;
+	int32 count = 22; // Caption: Count;
+	Device device = 23; // Caption: Device;
+	CLASS_UID class_uid = 24; // Caption: Class ID;
+	SEVERITY_ID severity_id = 25; // Caption: Severity ID;
+	STATUS_ID status_id = 26; // Caption: Status ID;
+	string message = 27; // Caption: Message;
+	string type_name = 28; // Caption: Type Name;
+	string status_code = 29; // Caption: Status Code;
+	string raw_data = 30; // Caption: Raw Data;
+	string status_detail = 31; // Caption: Status Details;
+}
+
+// Event: discovery
+message InventoryInfo {
+	string message = 1; // Caption: Message;
+	string status = 2; // Caption: Status;
+	string activity_name = 3; // Caption: Activity;
+	repeated Enrichment enrichments = 4; // Caption: Enrichments;
+	Device device = 5; // Caption: Device;
+	int32 duration = 6; // Caption: Duration;
+	string class_name = 7; // Caption: Class;
+	Metadata metadata = 8; // Caption: Metadata;
+	int64 start_time = 9; // Caption: Start Time;
+	ACTIVITY_ID activity_id = 10; // Caption: Activity ID;
+	int64 end_time = 11; // Caption: End Time;
+	Cloud cloud = 12; // Caption: Cloud; Profile: cloud;
+	SEVERITY_ID severity_id = 13; // Caption: Severity ID;
+	int64 time = 14; // Caption: Event Time;
+	string severity = 15; // Caption: Severity;
+	Api api = 16; // Profile: cloud; Caption: API Details;
+	string category_name = 17; // Caption: Category;
+	CLASS_UID class_uid = 18; // Caption: Class ID;
+	int32 count = 19; // Caption: Count;
+	int32 timezone_offset = 20; // Caption: Timezone Offset;
+	STATUS_ID status_id = 21; // Caption: Status ID;
+	string raw_data = 22; // Caption: Raw Data;
+	string status_code = 23; // Caption: Status Code;
+	TYPE_UID type_uid = 24; // Caption: Type ID;
+	CATEGORY_UID category_uid = 25; // Caption: Category ID;
+	string type_name = 26; // Caption: Type Name;
+	repeated Observable observables = 27; // Caption: Observables;
+	Object unmapped = 28; // Caption: Unmapped Data;
+	Actor actor = 29; // Caption: Actor;
+	string status_detail = 30; // Caption: Status Details;
+}
+
+// Event: findings
+message SecurityFinding {
+	STATE_ID state_id = 1; // Caption: State ID;
+	repeated Malware malware = 2; // Caption: Malware;
+	TYPE_UID type_uid = 3; // Caption: Type ID;
+	repeated ResourceDetails resources = 4; // Caption: Resources Array;
+	int32 duration = 5; // Caption: Duration;
+	string class_name = 6; // Caption: Class;
+	repeated Attack attacks = 7; // Caption: Attacks;
+	int64 end_time = 8; // Caption: End Time;
+	Metadata metadata = 9; // Caption: Metadata;
+	CLASS_UID class_uid = 10; // Caption: Class ID;
+	int32 risk_score = 11; // Caption: Risk Score;
+	int32 impact_score = 12; // Caption: Impact;
+	repeated Observable observables = 13; // Caption: Observables;
+	IMPACT_ID impact_id = 14; // Caption: Impact ID;
+	string risk_level = 15; // Caption: Risk Level;
+	string status_detail = 16; // Caption: Status Details;
+	repeated Enrichment enrichments = 17; // Caption: Enrichments;
+	string type_name = 18; // Caption: Type Name;
+	repeated Vulnerability vulnerabilities = 19; // Caption: Vulnerabilities;
+	string impact = 20; // Caption: Impact;
+	int32 count = 21; // Caption: Count;
+	repeated string data_sources = 22; // Caption: Data Sources;
+	STATUS_ID status_id = 23; // Caption: Status ID;
+	string state = 24; // Caption: State;
+	string confidence = 25; // Caption: Confidence;
+	Api api = 26; // Caption: API Details; Profile: cloud;
+	int64 time = 27; // Caption: Event Time;
+	string activity_name = 28; // Caption: Activity;
+	Analytic analytic = 29; // Caption: Analytic;
+	int32 timezone_offset = 30; // Caption: Timezone Offset;
+	CONFIDENCE_ID confidence_id = 31; // Caption: Confidence Id;
+	string status = 32; // Caption: Status;
+	string category_name = 33; // Caption: Category;
+	Cloud cloud = 34; // Caption: Cloud; Profile: cloud;
+	int64 start_time = 35; // Caption: Start Time;
+	Process process = 36; // Caption: Process;
+	ACTIVITY_ID activity_id = 37; // Caption: Activity ID;
+	SEVERITY_ID severity_id = 38; // Caption: Severity ID;
+	RISK_LEVEL_ID risk_level_id = 39; // Caption: Risk Level ID;
+	string message = 40; // Caption: Message;
+	Compliance compliance = 41; // Caption: Compliance;
+	repeated KillChain kill_chain = 42; // Caption: Kill Chain;
+	string raw_data = 43; // Caption: Raw Data;
+	repeated CisControl cis_csc = 44; // Caption: CIS CSC;
+	CATEGORY_UID category_uid = 45; // Caption: Category ID;
+	Object unmapped = 46; // Caption: Unmapped Data;
+	string severity = 47; // Caption: Severity;
+	Finding finding = 48; // Caption: Finding;
+	int32 confidence_score = 49; // Caption: Confidence Score;
+	repeated string nist = 50; // Caption: NIST List;
+	string evidence = 51; // Caption: Evidence;
+	string status_code = 52; // Caption: Status Code;
+}
+
+// Event: iam
+message AccountChange {
+	string activity_name = 1; // Caption: Activity;
+	string raw_data = 2; // Caption: Raw Data;
+	int64 time = 3; // Caption: Event Time;
+	string type_name = 4; // Caption: Type Name;
+	STATUS_ID status_id = 5; // Caption: Status ID;
+	NetworkEndpoint src_endpoint = 6; // Caption: Source Endpoint;
+	string status = 7; // Caption: Status;
+	string status_detail = 8; // Caption: Status Details;
+	string severity = 9; // Caption: Severity;
+	string message = 10; // Caption: Message;
+	int32 count = 11; // Caption: Count;
+	Cloud cloud = 12; // Caption: Cloud; Profile: cloud;
+	string status_code = 13; // Caption: Status Code;
+	TYPE_UID type_uid = 14; // Caption: Type ID;
+	repeated Enrichment enrichments = 15; // Caption: Enrichments;
+	User user = 16; // Caption: User;
+	CATEGORY_UID category_uid = 17; // Caption: Category ID;
+	Object unmapped = 18; // Caption: Unmapped Data;
+	int64 start_time = 19; // Caption: Start Time;
+	HttpRequest http_request = 20; // Caption: HTTP Request;
+	string class_name = 21; // Caption: Class;
+	int64 end_time = 22; // Caption: End Time;
+	User user_result = 23; // Caption: User Result;
+	int32 timezone_offset = 24; // Caption: Timezone Offset;
+	int32 duration = 25; // Caption: Duration;
+	string category_name = 26; // Caption: Category;
+	Api api = 27; // Profile: cloud; Caption: API Details;
+	Actor actor = 28; // Caption: Actor;
+	repeated Observable observables = 29; // Caption: Observables;
+	SEVERITY_ID severity_id = 30; // Caption: Severity ID;
+	ACTIVITY_ID activity_id = 31; // Caption: Activity ID;
+	Metadata metadata = 32; // Caption: Metadata;
+	CLASS_UID class_uid = 33; // Caption: Class ID;
+}
+
+// Event: iam
+message Authentication {
+	NetworkEndpoint dst_endpoint = 1; // Caption: Destination Endpoint;
+	Metadata metadata = 2; // Caption: Metadata;
+	string raw_data = 3; // Caption: Raw Data;
+	string category_name = 4; // Caption: Category;
+	bool is_new_logon = 5; // Caption: New Logon;
+	repeated Observable observables = 6; // Caption: Observables;
+	Service service = 7; // Caption: Service;
+	int32 duration = 8; // Caption: Duration;
+	int64 end_time = 9; // Caption: End Time;
+	string logon_type = 10; // Caption: Logon Type;
+	Actor actor = 11; // Caption: Actor;
+	SEVERITY_ID severity_id = 12; // Caption: Severity ID;
+	Cloud cloud = 13; // Caption: Cloud; Profile: cloud;
+	int64 start_time = 14; // Caption: Start Time;
+	string status_code = 15; // Caption: Status Code;
+	NetworkEndpoint src_endpoint = 16; // Caption: Source Endpoint;
+	User user = 17; // Caption: User;
+	bool is_remote = 18; // Caption: Remote;
+	int32 timezone_offset = 19; // Caption: Timezone Offset;
+	int32 count = 20; // Caption: Count;
+	Certificate certificate = 21; // Caption: Certificate;
+	string type_name = 22; // Caption: Type Name;
+	bool is_mfa = 23; // Caption: Multi Factor Authentication;
+	AUTH_PROTOCOL_ID auth_protocol_id = 24; // Caption: Auth Protocol ID;
+	LOGON_TYPE_ID logon_type_id = 25; // Caption: Logon Type ID;
+	CATEGORY_UID category_uid = 26; // Caption: Category ID;
+	int64 time = 27; // Caption: Event Time;
+	Process logon_process = 28; // Caption: Logon Process;
+	bool is_cleartext = 29; // Caption: Cleartext Credentials;
+	string severity = 30; // Caption: Severity;
+	string status_detail = 31; // Caption: Status Details;
+	CLASS_UID class_uid = 32; // Caption: Class ID;
+	TYPE_UID type_uid = 33; // Caption: Type ID;
+	repeated Enrichment enrichments = 34; // Caption: Enrichments;
+	STATUS_ID status_id = 35; // Caption: Status ID;
+	string activity_name = 36; // Caption: Activity;
+	ACTIVITY_ID activity_id = 37; // Caption: Activity ID;
+	HttpRequest http_request = 38; // Caption: HTTP Request;
+	string message = 39; // Caption: Message;
+	string status = 40; // Caption: Status;
+	Session session = 41; // Caption: Session;
+	Object unmapped = 42; // Caption: Unmapped Data;
+	Api api = 43; // Caption: API Details; Profile: cloud;
+	string class_name = 44; // Caption: Class;
+	string auth_protocol = 45; // Caption: Auth Protocol;
+}
+
+// Event: iam
+message AuthorizeSession {
+	string message = 1; // Caption: Message;
+	repeated Enrichment enrichments = 2; // Caption: Enrichments;
+	string severity = 3; // Caption: Severity;
+	Group group = 4; // Caption: Group;
+	string raw_data = 5; // Caption: Raw Data;
+	SEVERITY_ID severity_id = 6; // Caption: Severity ID;
+	string status = 7; // Caption: Status;
+	Api api = 8; // Caption: API Details; Profile: cloud;
+	string status_code = 9; // Caption: Status Code;
+	int64 time = 10; // Caption: Event Time;
+	STATUS_ID status_id = 11; // Caption: Status ID;
+	string status_detail = 12; // Caption: Status Details;
+	Metadata metadata = 13; // Caption: Metadata;
+	Cloud cloud = 14; // Caption: Cloud; Profile: cloud;
+	int64 end_time = 15; // Caption: End Time;
+	CLASS_UID class_uid = 16; // Caption: Class ID;
+	TYPE_UID type_uid = 17; // Caption: Type ID;
+	repeated string privileges = 18; // Caption: Privileges;
+	User user = 19; // Caption: User;
+	int32 duration = 20; // Caption: Duration;
+	string class_name = 21; // Caption: Class;
+	string category_name = 22; // Caption: Category;
+	CATEGORY_UID category_uid = 23; // Caption: Category ID;
+	string type_name = 24; // Caption: Type Name;
+	string activity_name = 25; // Caption: Activity;
+	int32 timezone_offset = 26; // Caption: Timezone Offset;
+	ACTIVITY_ID activity_id = 27; // Caption: Activity ID;
+	int32 count = 28; // Caption: Count;
+	NetworkEndpoint dst_endpoint = 29; // Caption: Destination Endpoint;
+	Object unmapped = 30; // Caption: Unmapped Data;
+	int64 start_time = 31; // Caption: Start Time;
+	Session session = 32; // Caption: Session;
+	repeated Observable observables = 33; // Caption: Observables;
+}
+
+// Event: iam
+message EntityManagement {
+	string message = 1; // Caption: Message;
+	string type_name = 2; // Caption: Type Name;
+	string status_detail = 3; // Caption: Status Details;
+	Api api = 4; // Caption: API Details; Profile: cloud;
+	repeated Enrichment enrichments = 5; // Caption: Enrichments;
+	string status = 6; // Caption: Status;
+	string severity = 7; // Caption: Severity;
+	int32 duration = 8; // Caption: Duration;
+	CATEGORY_UID category_uid = 9; // Caption: Category ID;
+	int32 timezone_offset = 10; // Caption: Timezone Offset;
+	string activity_name = 11; // Caption: Activity;
+	Metadata metadata = 12; // Caption: Metadata;
+	ManagedEntity entity_result = 13; // Caption: Entity Result;
+	int32 count = 14; // Caption: Count;
+	string comment = 15; // Caption: Comment;
+	ACTIVITY_ID activity_id = 16; // Caption: Activity ID;
+	STATUS_ID status_id = 17; // Caption: Status ID;
+	string class_name = 18; // Caption: Class;
+	Object unmapped = 19; // Caption: Unmapped Data;
+	int64 end_time = 20; // Caption: End Time;
+	int64 time = 21; // Caption: Event Time;
+	int64 start_time = 22; // Caption: Start Time;
+	TYPE_UID type_uid = 23; // Caption: Type ID;
+	string category_name = 24; // Caption: Category;
+	SEVERITY_ID severity_id = 25; // Caption: Severity ID;
+	string status_code = 26; // Caption: Status Code;
+	repeated Observable observables = 27; // Caption: Observables;
+	CLASS_UID class_uid = 28; // Caption: Class ID;
+	string raw_data = 29; // Caption: Raw Data;
+	Cloud cloud = 30; // Caption: Cloud; Profile: cloud;
+	ManagedEntity entity = 31; // Caption: Entity;
+}
+
+// Event: iam
+message GroupManagement {
+	string class_name = 1; // Caption: Class;
+	SEVERITY_ID severity_id = 2; // Caption: Severity ID;
+	string status_detail = 3; // Caption: Status Details;
+	int64 time = 4; // Caption: Event Time;
+	CLASS_UID class_uid = 5; // Caption: Class ID;
+	int32 duration = 6; // Caption: Duration;
+	TYPE_UID type_uid = 7; // Caption: Type ID;
+	int32 timezone_offset = 8; // Caption: Timezone Offset;
+	Cloud cloud = 9; // Caption: Cloud; Profile: cloud;
+	int32 count = 10; // Caption: Count;
+	ResourceDetails resource = 11; // Caption: Resource;
+	repeated string privileges = 12; // Caption: Privileges;
+	CATEGORY_UID category_uid = 13; // Caption: Category ID;
+	string raw_data = 14; // Caption: Raw Data;
+	int64 start_time = 15; // Caption: Start Time;
+	STATUS_ID status_id = 16; // Caption: Status ID;
+	string message = 17; // Caption: Message;
+	string status = 18; // Caption: Status;
+	Api api = 19; // Caption: API Details; Profile: cloud;
+	Object unmapped = 20; // Caption: Unmapped Data;
+	string status_code = 21; // Caption: Status Code;
+	Group group = 22; // Caption: Group;
+	string severity = 23; // Caption: Severity;
+	string type_name = 24; // Caption: Type Name;
+	string category_name = 25; // Caption: Category;
+	int64 end_time = 26; // Caption: End Time;
+	repeated Enrichment enrichments = 27; // Caption: Enrichments;
+	ACTIVITY_ID activity_id = 28; // Caption: Activity ID;
+	repeated Observable observables = 29; // Caption: Observables;
+	string activity_name = 30; // Caption: Activity;
+	User user = 31; // Caption: User;
+	Metadata metadata = 32; // Caption: Metadata;
+}
+
+// Event: iam
+message UserAccess {
+	int64 start_time = 1; // Caption: Start Time;
+	string severity = 2; // Caption: Severity;
+	string type_name = 3; // Caption: Type Name;
+	string raw_data = 4; // Caption: Raw Data;
+	string status_code = 5; // Caption: Status Code;
+	int32 count = 6; // Caption: Count;
+	int32 duration = 7; // Caption: Duration;
+	Api api = 8; // Caption: API Details; Profile: cloud;
+	int64 time = 9; // Caption: Event Time;
+	Metadata metadata = 10; // Caption: Metadata;
+	int64 end_time = 11; // Caption: End Time;
+	SEVERITY_ID severity_id = 12; // Caption: Severity ID;
+	string status_detail = 13; // Caption: Status Details;
+	User user = 14; // Caption: User;
+	string class_name = 15; // Caption: Class;
+	string status = 16; // Caption: Status;
+	ACTIVITY_ID activity_id = 17; // Caption: Activity ID;
+	CLASS_UID class_uid = 18; // Caption: Class ID;
+	string activity_name = 19; // Caption: Activity;
+	repeated Observable observables = 20; // Caption: Observables;
+	CATEGORY_UID category_uid = 21; // Caption: Category ID;
+	repeated Enrichment enrichments = 22; // Caption: Enrichments;
+	TYPE_UID type_uid = 23; // Caption: Type ID;
+	string category_name = 24; // Caption: Category;
+	int32 timezone_offset = 25; // Caption: Timezone Offset;
+	Object unmapped = 26; // Caption: Unmapped Data;
+	Cloud cloud = 27; // Caption: Cloud; Profile: cloud;
+	repeated string privileges = 28; // Caption: Privileges;
+	string message = 29; // Caption: Message;
+	ResourceDetails resource = 30; // Caption: Resource;
+	STATUS_ID status_id = 31; // Caption: Status ID;
+}
+
+// Event: network
+message DhcpActivity {
+	NetworkEndpoint dst_endpoint = 1; // Caption: Destination Endpoint;
+	Api api = 2; // Caption: API Details; Profile: cloud;
+	int32 timezone_offset = 3; // Caption: Timezone Offset;
+	string class_name = 4; // Caption: Class;
+	TYPE_UID type_uid = 5; // Caption: Type ID;
+	string status_detail = 6; // Caption: Status Details;
+	Metadata metadata = 7; // Caption: Metadata;
+	string category_name = 8; // Caption: Category;
+	CLASS_UID class_uid = 9; // Caption: Class ID;
+	CATEGORY_UID category_uid = 10; // Caption: Category ID;
+	string type_name = 11; // Caption: Type Name;
+	STATUS_ID status_id = 12; // Caption: Status ID;
+	bool is_renewal = 13; // Caption: Renewal;
+	string raw_data = 14; // Caption: Raw Data;
+	repeated Enrichment enrichments = 15; // Caption: Enrichments;
+	string activity_name = 16; // Caption: Activity;
+	string message = 17; // Caption: Message;
+	string status = 18; // Caption: Status;
+	int32 count = 19; // Caption: Count;
+	string status_code = 20; // Caption: Status Code;
+	NetworkEndpoint src_endpoint = 21; // Caption: Source Endpoint;
+	NetworkInterface relay = 22; // Caption: Relay;
+	SEVERITY_ID severity_id = 23; // Caption: Severity ID;
+	string severity = 24; // Caption: Severity;
+	int64 start_time = 25; // Caption: Start Time;
+	int64 time = 26; // Caption: Event Time;
+	ACTIVITY_ID activity_id = 27; // Caption: Activity ID;
+	int32 duration = 28; // Caption: Duration;
+	Cloud cloud = 29; // Caption: Cloud; Profile: cloud;
+	string transaction_uid = 30; // Caption: Transaction UID;
+	Object unmapped = 31; // Caption: Unmapped Data;
+	int64 end_time = 32; // Caption: End Time;
+	int32 lease_dur = 33; // Caption: Lease Duration;
+	repeated Observable observables = 34; // Caption: Observables;
+}
+
+// Event: network
+message DnsActivity {
+	string rcode = 1; // Caption: Response Code;
+	repeated Observable observables = 2; // Caption: Observables;
+	int32 timezone_offset = 3; // Caption: Timezone Offset;
+	Tls tls = 4; // Caption: TLS;
+	int64 query_time = 5; // Caption: Query Time;
+	string raw_data = 6; // Caption: Raw Data;
+	int64 start_time = 7; // Caption: Start Time;
+	RCODE_ID rcode_id = 8; // Caption: Response Code ID;
+	string severity = 9; // Caption: Severity;
+	string message = 10; // Caption: Message;
+	string status = 11; // Caption: Status;
+	DnsQuery query = 12; // Caption: DNS Query;
+	NetworkEndpoint dst_endpoint = 13; // Caption: Destination Endpoint;
+	int64 response_time = 14; // Caption: Response Time;
+	NetworkProxy proxy = 15; // Caption: Proxy;
+	NetworkEndpoint src_endpoint = 16; // Caption: Source Endpoint;
+	ACTIVITY_ID activity_id = 17; // Caption: Activity ID;
+	SEVERITY_ID severity_id = 18; // Caption: Severity ID;
+	CLASS_UID class_uid = 19; // Caption: Class ID;
+	string activity_name = 20; // Caption: Activity;
+	Object unmapped = 21; // Caption: Unmapped Data;
+	Metadata metadata = 22; // Caption: Metadata;
+	string class_name = 23; // Caption: Class;
+	Api api = 24; // Caption: API Details; Profile: cloud;
+	string category_name = 25; // Caption: Category;
+	string type_name = 26; // Caption: Type Name;
+	string app_name = 27; // Caption: Application Name;
+	int32 count = 28; // Caption: Count;
+	NetworkConnectionInfo connection_info = 29; // Caption: Connection Info;
+	NetworkTraffic traffic = 30; // Caption: Traffic;
+	int32 duration = 31; // Caption: Duration;
+	Cloud cloud = 32; // Caption: Cloud; Profile: cloud;
+	CATEGORY_UID category_uid = 33; // Caption: Category ID;
+	TYPE_UID type_uid = 34; // Caption: Type ID;
+	int64 time = 35; // Caption: Event Time;
+	repeated DnsAnswer answers = 36; // Caption: DNS Answer;
+	string status_code = 37; // Caption: Status Code;
+	repeated Enrichment enrichments = 38; // Caption: Enrichments;
+	STATUS_ID status_id = 39; // Caption: Status ID;
+	string status_detail = 40; // Caption: Status Details;
+	int64 end_time = 41; // Caption: End Time;
+}
+
+// Event: network
+message EmailActivity {
+	int64 time = 1; // Caption: Event Time;
+	string severity = 2; // Caption: Severity;
+	string status_detail = 3; // Caption: Status Details;
+	NetworkEndpoint dst_endpoint = 4; // Caption: Destination Endpoint;
+	CLASS_UID class_uid = 5; // Caption: Class ID;
+	CATEGORY_UID category_uid = 6; // Caption: Category ID;
+	repeated Enrichment enrichments = 7; // Caption: Enrichments;
+	string message = 8; // Caption: Message;
+	string status = 9; // Caption: Status;
+	string direction = 10; // Caption: Direction;
+	Api api = 11; // Caption: API Details; Profile: cloud;
+	string banner = 12; // Caption: SMTP Banner;
+	NetworkEndpoint src_endpoint = 13; // Caption: Source Endpoint;
+	int32 timezone_offset = 14; // Caption: Timezone Offset;
+	EmailAuth email_auth = 15; // Caption: Email Authentication;
+	int32 attempt = 16; // Caption: Attempt;
+	string raw_data = 17; // Caption: Raw Data;
+	DIRECTION_ID direction_id = 18; // Caption: Direction ID;
+	repeated Observable observables = 19; // Caption: Observables;
+	string activity_name = 20; // Caption: Activity;
+	Cloud cloud = 21; // Caption: Cloud; Profile: cloud;
+	int64 end_time = 22; // Caption: End Time;
+	TYPE_UID type_uid = 23; // Caption: Type ID;
+	string type_name = 24; // Caption: Type Name;
+	Metadata metadata = 25; // Caption: Metadata;
+	int64 start_time = 26; // Caption: Start Time;
+	string category_name = 27; // Caption: Category;
+	string status_code = 28; // Caption: Status Code;
+	STATUS_ID status_id = 29; // Caption: Status ID;
+	SEVERITY_ID severity_id = 30; // Caption: Severity ID;
+	Email email = 31; // Caption: Email;
+	string class_name = 32; // Caption: Class;
+	int32 duration = 33; // Caption: Duration;
+	ACTIVITY_ID activity_id = 34; // Caption: Activity ID;
+	int32 count = 35; // Caption: Count;
+	string smtp_hello = 36; // Caption: SMTP Hello;
+	Object unmapped = 37; // Caption: Unmapped Data;
+}
+
+// Event: network
+message EmailFileActivity {
+	int64 start_time = 1; // Caption: Start Time;
+	repeated Observable observables = 2; // Caption: Observables;
+	Object unmapped = 3; // Caption: Unmapped Data;
+	SEVERITY_ID severity_id = 4; // Caption: Severity ID;
+	string message = 5; // Caption: Message;
+	int32 duration = 6; // Caption: Duration;
+	Cloud cloud = 7; // Caption: Cloud; Profile: cloud;
+	string email_uid = 8; // Caption: Email UID;
+	int32 count = 9; // Caption: Count;
+	string type_name = 10; // Caption: Type Name;
+	repeated Enrichment enrichments = 11; // Caption: Enrichments;
+	string status_detail = 12; // Caption: Status Details;
+	Metadata metadata = 13; // Caption: Metadata;
+	string category_name = 14; // Caption: Category;
+	string raw_data = 15; // Caption: Raw Data;
+	STATUS_ID status_id = 16; // Caption: Status ID;
+	Api api = 17; // Caption: API Details; Profile: cloud;
+	CLASS_UID class_uid = 18; // Caption: Class ID;
+	int64 end_time = 19; // Caption: End Time;
+	TYPE_UID type_uid = 20; // Caption: Type ID;
+	string severity = 21; // Caption: Severity;
+	ACTIVITY_ID activity_id = 22; // Caption: Activity ID;
+	int32 timezone_offset = 23; // Caption: Timezone Offset;
+	string status_code = 24; // Caption: Status Code;
+	string status = 25; // Caption: Status;
+	File file = 26; // Caption: File;
+	string activity_name = 27; // Caption: Activity;
+	int64 time = 28; // Caption: Event Time;
+	string class_name = 29; // Caption: Class;
+	CATEGORY_UID category_uid = 30; // Caption: Category ID;
+}
+
+// Event: network
+message EmailUrlActivity {
+	SEVERITY_ID severity_id = 1; // Caption: Severity ID;
+	int64 time = 2; // Caption: Event Time;
+	string severity = 3; // Caption: Severity;
+	CATEGORY_UID category_uid = 4; // Caption: Category ID;
+	string activity_name = 5; // Caption: Activity;
+	string status_detail = 6; // Caption: Status Details;
+	Url url = 7; // Caption: URL;
+	string type_name = 8; // Caption: Type Name;
+	string raw_data = 9; // Caption: Raw Data;
+	int32 timezone_offset = 10; // Caption: Timezone Offset;
+	repeated Enrichment enrichments = 11; // Caption: Enrichments;
+	repeated Observable observables = 12; // Caption: Observables;
+	string category_name = 13; // Caption: Category;
+	Api api = 14; // Caption: API Details; Profile: cloud;
+	string class_name = 15; // Caption: Class;
+	Cloud cloud = 16; // Profile: cloud; Caption: Cloud;
+	string email_uid = 17; // Caption: Email UID;
+	Metadata metadata = 18; // Caption: Metadata;
+	int64 start_time = 19; // Caption: Start Time;
+	Object unmapped = 20; // Caption: Unmapped Data;
+	int64 end_time = 21; // Caption: End Time;
+	string status_code = 22; // Caption: Status Code;
+	string status = 23; // Caption: Status;
+	ACTIVITY_ID activity_id = 24; // Caption: Activity ID;
+	int32 duration = 25; // Caption: Duration;
+	CLASS_UID class_uid = 26; // Caption: Class ID;
+	TYPE_UID type_uid = 27; // Caption: Type ID;
+	STATUS_ID status_id = 28; // Caption: Status ID;
+	int32 count = 29; // Caption: Count;
+	string message = 30; // Caption: Message;
+}
+
+// Event: network
+message FtpActivity {
+	int64 start_time = 1; // Caption: Start Time;
+	int64 end_time = 2; // Caption: End Time;
+	int64 time = 3; // Caption: Event Time;
+	int32 count = 4; // Caption: Count;
+	Api api = 5; // Caption: API Details; Profile: cloud;
+	string category_name = 6; // Caption: Category;
+	string status = 7; // Caption: Status;
+	NetworkEndpoint dst_endpoint = 8; // Caption: Destination Endpoint;
+	Object unmapped = 9; // Caption: Unmapped Data;
+	NetworkProxy proxy = 10; // Caption: Proxy;
+	string type = 11; // Caption: Type;
+	string activity_name = 12; // Caption: Activity;
+	ACTIVITY_ID activity_id = 13; // Caption: Activity ID;
+	int32 duration = 14; // Caption: Duration;
+	TYPE_UID type_uid = 15; // Caption: Type ID;
+	string command = 16; // Caption: Command;
+	string type_name = 17; // Caption: Type Name;
+	int32 port = 18; // Caption: Port;
+	Cloud cloud = 19; // Caption: Cloud; Profile: cloud;
+	CLASS_UID class_uid = 20; // Caption: Class ID;
+	CATEGORY_UID category_uid = 21; // Caption: Category ID;
+	string status_detail = 22; // Caption: Status Details;
+	Metadata metadata = 23; // Caption: Metadata;
+	string raw_data = 24; // Caption: Raw Data;
+	string status_code = 25; // Caption: Status Code;
+	repeated Enrichment enrichments = 26; // Caption: Enrichments;
+	NetworkEndpoint src_endpoint = 27; // Caption: Source Endpoint;
+	SEVERITY_ID severity_id = 28; // Caption: Severity ID;
+	string message = 29; // Caption: Message;
+	repeated Observable observables = 30; // Caption: Observables;
+	repeated int32 codes = 31; // Caption: Response Codes;
+	string name = 32; // Caption: Name;
+	NetworkConnectionInfo connection_info = 33; // Caption: Connection Info;
+	Tls tls = 34; // Caption: TLS;
+	string class_name = 35; // Caption: Class;
+	repeated string command_responses = 36; // Caption: Command Responses;
+	STATUS_ID status_id = 37; // Caption: Status ID;
+	int32 timezone_offset = 38; // Caption: Timezone Offset;
+	string app_name = 39; // Caption: Application Name;
+	string severity = 40; // Caption: Severity;
+	NetworkTraffic traffic = 41; // Caption: Traffic;
+}
+
+// Event: network
+message HttpActivity {
+	string status_detail = 1; // Caption: Status Details;
+	Api api = 2; // Caption: API Details; Profile: cloud;
+	string class_name = 3; // Caption: Class;
+	int64 end_time = 4; // Caption: End Time;
+	CATEGORY_UID category_uid = 5; // Caption: Category ID;
+	string app_name = 6; // Caption: Application Name;
+	int32 timezone_offset = 7; // Caption: Timezone Offset;
+	int32 count = 8; // Caption: Count;
+	Object unmapped = 9; // Caption: Unmapped Data;
+	int32 duration = 10; // Caption: Duration;
+	Metadata metadata = 11; // Caption: Metadata;
+	CLASS_UID class_uid = 12; // Caption: Class ID;
+	int64 time = 13; // Caption: Event Time;
+	NetworkEndpoint src_endpoint = 14; // Caption: Source Endpoint;
+	string status_code = 15; // Caption: Status Code;
+	string raw_data = 16; // Caption: Raw Data;
+	int64 start_time = 17; // Caption: Start Time;
+	STATUS_ID status_id = 18; // Caption: Status ID;
+	string status = 19; // Caption: Status;
+	NetworkEndpoint dst_endpoint = 20; // Caption: Destination Endpoint;
+	Tls tls = 21; // Caption: TLS;
+	NetworkProxy proxy = 22; // Caption: Proxy;
+	ACTIVITY_ID activity_id = 23; // Caption: Activity ID;
+	string category_name = 24; // Caption: Category;
+	string message = 25; // Caption: Message;
+	NetworkTraffic traffic = 26; // Caption: Traffic;
+	string activity_name = 27; // Caption: Activity;
+	int32 http_status = 28; // Caption: HTTP Status;
+	repeated Observable observables = 29; // Caption: Observables;
+	HttpResponse http_response = 30; // Caption: HTTP Response;
+	Cloud cloud = 31; // Caption: Cloud; Profile: cloud;
+	repeated Enrichment enrichments = 32; // Caption: Enrichments;
+	string type_name = 33; // Caption: Type Name;
+	SEVERITY_ID severity_id = 34; // Caption: Severity ID;
+	string severity = 35; // Caption: Severity;
+	NetworkConnectionInfo connection_info = 36; // Caption: Connection Info;
+	TYPE_UID type_uid = 37; // Caption: Type ID;
+	HttpRequest http_request = 38; // Caption: HTTP Request;
+}
+
+// Event: network
+message NetworkActivity {
+	NetworkConnectionInfo connection_info = 1; // Caption: Connection Info;
+	NetworkEndpoint dst_endpoint = 2; // Caption: Destination Endpoint;
+	int64 start_time = 3; // Caption: Start Time;
+	int64 time = 4; // Caption: Event Time;
+	TYPE_UID type_uid = 5; // Caption: Type ID;
+	STATUS_ID status_id = 6; // Caption: Status ID;
+	string message = 7; // Caption: Message;
+	int64 end_time = 8; // Caption: End Time;
+	CATEGORY_UID category_uid = 9; // Caption: Category ID;
+	int32 count = 10; // Caption: Count;
+	int32 duration = 11; // Caption: Duration;
+	Metadata metadata = 12; // Caption: Metadata;
+	string category_name = 13; // Caption: Category;
+	ACTIVITY_ID activity_id = 14; // Caption: Activity ID;
+	Cloud cloud = 15; // Caption: Cloud; Profile: cloud;
+	string app_name = 16; // Caption: Application Name;
+	repeated Observable observables = 17; // Caption: Observables;
+	Object unmapped = 18; // Caption: Unmapped Data;
+	string type_name = 19; // Caption: Type Name;
+	Api api = 20; // Caption: API Details; Profile: cloud;
+	string raw_data = 21; // Caption: Raw Data;
+	string status_code = 22; // Caption: Status Code;
+	repeated Enrichment enrichments = 23; // Caption: Enrichments;
+	int32 timezone_offset = 24; // Caption: Timezone Offset;
+	string status = 25; // Caption: Status;
+	string status_detail = 26; // Caption: Status Details;
+	NetworkTraffic traffic = 27; // Caption: Traffic;
+	string class_name = 28; // Caption: Class;
+	CLASS_UID class_uid = 29; // Caption: Class ID;
+	string activity_name = 30; // Caption: Activity;
+	NetworkEndpoint src_endpoint = 31; // Caption: Source Endpoint;
+	SEVERITY_ID severity_id = 32; // Caption: Severity ID;
+	string severity = 33; // Caption: Severity;
+	Tls tls = 34; // Caption: TLS;
+	NetworkProxy proxy = 35; // Caption: Proxy;
+}
+
+// Event: network
+message NetworkFileActivity {
+	NetworkEndpoint src_endpoint = 1; // Caption: Source Endpoint;
+	string severity = 2; // Caption: Severity;
+	int64 end_time = 3; // Caption: End Time;
+	string status_detail = 4; // Caption: Status Details;
+	int32 count = 5; // Caption: Count;
+	File file = 6; // Caption: File;
+	string category_name = 7; // Caption: Category;
+	Object unmapped = 8; // Caption: Unmapped Data;
+	string activity_name = 9; // Caption: Activity;
+	repeated Enrichment enrichments = 10; // Caption: Enrichments;
+	string status = 11; // Caption: Status;
+	int64 time = 12; // Caption: Event Time;
+	string type_name = 13; // Caption: Type Name;
+	ACTIVITY_ID activity_id = 14; // Caption: Activity ID;
+	TYPE_UID type_uid = 15; // Caption: Type ID;
+	CLASS_UID class_uid = 16; // Caption: Class ID;
+	CATEGORY_UID category_uid = 17; // Caption: Category ID;
+	string class_name = 18; // Caption: Class;
+	int32 timezone_offset = 19; // Caption: Timezone Offset;
+	SEVERITY_ID severity_id = 20; // Caption: Severity ID;
+	Api api = 21; // Caption: API Details; Profile: cloud;
+	repeated Observable observables = 22; // Caption: Observables;
+	string raw_data = 23; // Caption: Raw Data;
+	Actor actor = 24; // Caption: Actor;
+	Cloud cloud = 25; // Caption: Cloud; Profile: cloud;
+	string status_code = 26; // Caption: Status Code;
+	STATUS_ID status_id = 27; // Caption: Status ID;
+	string message = 28; // Caption: Message;
+	int64 start_time = 29; // Caption: Start Time;
+	int32 duration = 30; // Caption: Duration;
+	Metadata metadata = 31; // Caption: Metadata;
+	int64 expiration_time = 32; // Caption: Expiration Time;
+}
+
+// Event: network
+message RdpActivity {
+	string type_name = 1; // Caption: Type Name;
+	STATUS_ID status_id = 2; // Caption: Status ID;
+	string message = 3; // Caption: Message;
+	Cloud cloud = 4; // Caption: Cloud; Profile: cloud;
+	int64 end_time = 5; // Caption: End Time;
+	TYPE_UID type_uid = 6; // Caption: Type ID;
+	Response response = 7; // Caption: API Response Details;
+	Request request = 8; // Caption: API Request Details;
+	int64 time = 9; // Caption: Event Time;
+	string activity_name = 10; // Caption: Activity;
+	repeated string capabilities = 11; // Caption: Capabilities;
+	string app_name = 12; // Caption: Application Name;
+	string status_detail = 13; // Caption: Status Details;
+	string class_name = 14; // Caption: Class;
+	string category_name = 15; // Caption: Category;
+	int64 start_time = 16; // Caption: Start Time;
+	repeated string certificate_chain = 17; // Caption: Certificate Chain;
+	string severity = 18; // Caption: Severity;
+	CLASS_UID class_uid = 19; // Caption: Class ID;
+	repeated Enrichment enrichments = 20; // Caption: Enrichments;
+	SEVERITY_ID severity_id = 21; // Caption: Severity ID;
+	Api api = 22; // Caption: API Details; Profile: cloud;
+	int32 duration = 23; // Caption: Duration;
+	Tls tls = 24; // Caption: TLS;
+	Metadata metadata = 25; // Caption: Metadata;
+	string raw_data = 26; // Caption: Raw Data;
+	CATEGORY_UID category_uid = 27; // Caption: Category ID;
+	string identifier_cookie = 28; // Caption: Identifier Cookie;
+	ACTIVITY_ID activity_id = 29; // Caption: Activity ID;
+	NetworkEndpoint dst_endpoint = 30; // Caption: Destination Endpoint;
+	string status_code = 31; // Caption: Status Code;
+	NetworkProxy proxy = 32; // Caption: Proxy;
+	NetworkConnectionInfo connection_info = 33; // Caption: Connection Info;
+	NetworkTraffic traffic = 34; // Caption: Traffic;
+	NetworkEndpoint src_endpoint = 35; // Caption: Source Endpoint;
+	repeated Observable observables = 36; // Caption: Observables;
+	int32 timezone_offset = 37; // Caption: Timezone Offset;
+	string status = 38; // Caption: Status;
+	int32 count = 39; // Caption: Count;
+	Display remote_display = 40; // Caption: Remote Display;
+	Object unmapped = 41; // Caption: Unmapped Data;
+	string protocol_ver = 42; // Caption: RDP Version;
+}
+
+// Event: network
+message SmbActivity {
+	TYPE_UID type_uid = 1; // Caption: Type ID;
+	repeated Observable observables = 2; // Caption: Observables;
+	string tree_uid = 3; // Caption: Tree UID;
+	Response response = 4; // Caption: API Response Details;
+	string activity_name = 5; // Caption: Activity;
+	string open_type = 6; // Caption: Open Type;
+	string status = 7; // Caption: Status;
+	File file = 8; // Caption: File;
+	NetworkTraffic traffic = 9; // Caption: Traffic;
+	STATUS_ID status_id = 10; // Caption: Status ID;
+	int32 duration = 11; // Caption: Duration;
+	Tls tls = 12; // Caption: TLS;
+	int64 start_time = 13; // Caption: Start Time;
+	int64 end_time = 14; // Caption: End Time;
+	string type_name = 15; // Caption: Type Name;
+	ACTIVITY_ID activity_id = 16; // Caption: Activity ID;
+	SEVERITY_ID severity_id = 17; // Caption: Severity ID;
+	string message = 18; // Caption: Message;
+	NetworkEndpoint dst_endpoint = 19; // Caption: Destination Endpoint;
+	int64 time = 20; // Caption: Event Time;
+	repeated string client_dialects = 21; // Caption: Client Dialects;
+	NetworkConnectionInfo connection_info = 22; // Caption: Connection Info;
+	Object unmapped = 23; // Caption: Unmapped Data;
+	Api api = 24; // Caption: API Details; Profile: cloud;
+	string class_name = 25; // Caption: Class;
+	DceRpc dce_rpc = 26; // Caption: Distributed Computing Environment/Remote Procedure Call (DCE/RPC);
+	string share = 27; // Caption: Share;
+	repeated Enrichment enrichments = 28; // Caption: Enrichments;
+	CLASS_UID class_uid = 29; // Caption: Class ID;
+	string share_type = 30; // Caption: Share Type;
+	string app_name = 31; // Caption: Application Name;
+	string severity = 32; // Caption: Severity;
+	string status_detail = 33; // Caption: Status Details;
+	Metadata metadata = 34; // Caption: Metadata;
+	string raw_data = 35; // Caption: Raw Data;
+	Cloud cloud = 36; // Profile: cloud; Caption: Cloud;
+	SHARE_TYPE_ID share_type_id = 37; // Caption: Share Type Id;
+	int32 timezone_offset = 38; // Caption: Timezone Offset;
+	int32 count = 39; // Caption: Count;
+	string dialect = 40; // Caption: Dialect;
+	string category_name = 41; // Caption: Category;
+	CATEGORY_UID category_uid = 42; // Caption: Category ID;
+	string status_code = 43; // Caption: Status Code;
+	NetworkEndpoint src_endpoint = 44; // Caption: Source Endpoint;
+	string command = 45; // Caption: Command;
+	NetworkProxy proxy = 46; // Caption: Proxy;
+}
+
+// Event: network
+message SshActivity {
+	string protocol_ver = 1; // Caption: SSH Version;
+	NetworkTraffic traffic = 2; // Caption: Traffic;
+	repeated Enrichment enrichments = 3; // Caption: Enrichments;
+	SEVERITY_ID severity_id = 4; // Caption: Severity ID;
+	int32 count = 5; // Caption: Count;
+	string status_detail = 6; // Caption: Status Details;
+	Api api = 7; // Caption: API Details; Profile: cloud;
+	Metadata metadata = 8; // Caption: Metadata;
+	string raw_data = 9; // Caption: Raw Data;
+	Hassh server_hassh = 10; // Caption: Server HASSH;
+	int64 time = 11; // Caption: Event Time;
+	int32 timezone_offset = 12; // Caption: Timezone Offset;
+	int64 end_time = 13; // Caption: End Time;
+	NetworkProxy proxy = 14; // Caption: Proxy;
+	string app_name = 15; // Caption: Application Name;
+	string class_name = 16; // Caption: Class;
+	int64 start_time = 17; // Caption: Start Time;
+	NetworkEndpoint src_endpoint = 18; // Caption: Source Endpoint;
+	repeated Observable observables = 19; // Caption: Observables;
+	NetworkConnectionInfo connection_info = 20; // Caption: Connection Info;
+	string category_name = 21; // Caption: Category;
+	string message = 22; // Caption: Message;
+	Tls tls = 23; // Caption: TLS;
+	Cloud cloud = 24; // Caption: Cloud; Profile: cloud;
+	CLASS_UID class_uid = 25; // Caption: Class ID;
+	CATEGORY_UID category_uid = 26; // Caption: Category ID;
+	Hassh client_hassh = 27; // Caption: Client HASSH;
+	ACTIVITY_ID activity_id = 28; // Caption: Activity ID;
+	string severity = 29; // Caption: Severity;
+	string status_code = 30; // Caption: Status Code;
+	TYPE_UID type_uid = 31; // Caption: Type ID;
+	STATUS_ID status_id = 32; // Caption: Status ID;
+	string status = 33; // Caption: Status;
+	Object unmapped = 34; // Caption: Unmapped Data;
+	string type_name = 35; // Caption: Type Name;
+	string activity_name = 36; // Caption: Activity;
+	NetworkEndpoint dst_endpoint = 37; // Caption: Destination Endpoint;
+	int32 duration = 38; // Caption: Duration;
+}
+
+// Event: other
+message BaseEvent {
+	TYPE_UID type_uid = 1; // Caption: Type ID;
+	int32 timezone_offset = 2; // Caption: Timezone Offset;
+	string raw_data = 3; // Caption: Raw Data;
+	int64 end_time = 4; // Caption: End Time;
+	repeated Enrichment enrichments = 5; // Caption: Enrichments;
+	string activity_name = 6; // Caption: Activity;
+	Cloud cloud = 7; // Caption: Cloud; Profile: cloud;
+	string status = 8; // Caption: Status;
+	string category_name = 9; // Caption: Category;
+	string message = 10; // Caption: Message;
+	int64 time = 11; // Caption: Event Time;
+	SEVERITY_ID severity_id = 12; // Caption: Severity ID;
+	string type_name = 13; // Caption: Type Name;
+	string status_detail = 14; // Caption: Status Details;
+	STATUS_ID status_id = 15; // Caption: Status ID;
+	Metadata metadata = 16; // Caption: Metadata;
+	int64 start_time = 17; // Caption: Start Time;
+	int32 duration = 18; // Caption: Duration;
+	Api api = 19; // Caption: API Details; Profile: cloud;
+	repeated Observable observables = 20; // Caption: Observables;
+	string class_name = 21; // Caption: Class;
+	string severity = 22; // Caption: Severity;
+	ACTIVITY_ID activity_id = 23; // Caption: Activity ID;
+	Object unmapped = 24; // Caption: Unmapped Data;
+	int32 count = 25; // Caption: Count;
+	CLASS_UID class_uid = 26; // Caption: Class ID;
+	CATEGORY_UID category_uid = 27; // Caption: Category ID;
+	string status_code = 28; // Caption: Status Code;
+}
+
+// Event: system
+message FileActivity {
+	string connection_uid = 1; // Caption: Connection Identifier;
+	Metadata metadata = 2; // Caption: Metadata;
+	string status_code = 3; // Caption: Status Code;
+	string type_name = 4; // Caption: Type Name;
+	repeated Observable observables = 5; // Caption: Observables;
+	ACTIVITY_ID activity_id = 6; // Caption: Activity ID;
+	Api api = 7; // Caption: API Details; Profile: cloud;
+	string class_name = 8; // Caption: Class;
+	string raw_data = 9; // Caption: Raw Data;
+	string category_name = 10; // Caption: Category;
+	CLASS_UID class_uid = 11; // Caption: Class ID;
+	File file = 12; // Caption: File;
+	int64 time = 13; // Caption: Event Time;
+	string status = 14; // Caption: Status;
+	STATUS_ID status_id = 15; // Caption: Status ID;
+	int32 access_mask = 16; // Caption: Access Mask;
+	SEVERITY_ID severity_id = 17; // Caption: Severity ID;
+	string message = 18; // Caption: Message;
+	int32 count = 19; // Caption: Count;
+	string file_diff = 20; // Caption: File Diff;
+	int64 start_time = 21; // Caption: Start Time;
+	repeated Enrichment enrichments = 22; // Caption: Enrichments;
+	string activity_name = 23; // Caption: Activity;
+	int32 timezone_offset = 24; // Caption: Timezone Offset;
+	string create_mask = 25; // Caption: Create Mask;
+	Device device = 26; // Caption: Device;
+	int32 duration = 27; // Caption: Duration;
+	TYPE_UID type_uid = 28; // Caption: Type ID;
+	Actor actor = 29; // Caption: Actor;
+	Cloud cloud = 30; // Caption: Cloud; Profile: cloud;
+	string status_detail = 31; // Caption: Status Details;
+	File file_result = 32; // Caption: File Result;
+	CATEGORY_UID category_uid = 33; // Caption: Category ID;
+	Object unmapped = 34; // Caption: Unmapped Data;
+	int64 end_time = 35; // Caption: End Time;
+	string component = 36; // Caption: Component;
+	string severity = 37; // Caption: Severity;
+}
+
+// Event: system
+message KernelActivity {
+	Cloud cloud = 1; // Caption: Cloud; Profile: cloud;
+	Device device = 2; // Caption: Device;
+	Kernel kernel = 3; // Caption: Kernel;
+	string type_name = 4; // Caption: Type Name;
+	TYPE_UID type_uid = 5; // Caption: Type ID;
+	CLASS_UID class_uid = 6; // Caption: Class ID;
+	int64 time = 7; // Caption: Event Time;
+	Object unmapped = 8; // Caption: Unmapped Data;
+	repeated Enrichment enrichments = 9; // Caption: Enrichments;
+	string category_name = 10; // Caption: Category;
+	string class_name = 11; // Caption: Class;
+	int64 end_time = 12; // Caption: End Time;
+	string status_code = 13; // Caption: Status Code;
+	Metadata metadata = 14; // Caption: Metadata;
+	string severity = 15; // Caption: Severity;
+	ACTIVITY_ID activity_id = 16; // Caption: Activity ID;
+	int32 count = 17; // Caption: Count;
+	int64 start_time = 18; // Caption: Start Time;
+	int32 duration = 19; // Caption: Duration;
+	Api api = 20; // Caption: API Details; Profile: cloud;
+	CATEGORY_UID category_uid = 21; // Caption: Category ID;
+	string raw_data = 22; // Caption: Raw Data;
+	SEVERITY_ID severity_id = 23; // Caption: Severity ID;
+	string message = 24; // Caption: Message;
+	int32 timezone_offset = 25; // Caption: Timezone Offset;
+	Actor actor = 26; // Caption: Actor;
+	string status_detail = 27; // Caption: Status Details;
+	string status = 28; // Caption: Status;
+	string activity_name = 29; // Caption: Activity;
+	STATUS_ID status_id = 30; // Caption: Status ID;
+	repeated Observable observables = 31; // Caption: Observables;
+}
+
+// Event: system
+message KernelExtension {
+	string message = 1; // Caption: Message;
+	int64 start_time = 2; // Caption: Start Time;
+	int64 end_time = 3; // Caption: End Time;
+	string status = 4; // Caption: Status;
+	string class_name = 5; // Caption: Class;
+	int32 timezone_offset = 6; // Caption: Timezone Offset;
+	string status_code = 7; // Caption: Status Code;
+	Cloud cloud = 8; // Caption: Cloud; Profile: cloud;
+	Metadata metadata = 9; // Caption: Metadata;
+	TYPE_UID type_uid = 10; // Caption: Type ID;
+	CLASS_UID class_uid = 11; // Caption: Class ID;
+	Actor actor = 12; // Caption: Actor;
+	SEVERITY_ID severity_id = 13; // Caption: Severity ID;
+	int32 count = 14; // Caption: Count;
+	ACTIVITY_ID activity_id = 15; // Caption: Activity ID;
+	Object unmapped = 16; // Caption: Unmapped Data;
+	string activity_name = 17; // Caption: Activity;
+	KernelDriver driver = 18; // Caption: Kernel Driver;
+	Device device = 19; // Caption: Device;
+	int32 duration = 20; // Caption: Duration;
+	CATEGORY_UID category_uid = 21; // Caption: Category ID;
+	repeated Enrichment enrichments = 22; // Caption: Enrichments;
+	int64 time = 23; // Caption: Event Time;
+	string severity = 24; // Caption: Severity;
+	Api api = 25; // Caption: API Details; Profile: cloud;
+	repeated Observable observables = 26; // Caption: Observables;
+	STATUS_ID status_id = 27; // Caption: Status ID;
+	string type_name = 28; // Caption: Type Name;
+	string category_name = 29; // Caption: Category;
+	string raw_data = 30; // Caption: Raw Data;
+	string status_detail = 31; // Caption: Status Details;
+}
+
+// Event: system
+message MemoryActivity {
+	string raw_data = 1; // Caption: Raw Data;
+	int64 end_time = 2; // Caption: End Time;
+	ACTIVITY_ID activity_id = 3; // Caption: Activity ID;
+	string activity_name = 4; // Caption: Activity;
+	repeated Observable observables = 5; // Caption: Observables;
+	repeated Enrichment enrichments = 6; // Caption: Enrichments;
+	string type_name = 7; // Caption: Type Name;
+	Cloud cloud = 8; // Caption: Cloud; Profile: cloud;
+	CLASS_UID class_uid = 9; // Caption: Class ID;
+	string status_code = 10; // Caption: Status Code;
+	int64 time = 11; // Caption: Event Time;
+	int32 requested_permissions = 12; // Caption: Requested Permissions;
+	string status_detail = 13; // Caption: Status Details;
+	string base_address = 14; // Caption: Base Address;
+	int32 duration = 15; // Caption: Duration;
+	int32 timezone_offset = 16; // Caption: Timezone Offset;
+	string severity = 17; // Caption: Severity;
+	string status = 18; // Caption: Status;
+	string class_name = 19; // Caption: Class;
+	CATEGORY_UID category_uid = 20; // Caption: Category ID;
+	string message = 21; // Caption: Message;
+	int32 count = 22; // Caption: Count;
+	Device device = 23; // Caption: Device;
+	int32 actual_permissions = 24; // Caption: Actual Permissions;
+	TYPE_UID type_uid = 25; // Caption: Type ID;
+	Api api = 26; // Caption: API Details; Profile: cloud;
+	Metadata metadata = 27; // Caption: Metadata;
+	Process process = 28; // Caption: Process;
+	Actor actor = 29; // Caption: Actor;
+	STATUS_ID status_id = 30; // Caption: Status ID;
+	SEVERITY_ID severity_id = 31; // Caption: Severity ID;
+	Object unmapped = 32; // Caption: Unmapped Data;
+	string category_name = 33; // Caption: Category;
+	int64 start_time = 34; // Caption: Start Time;
+	int64 size = 35; // Caption: Size;
+}
+
+// Event: system
+message ModuleActivity {
+	CLASS_UID class_uid = 1; // Caption: Class ID;
+	Object unmapped = 2; // Caption: Unmapped Data;
+	string status_detail = 3; // Caption: Status Details;
+	int64 time = 4; // Caption: Event Time;
+	int32 duration = 5; // Caption: Duration;
+	CATEGORY_UID category_uid = 6; // Caption: Category ID;
+	int32 timezone_offset = 7; // Caption: Timezone Offset;
+	int64 start_time = 8; // Caption: Start Time;
+	repeated Observable observables = 9; // Caption: Observables;
+	Cloud cloud = 10; // Caption: Cloud; Profile: cloud;
+	STATUS_ID status_id = 11; // Caption: Status ID;
+	ACTIVITY_ID activity_id = 12; // Caption: Activity ID;
+	string status = 13; // Caption: Status;
+	string severity = 14; // Caption: Severity;
+	string class_name = 15; // Caption: Class;
+	repeated Enrichment enrichments = 16; // Caption: Enrichments;
+	int32 count = 17; // Caption: Count;
+	Device device = 18; // Caption: Device;
+	string category_name = 19; // Caption: Category;
+	SEVERITY_ID severity_id = 20; // Caption: Severity ID;
+	Module module = 21; // Caption: Module;
+	string activity_name = 22; // Caption: Activity;
+	int64 end_time = 23; // Caption: End Time;
+	TYPE_UID type_uid = 24; // Caption: Type ID;
+	Metadata metadata = 25; // Caption: Metadata;
+	Api api = 26; // Caption: API Details; Profile: cloud;
+	string type_name = 27; // Caption: Type Name;
+	string raw_data = 28; // Caption: Raw Data;
+	string status_code = 29; // Caption: Status Code;
+	string message = 30; // Caption: Message;
+	Actor actor = 31; // Caption: Actor;
+}
+
+// Event: system
+message ProcessActivity {
+	Api api = 1; // Caption: API Details; Profile: cloud;
+	string raw_data = 2; // Caption: Raw Data;
+	Cloud cloud = 3; // Caption: Cloud; Profile: cloud;
+	string status_code = 4; // Caption: Status Code;
+	repeated Observable observables = 5; // Caption: Observables;
+	int32 timezone_offset = 6; // Caption: Timezone Offset;
+	Module module = 7; // Caption: Module;
+	CLASS_UID class_uid = 8; // Caption: Class ID;
+	TYPE_UID type_uid = 9; // Caption: Type ID;
+	repeated Enrichment enrichments = 10; // Caption: Enrichments;
+	INJECTION_TYPE_ID injection_type_id = 11; // Caption: Injection Type ID;
+	int32 requested_permissions = 12; // Caption: Requested Permissions;
+	string severity = 13; // Caption: Severity;
+	string message = 14; // Caption: Message;
+	Device device = 15; // Caption: Device;
+	Metadata metadata = 16; // Caption: Metadata;
+	int64 time = 17; // Caption: Event Time;
+	int64 end_time = 18; // Caption: End Time;
+	Process process = 19; // Caption: Process;
+	Object unmapped = 20; // Caption: Unmapped Data;
+	STATUS_ID status_id = 21; // Caption: Status ID;
+	string class_name = 22; // Caption: Class;
+	int32 duration = 23; // Caption: Duration;
+	ACTIVITY_ID activity_id = 24; // Caption: Activity ID;
+	int32 exit_code = 25; // Caption: Exit Code;
+	Actor actor = 26; // Caption: Actor;
+	SEVERITY_ID severity_id = 27; // Caption: Severity ID;
+	int32 actual_permissions = 28; // Caption: Actual Permissions;
+	string activity_name = 29; // Caption: Activity;
+	string type_name = 30; // Caption: Type Name;
+	string status = 31; // Caption: Status;
+	int32 count = 32; // Caption: Count;
+	string injection_type = 33; // Caption: Injection Type;
+	string status_detail = 34; // Caption: Status Details;
+	string category_name = 35; // Caption: Category;
+	int64 start_time = 36; // Caption: Start Time;
+	CATEGORY_UID category_uid = 37; // Caption: Category ID;
+}
+
+// Event: system
+message RegistryKeyActivity {
+	string create_mask = 1; // Caption: Create Mask;
+	string category_name = 2; // Caption: Category;
+	Cloud cloud = 3; // Caption: Cloud; Profile: cloud;
+	int32 open_mask = 4; // Caption: Open Mask;
+	string activity_name = 5; // Caption: Activity;
+	int32 access_mask = 6; // Caption: Access Mask;
+	repeated Enrichment enrichments = 7; // Caption: Enrichments;
+	string type_name = 8; // Caption: Type Name;
+	int64 start_time = 9; // Caption: Start Time;
+	repeated Observable observables = 10; // Caption: Observables;
+	Api api = 11; // Caption: API Details; Profile: cloud;
+	string class_name = 12; // Caption: Class;
+	int64 end_time = 13; // Caption: End Time;
+	CLASS_UID class_uid = 14; // Caption: Class ID;
+	Actor actor = 15; // Caption: Actor;
+	SEVERITY_ID severity_id = 16; // Caption: Severity ID;
+	string status_detail = 17; // Caption: Status Details;
+	string raw_data = 18; // Caption: Raw Data;
+	string status_code = 19; // Caption: Status Code;
+	int32 timezone_offset = 20; // Caption: Timezone Offset;
+	string message = 21; // Caption: Message;
+	Device device = 22; // Caption: Device;
+	string severity = 23; // Caption: Severity;
+	Object unmapped = 24; // Caption: Unmapped Data;
+	int32 duration = 25; // Caption: Duration;
+	Metadata metadata = 26; // Caption: Metadata;
+	CATEGORY_UID category_uid = 27; // Caption: Category ID;
+	TYPE_UID type_uid = 28; // Caption: Type ID;
+	int64 time = 29; // Caption: Event Time;
+	RegistryKey reg_key = 30; // Caption: Registry Key;
+	RegistryKey prev_reg_key = 31; // Caption: Previous Registry Key;
+	STATUS_ID status_id = 32; // Caption: Status ID;
+	string status = 33; // Caption: Status;
+	ACTIVITY_ID activity_id = 34; // Caption: Activity ID;
+	int32 count = 35; // Caption: Count;
+}
+
+// Event: system
+message RegistryValueActivity {
+	string status_code = 1; // Caption: Status Code;
+	string status = 2; // Caption: Status;
+	int64 time = 3; // Caption: Event Time;
+	Device device = 4; // Caption: Device;
+	string type_name = 5; // Caption: Type Name;
+	CLASS_UID class_uid = 6; // Caption: Class ID;
+	int64 start_time = 7; // Caption: Start Time;
+	string raw_data = 8; // Caption: Raw Data;
+	STATUS_ID status_id = 9; // Caption: Status ID;
+	Actor actor = 10; // Caption: Actor;
+	Cloud cloud = 11; // Caption: Cloud; Profile: cloud;
+	RegistryValue reg_value = 12; // Caption: Registry Value;
+	string message = 13; // Caption: Message;
+	Metadata metadata = 14; // Caption: Metadata;
+	int64 end_time = 15; // Caption: End Time;
+	int32 count = 16; // Caption: Count;
+	string severity = 17; // Caption: Severity;
+	string class_name = 18; // Caption: Class;
+	repeated Enrichment enrichments = 19; // Caption: Enrichments;
+	Api api = 20; // Caption: API Details; Profile: cloud;
+	ACTIVITY_ID activity_id = 21; // Caption: Activity ID;
+	repeated Observable observables = 22; // Caption: Observables;
+	string category_name = 23; // Caption: Category;
+	string activity_name = 24; // Caption: Activity;
+	CATEGORY_UID category_uid = 25; // Caption: Category ID;
+	int32 timezone_offset = 26; // Caption: Timezone Offset;
+	string status_detail = 27; // Caption: Status Details;
+	int32 duration = 28; // Caption: Duration;
+	TYPE_UID type_uid = 29; // Caption: Type ID;
+	Object unmapped = 30; // Caption: Unmapped Data;
+	SEVERITY_ID severity_id = 31; // Caption: Severity ID;
+	RegistryValue prev_reg_value = 32; // Caption: Previous Registry Value;
+}
+
+// Event: system
+message ResourceActivity {
+	int32 count = 1; // Caption: Count;
+	int32 duration = 2; // Caption: Duration;
+	ACTIVITY_ID activity_id = 3; // Caption: Activity ID;
+	string raw_data = 4; // Caption: Raw Data;
+	Object unmapped = 5; // Caption: Unmapped Data;
+	STATUS_ID status_id = 6; // Caption: Status ID;
+	string class_name = 7; // Caption: Class;
+	int32 timezone_offset = 8; // Caption: Timezone Offset;
+	Actor actor = 9; // Caption: Actor;
+	SEVERITY_ID severity_id = 10; // Caption: Severity ID;
+	int64 start_time = 11; // Caption: Start Time;
+	string type_name = 12; // Caption: Type Name;
+	string status_code = 13; // Caption: Status Code;
+	string severity = 14; // Caption: Severity;
+	string category_name = 15; // Caption: Category;
+	string activity_name = 16; // Caption: Activity;
+	Metadata metadata = 17; // Caption: Metadata;
+	TYPE_UID type_uid = 18; // Caption: Type ID;
+	repeated Observable observables = 19; // Caption: Observables;
+	CLASS_UID class_uid = 20; // Caption: Class ID;
+	string message = 21; // Caption: Message;
+	Api api = 22; // Caption: API Details; Profile: cloud;
+	Cloud cloud = 23; // Caption: Cloud; Profile: cloud;
+	repeated Enrichment enrichments = 24; // Caption: Enrichments;
+	string status = 25; // Caption: Status;
+	CATEGORY_UID category_uid = 26; // Caption: Category ID;
+	int64 time = 27; // Caption: Event Time;
+	Device device = 28; // Caption: Device;
+	int64 end_time = 29; // Caption: End Time;
+	string status_detail = 30; // Caption: Status Details;
+	WinResource win_resource = 31; // Caption: Windows Resource;
+}
+
+// Event: system
+message ScheduledJobActivity {
+	Metadata metadata = 1; // Caption: Metadata;
+	int32 duration = 2; // Caption: Duration;
+	ACTIVITY_ID activity_id = 3; // Caption: Activity ID;
+	CLASS_UID class_uid = 4; // Caption: Class ID;
+	int32 timezone_offset = 5; // Caption: Timezone Offset;
+	string status_code = 6; // Caption: Status Code;
+	int64 time = 7; // Caption: Event Time;
+	Object unmapped = 8; // Caption: Unmapped Data;
+	STATUS_ID status_id = 9; // Caption: Status ID;
+	Device device = 10; // Caption: Device;
+	int64 start_time = 11; // Caption: Start Time;
+	Api api = 12; // Profile: cloud; Caption: API Details;
+	string activity_name = 13; // Caption: Activity;
+	Actor actor = 14; // Caption: Actor;
+	repeated Enrichment enrichments = 15; // Caption: Enrichments;
+	int32 count = 16; // Caption: Count;
+	string status = 17; // Caption: Status;
+	string severity = 18; // Caption: Severity;
+	string type_name = 19; // Caption: Type Name;
+	CATEGORY_UID category_uid = 20; // Caption: Category ID;
+	string raw_data = 21; // Caption: Raw Data;
+	Job job = 22; // Caption: Job;
+	SEVERITY_ID severity_id = 23; // Caption: Severity ID;
+	string message = 24; // Caption: Message;
+	int64 end_time = 25; // Caption: End Time;
+	string status_detail = 26; // Caption: Status Details;
+	repeated Observable observables = 27; // Caption: Observables;
+	string category_name = 28; // Caption: Category;
+	string class_name = 29; // Caption: Class;
+	Cloud cloud = 30; // Caption: Cloud; Profile: cloud;
+	TYPE_UID type_uid = 31; // Caption: Type ID;
+}
+
+// Object
+message Account {
+	string type = 1; // Caption: Type;
+	string uid = 2; // Caption: Unique ID;
+	TYPE_ID type_id = 3; // Caption: Type ID;
+	string name = 4; // Caption: Name;
+}
+
+// Object
+message Actor {
+	Process process = 1; // Caption: Process;
+	User user = 2; // Caption: User;
+	Session session = 3; // Caption: Session;
+	repeated Authorization authorizations = 4; // Caption: Authorization Information;
+	Idp idp = 5; // Caption: Identity Provider;
+	string invoked_by = 6; // Caption: Invoked by;
+}
+
+// Object
+message Analytic {
+	string uid = 1; // Caption: Unique ID;
+	string category = 2; // Caption: Category;
+	TYPE_ID type_id = 3; // Caption: Type ID;
+	repeated Analytic related_analytics = 4; // Caption: Related Analytics;
+	string name = 5; // Caption: Name;
+	string type = 6; // Caption: Type;
+	string version = 7; // Caption: Version;
+	string desc = 8; // Caption: Description;
+}
+
+// Object
+message Api {
+	string version = 1; // Caption: Version;
+	Request request = 2; // Caption: API Request Details;
+	Service service = 3; // Caption: Service;
+	Response response = 4; // Caption: API Response Details;
+	string operation = 5; // Caption: Operation;
+}
+
+// Object
+message Attack {
+	string version = 1; // Caption: Version;
+	repeated Tactic tactics = 2; // Caption: Tactics;
+	Technique technique = 3; // Caption: Technique;
+}
+
+// Object
+message Authorization {
+	string decision = 1; // Caption: Authorization Decision/Outcome;
+	Policy policy = 2; // Caption: Policy;
+}
+
+// Object
+message Certificate {
+	string version = 1; // Caption: Version;
+	string subject = 2; // Caption: Subject Distinguished Name;
+	string issuer = 3; // Caption: Issuer Distinguished Name;
+	repeated Fingerprint fingerprints = 4; // Caption: Fingerprints;
+	int64 created_time = 5; // Caption: Created Time;
+	int64 expiration_time = 6; // Caption: Expiration Time;
+	string serial_number = 7; // Caption: Certificate Serial Number;
+}
+
+// Object
+message CisBenchmarkResult {
+	string desc = 1; // Caption: Description;
+	Remediation remediation = 2; // Caption: Remediation;
+	Rule rule = 3; // Caption: Rule;
+	string name = 4; // Caption: Name;
+}
+
+// Object
+message CisControl {
+	string control = 1; // Caption: Control;
+	string version = 2; // Caption: Version;
+}
+
+// Object
+message Cloud {
+	Organization org = 1; // Caption: Organization;
+	Account account = 2; // Caption: Account;
+	string project_uid = 3; // Caption: Project ID;
+	string provider = 4; // Caption: Provider;
+	string region = 5; // Caption: Region;
+	string zone = 6; // Caption: Network Zone;
+}
+
+// Object
+message Compliance {
+	string status = 1; // Caption: Status;
+	repeated string requirements = 2; // Caption: Requirements;
+	string status_detail = 3; // Caption: Status Details;
+}
+
+// Object
 message Container {
-	optional string orchestrator = 1;
-	optional string runtime = 2;
-	optional int64 size = 3;
-	optional Fingerprint hash = 4;
-	optional Image image = 5;
-	optional string network_driver = 6;
-	optional string pod_uuid = 7;
-	optional string name = 8;
-	optional string tag = 9;
-	string uid = 10;
+	string name = 1; // Caption: Name;
+	string runtime = 2; // Caption: Runtime;
+	Fingerprint hash = 3; // Caption: Hash;
+	string network_driver = 4; // Caption: Network Driver;
+	string orchestrator = 5; // Caption: Orchestrator;
+	int64 size = 6; // Caption: Size;
+	string tag = 7; // Caption: Image Tag;
+	string uid = 8; // Caption: Unique ID;
+	Image image = 9; // Caption: Image;
+	string pod_uuid = 10; // Caption: Pod UUID;
 }
 
+// Object
+message Cve {
+	string uid = 1; // Caption: CVE ID;
+	int64 created_time = 2; // Caption: Record Creation Date;
+	Cvss cvss = 3; // Caption: CVSS Score;
+	string cwe_uid = 4; // Caption: CWE UID;
+	string cwe_url = 5; // Caption: CWE URL;
+	int64 modified_time = 6; // Caption: Record Modified Date;
+	string type = 7; // Caption: Vulnerability Type;
+	Product product = 8; // Caption: Product;
+}
+
+// Object
+message Cvss {
+	string version = 1; // Caption: Version;
+	DEPTH depth = 2; // Caption: CVSS Depth;
+	string severity = 3; // Caption: Severity;
+	float base_score = 4; // Caption: Base Score;
+	repeated Metric metrics = 5; // Caption: Metrics;
+	float overall_score = 6; // Caption: Overall Score;
+	string vector_string = 7; // Caption: Vector String;
+}
+
+// Object
+message DceRpc {
+	string command = 1; // Caption: Command;
+	repeated string flags = 2; // Caption: Flags;
+	string command_response = 3; // Caption: Command Response;
+	int32 opnum = 4; // Caption: Opnum;
+	RpcInterface rpc_interface = 5; // Caption: Remote Procedure Call Interface;
+}
+
+// Object
+message Device {
+	TYPE_ID type_id = 1; // Caption: Type ID;
+	string domain = 2; // Caption: Domain;
+	repeated NetworkInterface network_interfaces = 3; // Caption: Network Interfaces;
+	string type = 4; // Caption: Type;
+	Os os = 5; // Caption: OS;
+	Location location = 6; // Caption: Geo Location;
+	string mac = 7; // Caption: MAC Address;
+	string vpc_uid = 8; // Caption: VPC UID;
+	string name = 9; // Caption: Name;
+	Organization org = 10; // Caption: Organization;
+	int64 modified_time = 11; // Caption: Modified Time;
+	int32 risk_score = 12; // Caption: Risk Score;
+	int64 last_seen_time = 13; // Caption: Last Seen;
+	string ip = 14; // Caption: IP Address;
+	string interface_name = 15; // Caption: Network Interface Name;
+	bool is_trusted = 16; // Caption: Trusted Device;
+	string instance_uid = 17; // Caption: Instance ID;
+	string autoscale_uid = 18; // Caption: Autoscale UID;
+	string subnet_uid = 19; // Caption: Subnet UID;
+	string uid_alt = 20; // Caption: Alternate ID;
+	string subnet = 21; // Caption: Subnet;
+	string hypervisor = 22; // Caption: Hypervisor;
+	bool is_personal = 23; // Caption: Personal Device;
+	string uid = 24; // Caption: Unique ID;
+	repeated Group groups = 25; // Caption: Groups;
+	string region = 26; // Caption: Region;
+	Image image = 27; // Caption: Image;
+	bool is_compliant = 28; // Caption: Compliant Device;
+	string desc = 29; // Caption: Description;
+	DeviceHwInfo hw_info = 30; // Caption: Hardware Info;
+	string risk_level = 31; // Caption: Risk Level;
+	string imei = 32; // Caption: IMEI;
+	int64 created_time = 33; // Caption: Created Time;
+	string hostname = 34; // Caption: Hostname;
+	string interface_uid = 35; // Caption: Network Interface ID;
+	int64 first_seen_time = 36; // Caption: First Seen;
+	RISK_LEVEL_ID risk_level_id = 37; // Caption: Risk Level ID;
+	string vlan_uid = 38; // Caption: VLAN;
+	bool is_managed = 39; // Caption: Managed Device;
+}
+
+// Object
+message DeviceHwInfo {
+	KeyboardInfo keyboard_info = 1; // Caption: Keyboard Information;
+	int32 ram_size = 2; // Caption: RAM Size;
+	string chassis = 3; // Caption: Chassis;
+	string cpu_type = 4; // Caption: Processor Type;
+	string bios_ver = 5; // Caption: BIOS Version;
+	int32 cpu_bits = 6; // Caption: CPU Bits;
+	int32 cpu_cores = 7; // Caption: CPU Cores;
+	int32 cpu_speed = 8; // Caption: Processor Speed;
+	string bios_date = 9; // Caption: BIOS Date;
+	string bios_manufacturer = 10; // Caption: BIOS Manufacturer;
+	string serial_number = 11; // Caption: Serial Number;
+	int32 cpu_count = 12; // Caption: CPU Count;
+	Display desktop_display = 13; // Caption: Desktop Display;
+}
+
+// Object
+message DigitalSignature {
+	Certificate certificate = 1; // Caption: Certificate;
+	string algorithm = 2; // Caption: Algorithm;
+	ALGORITHM_ID algorithm_id = 3; // Caption: Algorithm ID;
+	int64 created_time = 4; // Caption: Created Time;
+	string developer_uid = 5; // Caption: Developer UID;
+	Fingerprint digest = 6; // Caption: Message Digest;
+}
+
+// Object
+message Display {
+	int32 color_depth = 1; // Caption: Color Depth;
+	int32 physical_height = 2; // Caption: Physical Height;
+	int32 physical_orientation = 3; // Caption: Physical Orientation;
+	int32 physical_width = 4; // Caption: Physical Width;
+	int32 scale_factor = 5; // Caption: Scale Factor;
+}
+
+// Object
+message DnsAnswer {
+	string rdata = 1; // Caption: DNS RData;
+	repeated string flags = 2; // Caption: DNS Header Flags;
+	string type = 3; // Caption: Resource Record Type;
+	int32 ttl = 4; // Caption: TTL;
+	string class = 5; // Caption: Resource Record Class;
+	repeated FLAG_IDS flag_ids = 6; // Caption: DNS Header Flags;
+	int32 packet_uid = 7; // Caption: Packet UID;
+}
+
+// Object
+message DnsQuery {
+	int32 packet_uid = 1; // Caption: Packet UID;
+	string type = 2; // Caption: Resource Record Type;
+	string class = 3; // Caption: Resource Record Class;
+	string opcode = 4; // Caption: DNS Opcode;
+	string hostname = 5; // Caption: Hostname;
+	OPCODE_ID opcode_id = 6; // Caption: DNS Opcode ID;
+}
+
+// Object
+message Email {
+	string from = 1; // Caption: From;
+	string subject = 2; // Caption: Subject;
+	string delivered_to = 3; // Caption: Delivered To;
+	string message_uid = 4; // Caption: Message UID;
+	repeated string x_originating_ip = 5; // Caption: X-Originating-IP;
+	int64 size = 6; // Caption: Size;
+	string uid = 7; // Caption: Email UID;
+	repeated string cc = 8; // Caption: Cc;
+	repeated string to = 9; // Caption: To;
+	string raw_header = 10; // Caption: Raw Header;
+	string reply_to = 11; // Caption: Reply To;
+	string smtp_from = 12; // Caption: SMTP From;
+	repeated string smtp_to = 13; // Caption: SMTP To;
+}
+
+// Object
+message EmailAuth {
+	string spf = 1; // Caption: SPF Status;
+	string dkim = 2; // Caption: DKIM Status;
+	string dkim_domain = 3; // Caption: DKIM Domain;
+	string dkim_signature = 4; // Caption: DKIM Signature;
+	string dmarc = 5; // Caption: DMARC Status;
+	string dmarc_override = 6; // Caption: DMARC Override;
+	string dmarc_policy = 7; // Caption: DMARC Policy;
+}
+
+// Object
+message Enrichment {
+	string value = 1; // Caption: Value;
+	string provider = 2; // Caption: Provider;
+	string data = 3; // Caption: Data;
+	string name = 4; // Caption: Name;
+	string type = 5; // Caption: Type;
+}
+
+// Object
+message Extension {
+	string name = 1; // Caption: Name;
+	string version = 2; // Caption: Version;
+	string uid = 3; // Caption: Unique ID;
+}
+
+// Object
+message Feature {
+	string name = 1; // Caption: Name;
+	string version = 2; // Caption: Version;
+	string uid = 3; // Caption: Unique ID;
+}
+
+// Object
+message File {
+	User owner = 1; // Caption: Owner;
+	Product product = 2; // Caption: Product;
+	string uid = 3; // Caption: Unique ID;
+	User creator = 4; // Caption: Creator;
+	string confidentiality = 5; // Caption: Confidentiality;
+	int64 created_time = 6; // Caption: Created Time;
+	int64 size = 7; // Caption: Size;
+	string company_name = 8; // Caption: Company Name;
+	string name = 9; // Caption: Name;
+	User modifier = 10; // Caption: Modifier;
+	User accessor = 11; // Caption: Accessor;
+	bool is_system = 12; // Caption: System;
+	int64 modified_time = 13; // Caption: Modified Time;
+	string security_descriptor = 14; // Caption: Security Descriptor;
+	int64 accessed_time = 15; // Caption: Accessed Time;
+	int32 attributes = 16; // Caption: Attributes;
+	Object xattributes = 17; // Caption: Extended Attributes;
+	string mime_type = 18; // Caption: MIME type;
+	CONFIDENTIALITY_ID confidentiality_id = 19; // Caption: Confidentiality ID;
+	repeated Fingerprint hashes = 20; // Caption: Hashes;
+	string version = 21; // Caption: Version;
+	string path = 22; // Caption: Path;
+	string desc = 23; // Caption: Description;
+	string parent_folder = 24; // Caption: Parent Folder;
+	string type = 25; // Caption: Type;
+	DigitalSignature signature = 26; // Caption: Digital Signature;
+	TYPE_ID type_id = 27; // Caption: Type ID;
+}
+
+// Object
+message Finding {
+	string uid = 1; // Caption: Unique ID;
+	string title = 2; // Caption: Title;
+	int64 first_seen_time = 3; // Caption: First Seen;
+	repeated RelatedEvent related_events = 4; // Caption: Related Events;
+	string desc = 5; // Caption: Description;
+	string product_uid = 6; // Caption: Product Identifier;
+	string src_url = 7; // Caption: Source URL;
+	string supporting_data = 8; // Caption: Supporting Data;
+	int64 modified_time = 9; // Caption: Modified Time;
+	int64 created_time = 10; // Caption: Created Time;
+	int64 last_seen_time = 11; // Caption: Last Seen;
+	Remediation remediation = 12; // Caption: Remediation;
+	repeated string types = 13; // Caption: Types;
+}
+
+// Object
+message Fingerprint {
+	ALGORITHM_ID algorithm_id = 1; // Caption: Algorithm ID;
+	string value = 2; // Caption: Value;
+	string algorithm = 3; // Caption: Algorithm;
+}
+
+// Object
+message Group {
+	string name = 1; // Caption: Name;
+	string type = 2; // Caption: Account Type;
+	string desc = 3; // Caption: Description;
+	string uid = 4; // Caption: Unique ID;
+	repeated string privileges = 5; // Caption: Privileges;
+}
+
+// Object
+message Hassh {
+	string algorithm = 1; // Caption: Algorithm;
+	Fingerprint fingerprint = 2; // Caption: Fingerprint;
+}
+
+// Object
+message HttpHeader {
+	string name = 1; // Caption: Name;
+	string value = 2; // Caption: Value;
+}
+
+// Object
+message HttpRequest {
+	string args = 1; // Caption: HTTP Arguments;
+	string version = 2; // Caption: HTTP Version;
+	string user_agent = 3; // Caption: HTTP User-Agent;
+	repeated HttpHeader http_headers = 4; // Caption: HTTP Headers;
+	HTTP_METHOD http_method = 5; // Caption: HTTP Method;
+	string uid = 6; // Caption: Unique ID;
+	Url url = 7; // Caption: URL;
+	string referrer = 8; // Caption: HTTP Referrer;
+	repeated string x_forwarded_for = 9; // Caption: X-Forwarded-For;
+}
+
+// Object
+message HttpResponse {
+	int32 code = 1; // Caption: Response Code;
+	string message = 2; // Caption: Message;
+	string status = 3; // Caption: Status;
+	int32 length = 4; // Caption: Response Length;
+	string content_type = 5; // Caption: HTTP Content Type;
+	int32 latency = 6; // Caption: Latency;
+}
+
+// Object
+message Idp {
+	string name = 1; // Caption: Name;
+	string uid = 2; // Caption: Unique ID;
+}
+
+// Object
+message Image {
+	string path = 1; // Caption: Path;
+	string uid = 2; // Caption: Unique ID;
+	repeated string labels = 3; // Caption: Labels;
+	string name = 4; // Caption: Name;
+	string tag = 5; // Caption: Image Tag;
+}
+
+// Object
+message Job {
+	int64 created_time = 1; // Caption: Created Time;
+	string name = 2; // Caption: Name;
+	User user = 3; // Caption: User;
+	string desc = 4; // Caption: Description;
+	string cmd_line = 5; // Caption: Command Line;
+	RUN_STATE_ID run_state_id = 6; // Caption: Run State ID;
+	File file = 7; // Caption: File;
+	int64 last_run_time = 8; // Caption: Last Run;
+	int64 next_run_time = 9; // Caption: Next Run;
+	string run_state = 10; // Caption: Run State;
+}
+
+// Object
+message Kernel {
+	TYPE_ID type_id = 1; // Caption: Type ID;
+	bool is_system = 2; // Caption: System;
+	string system_call = 3; // Caption: System Call;
+	string name = 4; // Caption: Name;
+	string type = 5; // Caption: Type;
+	string path = 6; // Caption: Path;
+}
+
+// Object
+message KernelDriver {
+	File file = 1; // Caption: File;
+}
+
+// Object
 message KeyboardInfo {
-	optional string keyboard_layout = 1;
-	optional int32 keyboard_subtype = 2;
-	optional string keyboard_type = 3;
-	optional int32 function_keys = 4;
-	optional string ime = 5;
+	int32 keyboard_subtype = 1; // Caption: Keyboard Subtype;
+	string keyboard_type = 2; // Caption: Keyboard Type;
+	int32 function_keys = 3; // Caption: Function Keys;
+	string ime = 4; // Caption: IME;
+	string keyboard_layout = 5; // Caption: Keyboard Layout;
 }
 
-message Organization {
-	optional string name = 1;
-	optional string uid = 2;
-	optional string ou_name = 3;
-	optional string ou_uid = 4;
+// Object
+message KillChain {
+	string phase = 1; // Caption: Kill Chain Phase;
+	PHASE_ID phase_id = 2; // Caption: Kill Chain Phase ID;
 }
 
+// Object
 message Location {
-	optional string continent = 1;
-	optional string provider = 2;
-	optional string region = 3;
-	optional string city = 4;
-	optional string country = 5;
-	optional bool is_on_premises = 6;
-	optional string isp = 7;
-	optional string postal_code = 8;
-	optional string desc = 9;
-	repeated float32 coordinates = 10;
+	string city = 1; // Caption: City;
+	string country = 2; // Caption: Country;
+	bool is_on_premises = 3; // Caption: On Premises;
+	string isp = 4; // Caption: ISP;
+	string postal_code = 5; // Caption: Postal Code;
+	string provider = 6; // Caption: Provider;
+	string region = 7; // Caption: Region;
+	string desc = 8; // Caption: Description;
+	repeated float coordinates = 9; // Caption: Coordinates;
+	string continent = 10; // Caption: Continent;
 }
 
+// Object
+message Malware {
+	string path = 1; // Caption: Path;
+	string uid = 2; // Caption: Unique ID;
+	repeated CLASSIFICATION_IDS classification_ids = 3; // Caption: Classification IDs;
+	repeated string classifications = 4; // Caption: Classifications;
+	repeated Cve cves = 5; // Caption: CVE List;
+	string provider = 6; // Caption: Provider;
+	string name = 7; // Caption: Name;
+}
+
+// Object
+message ManagedEntity {
+	string data = 1; // Caption: Data;
+	string name = 2; // Caption: Name;
+	string type = 3; // Caption: Type;
+	string version = 4; // Caption: Version;
+	string uid = 5; // Caption: Unique ID;
+}
+
+// Object
+message Metadata {
+	Product product = 1; // Caption: Product;
+	string original_time = 2; // Caption: Original Time;
+	repeated string profiles = 3; // Caption: Profiles;
+	string log_provider = 4; // Caption: Log Provider;
+	string log_version = 5; // Caption: Log Version;
+	string version = 6; // Caption: Version;
+	string uid = 7; // Caption: Event UID;
+	repeated string labels = 8; // Caption: Labels;
+	string log_name = 9; // Caption: Log Name;
+	int64 modified_time = 10; // Caption: Modified Time;
+	string event_code = 11; // Caption: Event Code;
+	int64 logged_time = 12; // Caption: Logged Time;
+	int64 processed_time = 13; // Caption: Processed Time;
+	Extension extension = 14; // Caption: Schema Extension;
+	int32 sequence = 15; // Caption: Sequence Number;
+	string correlation_uid = 16; // Caption: Correlation UID;
+}
+
+// Object
+message Metric {
+	string name = 1; // Caption: Name;
+	string value = 2; // Caption: Value;
+}
+
+// Object
+message Module {
+	string function_name = 1; // Caption: Function Name;
+	string load_type = 2; // Caption: Load Type;
+	LOAD_TYPE_ID load_type_id = 3; // Caption: Load Type ID;
+	string start_address = 4; // Caption: Start Address;
+	string type = 5; // Caption: Type;
+	File file = 6; // Caption: File;
+	string base_address = 7; // Caption: Base Address;
+}
+
+// Object
+message NetworkConnectionInfo {
+	string uid = 1; // Caption: Connection UID;
+	string direction = 2; // Caption: Direction;
+	DIRECTION_ID direction_id = 3; // Caption: Direction ID;
+	int32 protocol_num = 4; // Caption: Protocol Number;
+	string protocol_ver = 5; // Caption: IP Version;
+	string boundary = 6; // Caption: Boundary;
+	string protocol_name = 7; // Caption: Protocol Name;
+	BOUNDARY_ID boundary_id = 8; // Caption: Boundary ID;
+	PROTOCOL_VER_ID protocol_ver_id = 9; // Caption: IP Version ID;
+	int32 tcp_flags = 10; // Caption: TCP Flags;
+}
+
+// Object
+message NetworkEndpoint {
+	Location location = 1; // Caption: Geo Location;
+	string interface_name = 2; // Caption: Network Interface Name;
+	string interface_uid = 3; // Caption: Network Interface ID;
+	string subnet_uid = 4; // Caption: Subnet UID;
+	string ip = 5; // Caption: IP Address;
+	string uid = 6; // Caption: Unique ID;
+	string hostname = 7; // Caption: Hostname;
+	string svc_name = 8; // Caption: Service Name;
+	int32 port = 9; // Caption: Port;
+	string mac = 10; // Caption: MAC Address;
+	string instance_uid = 11; // Caption: Instance ID;
+	string vlan_uid = 12; // Caption: VLAN;
+	string vpc_uid = 13; // Caption: VPC UID;
+	string name = 14; // Caption: Name;
+	string domain = 15; // Caption: Domain;
+	repeated string intermediate_ips = 16; // Caption: Intermediate IP Addresses;
+}
+
+// Object
+message NetworkInterface {
+	string ip = 1; // Caption: IP Address;
+	string uid = 2; // Caption: Unique ID;
+	string mac = 3; // Caption: MAC Address;
+	string name = 4; // Caption: Name;
+	string type = 5; // Caption: Type;
+	string hostname = 6; // Caption: Hostname;
+	string namespace = 7; // Caption: Namespace;
+	TYPE_ID type_id = 8; // Caption: Type ID;
+	int32 subnet_prefix = 9; // Caption: Subnet Prefix Length;
+}
+
+// Object
+message NetworkProxy {
+	Location location = 1; // Caption: Geo Location;
+	string uid = 2; // Caption: Unique ID;
+	string vlan_uid = 3; // Caption: VLAN;
+	string hostname = 4; // Caption: Hostname;
+	string instance_uid = 5; // Caption: Instance ID;
+	string domain = 6; // Caption: Domain;
+	string ip = 7; // Caption: IP Address;
+	string mac = 8; // Caption: MAC Address;
+	repeated string intermediate_ips = 9; // Caption: Intermediate IP Addresses;
+	string name = 10; // Caption: Name;
+	int32 port = 11; // Caption: Port;
+	string interface_name = 12; // Caption: Network Interface Name;
+	string interface_uid = 13; // Caption: Network Interface ID;
+	string subnet_uid = 14; // Caption: Subnet UID;
+	string svc_name = 15; // Caption: Service Name;
+	string vpc_uid = 16; // Caption: VPC UID;
+}
+
+// Object
+message NetworkTraffic {
+	int64 packets = 1; // Caption: Total Packets;
+	int64 packets_in = 2; // Caption: Packets In;
+	int64 packets_out = 3; // Caption: Packets Out;
+	int64 bytes = 4; // Caption: Total Bytes;
+	int64 bytes_in = 5; // Caption: Bytes In;
+	int64 bytes_out = 6; // Caption: Bytes Out;
+}
+
+// Object
 message Object {
 }
 
-message Authorization {
-	optional Policy policy = 1;
-	optional string decision = 2;
-}
-
-message Extension {
-	string name = 1;
-	string version = 2;
-	string uid = 3;
-}
-
-message Metadata {
-	string version = 1;
-	optional int32 sequence = 2;
-	optional string correlation_uid = 3;
-	optional string event_code = 4;
-	optional int64 logged_time = 5;
-	optional Extension extension = 6;
-	optional string uid = 7;
-	optional repeated string labels = 8;
-	optional string log_name = 9;
-	optional string log_version = 10;
-	optional int64 modified_time = 11;
-	optional int64 processed_time = 12;
-	Product product = 13;
-	optional repeated string profiles = 14;
-	optional string log_provider = 15;
-	optional string original_time = 16;
-}
-
-message Api {
-	optional string version = 1;
-	optional Request request = 2;
-	optional Service service = 3;
-	optional Response response = 4;
-	string operation = 5;
-}
-
-message Os {
-	optional string sp_name = 1;
-	string name = 2;
-	int32 type_id = 3;
-	optional string lang = 4;
-	optional int32 cpu_bits = 5;
-	optional string edition = 6;
-	optional string type = 7;
-	optional string version = 8;
-	optional string build = 9;
-	optional string country = 10;
-	optional int32 sp_ver = 11;
-}
-
-message Device {
-	optional int64 created_time = 1;
-	optional string hostname = 2;
-	optional string uid_alt = 3;
-	optional DeviceHwInfo hw_info = 4;
-	optional string vpc_uid = 5;
-	optional string risk_level = 6;
-	optional string ip = 7;
-	optional string name = 8;
-	optional bool is_trusted = 9;
-	optional int64 first_seen_time = 10;
-	optional string mac = 11;
-	optional Organization org = 12;
-	optional string vlan_uid = 13;
-	int32 type_id = 14;
-	optional string autoscale_uid = 15;
-	optional string subnet_uid = 16;
-	optional repeated NetworkInterface network_interfaces = 17;
-	optional string type = 18;
-	optional repeated Group groups = 19;
-	optional string interface_uid = 20;
-	optional int32 risk_level_id = 21;
-	optional string interface_name = 22;
-	optional int32 risk_score = 23;
-	optional string imei = 24;
-	optional Os os = 25;
-	optional int64 modified_time = 26;
-	optional string hypervisor = 27;
-	optional string desc = 28;
-	optional string domain = 29;
-	optional string uid = 30;
-	optional int64 last_seen_time = 31;
-	optional Image image = 32;
-	optional string subnet = 33;
-	optional bool is_personal = 34;
-	optional bool is_compliant = 35;
-	optional string region = 36;
-	optional bool is_managed = 37;
-	optional string instance_uid = 38;
-	optional Location location = 39;
-}
-
-message Account {
-	optional string name = 1;
-	optional string type = 2;
-	optional string uid = 3;
-	optional int32 type_id = 4;
-}
-
-message User {
-	optional string name = 1;
-	optional string type = 2;
-	optional string uid = 3;
-	optional repeated Group groups = 4;
-	optional string full_name = 5;
-	optional Account account = 6;
-	optional string domain = 7;
-	optional Organization org = 8;
-	int32 type_id = 9;
-	optional string credential_uid = 10;
-	optional string email_addr = 11;
-	optional string uid_alt = 12;
-}
-
-message FileActivity {
-	int64 time = 1;
-	optional repeated Observable observables = 2;
-	Metadata metadata = 3;
-	optional Api api = 4;
-	optional string status_code = 5;
-	optional repeated Enrichment enrichments = 6;
-	optional string type_name = 7;
-	optional int32 timezone_offset = 8;
-	int32 severity_id = 9;
-	Device device = 10;
-	optional string status_detail = 11;
-	File file = 12;
-	optional string status = 13;
-	optional File file_result = 14;
-	optional string class_name = 15;
-	int32 class_uid = 16;
-	optional string activity_name = 17;
-	optional int32 access_mask = 18;
-	optional string connection_uid = 19;
-	optional int64 end_time = 20;
-	int32 activity_id = 21;
-	optional int32 duration = 22;
-	optional string category_name = 23;
-	Cloud cloud = 24;
-	optional string component = 25;
-	optional string message = 26;
-	optional int32 count = 27;
-	optional string create_mask = 28;
-	optional Object unmapped = 29;
-	optional string file_diff = 30;
-	optional int64 start_time = 31;
-	int32 category_uid = 32;
-	int32 type_uid = 33;
-	Actor actor = 34;
-	optional int32 status_id = 35;
-	optional string severity = 36;
-	optional string raw_data = 37;
-}
-
-message Cloud {
-	optional Account account = 1;
-	optional string project_uid = 2;
-	string provider = 3;
-	optional string region = 4;
-	optional string zone = 5;
-	optional Organization org = 6;
-}
-
-message Idp {
-	optional string name = 1;
-	optional string uid = 2;
-}
-
-message Actor {
-	optional repeated Authorization authorizations = 1;
-	optional Idp idp = 2;
-	optional string invoked_by = 3;
-	optional Process process = 4;
-	optional User user = 5;
-	optional Session session = 6;
-}
-
-message Service {
-	optional string name = 1;
-	optional string version = 2;
-	optional string uid = 3;
-	optional repeated string labels = 4;
-}
-
-message Enrichment {
-	string data = 1;
-	string name = 2;
-	optional string type = 3;
-	string value = 4;
-	optional string provider = 5;
-}
-
-message Display {
-	optional int32 physical_width = 1;
-	optional int32 scale_factor = 2;
-	optional int32 color_depth = 3;
-	optional int32 physical_height = 4;
-	optional int32 physical_orientation = 5;
-}
-
-message NetworkInterface {
-	optional string ip = 1;
-	optional string hostname = 2;
-	optional string name = 3;
-	optional string type = 4;
-	optional string uid = 5;
-	optional string mac = 6;
-	optional string namespace = 7;
-	int32 type_id = 8;
-	optional int32 subnet_prefix = 9;
-}
-
-message File {
-	optional int32 attributes = 1;
-	optional string version = 2;
-	optional DigitalSignature signature = 3;
-	optional string company_name = 4;
-	optional string mime_type = 5;
-	optional string security_descriptor = 6;
-	optional int64 size = 7;
-	optional string desc = 8;
-	int32 type_id = 9;
-	optional User accessor = 10;
-	optional string path = 11;
-	optional User modifier = 12;
-	optional User creator = 13;
-	optional int64 accessed_time = 14;
-	optional int64 modified_time = 15;
-	optional string type = 16;
-	optional Object xattributes = 17;
-	string name = 18;
-	optional int32 confidentiality_id = 19;
-	optional User owner = 20;
-	optional Product product = 21;
-	optional string uid = 22;
-	optional string parent_folder = 23;
-	optional string confidentiality = 24;
-	optional repeated Fingerprint hashes = 25;
-	optional bool is_system = 26;
-	optional int64 created_time = 27;
-}
-
-message Product {
-	optional string name = 1;
-	optional string version = 2;
-	optional string path = 3;
-	optional string uid = 4;
-	optional Feature feature = 5;
-	optional string lang = 6;
-	optional string url_string = 7;
-	string vendor_name = 8;
-}
-
-message Certificate {
-	optional int64 created_time = 1;
-	optional int64 expiration_time = 2;
-	string serial_number = 3;
-	optional string version = 4;
-	optional string subject = 5;
-	string issuer = 6;
-	repeated Fingerprint fingerprints = 7;
-}
-
-message DigitalSignature {
-	optional string developer_uid = 1;
-	optional Fingerprint digest = 2;
-	optional Certificate certificate = 3;
-	optional string algorithm = 4;
-	int32 algorithm_id = 5;
-	optional int64 created_time = 6;
-}
-
-message Session {
-	optional int64 created_time = 1;
-	optional string credential_uid = 2;
-	optional int64 expiration_time = 3;
-	optional bool is_remote = 4;
-	optional string uid = 5;
-	optional string uuid = 6;
-	optional string issuer = 7;
-}
-
-message Reputation {
-	int32 score_id = 1;
-	float32 base_score = 2;
-	optional string provider = 3;
-	optional string score = 4;
-}
-
-message Request {
-	optional repeated string flags = 1;
-	string uid = 2;
-}
-
-message DeviceHwInfo {
-	optional string bios_date = 1;
-	optional int32 cpu_bits = 2;
-	optional int32 cpu_speed = 3;
-	optional int32 ram_size = 4;
-	optional string bios_ver = 5;
-	optional string chassis = 6;
-	optional int32 cpu_count = 7;
-	optional string cpu_type = 8;
-	optional KeyboardInfo keyboard_info = 9;
-	optional string serial_number = 10;
-	optional string bios_manufacturer = 11;
-	optional int32 cpu_cores = 12;
-	optional Display desktop_display = 13;
-}
-
-message Group {
-	optional string uid = 1;
-	optional repeated string privileges = 2;
-	optional string name = 3;
-	optional string type = 4;
-	optional string desc = 5;
-}
-
-message Image {
-	optional string name = 1;
-	optional string tag = 2;
-	optional string path = 3;
-	string uid = 4;
-	optional repeated string labels = 5;
-}
-
+// Object
 message Observable {
-	optional string value = 1;
-	int32 type_id = 2;
-	optional Reputation reputation = 3;
-	string name = 4;
-	optional string type = 5;
+	string type = 1; // Caption: Type;
+	string value = 2; // Caption: Value;
+	TYPE_ID type_id = 3; // Caption: Type ID;
+	Reputation reputation = 4; // Caption: Reputation Scores;
+	string name = 5; // Caption: Name;
 }
 
-message Feature {
-	optional string version = 1;
-	optional string uid = 2;
-	optional string name = 3;
+// Object
+message Organization {
+	string uid = 1; // Caption: Unique ID;
+	string ou_name = 2; // Caption: Org Unit Name;
+	string ou_uid = 3; // Caption: Org Unit ID;
+	string name = 4; // Caption: Name;
 }
 
-message Response {
-	optional string error = 1;
-	optional int32 code = 2;
-	optional repeated string flags = 3;
-	optional string message = 4;
-	optional string error_message = 5;
+// Object
+message Os {
+	string sp_name = 1; // Caption: OS Service Pack;
+	int32 sp_ver = 2; // Caption: OS Service Pack Version;
+	string name = 3; // Caption: Name;
+	string country = 4; // Caption: Country;
+	string lang = 5; // Caption: Language;
+	string edition = 6; // Caption: OS Edition;
+	int32 cpu_bits = 7; // Caption: CPU Bits;
+	string type = 8; // Caption: Type;
+	string version = 9; // Caption: Version;
+	string build = 10; // Caption: OS Build;
+	TYPE_ID type_id = 11; // Caption: Type ID;
 }
 
+// Object
+message Package {
+	string release = 1; // Caption: Software Release Details;
+	int32 epoch = 2; // Caption: Epoch;
+	string license = 3; // Caption: Software License;
+	string architecture = 4; // Caption: Architecture;
+	string name = 5; // Caption: Name;
+	string version = 6; // Caption: Version;
+}
+
+// Object
+message Policy {
+	string name = 1; // Caption: Name;
+	string version = 2; // Caption: Version;
+	Group group = 3; // Caption: Group;
+	string desc = 4; // Caption: Description;
+	string uid = 5; // Caption: Unique ID;
+}
+
+// Object
 message Process {
-	optional File file = 1;
-	optional string uid = 2;
-	optional Container container = 3;
-	optional int64 created_time = 4;
-	optional string integrity = 5;
-	optional string name = 6;
-	optional User user = 7;
-	optional Session session = 8;
-	optional string cmd_line = 9;
-	optional string sandbox = 10;
-	optional repeated string lineage = 11;
-	optional int32 namespace_pid = 12;
-	optional int64 terminated_time = 13;
-	optional Object xattributes = 14;
-	optional int32 pid = 15;
-	optional int32 tid = 16;
-	optional repeated string loaded_modules = 17;
-	optional int32 integrity_id = 18;
-	optional Process parent_process = 19;
+	User user = 1; // Caption: User;
+	int32 tid = 2; // Caption: Thread ID;
+	Session session = 3; // Caption: Session;
+	int64 created_time = 4; // Caption: Created Time;
+	int64 terminated_time = 5; // Caption: Terminated Time;
+	File file = 6; // Caption: File;
+	string sandbox = 7; // Caption: Sandbox;
+	string integrity = 8; // Caption: Integrity;
+	int32 pid = 9; // Caption: Process ID;
+	repeated string loaded_modules = 10; // Caption: Loaded Modules;
+	string cmd_line = 11; // Caption: Command Line;
+	repeated string lineage = 12; // Caption: Lineage;
+	Process parent_process = 13; // Caption: Parent Process;
+	Object xattributes = 14; // Caption: Extended Attributes;
+	string name = 15; // Caption: Name;
+	Container container = 16; // Caption: Container; Profile: container;
+	INTEGRITY_ID integrity_id = 17; // Caption: Integrity Level;
+	int32 namespace_pid = 18; // Caption: Namespace PID; Profile: container;
+	string uid = 19; // Caption: Unique ID;
+}
+
+// Object
+message Product {
+	string uid = 1; // Caption: Unique ID;
+	Feature feature = 2; // Caption: Feature;
+	string lang = 3; // Caption: Language;
+	string url_string = 4; // Caption: URL String;
+	string vendor_name = 5; // Caption: Vendor Name;
+	string name = 6; // Caption: Name;
+	string version = 7; // Caption: Version;
+	string path = 8; // Caption: Path;
+}
+
+// Object
+message RegistryKey {
+	bool is_system = 1; // Caption: System;
+	int64 modified_time = 2; // Caption: Modified Time;
+	string security_descriptor = 3; // Caption: Security Descriptor;
+	string path = 4; // Caption: Path;
+}
+
+// Object
+message RegistryValue {
+	int64 modified_time = 1; // Caption: Modified Time;
+	string data = 2; // Caption: Data;
+	string name = 3; // Caption: Name;
+	string type = 4; // Caption: Type;
+	string path = 5; // Caption: Path;
+	TYPE_ID type_id = 6; // Caption: Type ID;
+	bool is_default = 7; // Caption: Default Value;
+	bool is_system = 8; // Caption: System;
+}
+
+// Object
+message RelatedEvent {
+	int32 type_uid = 1; // Caption: Type ID;
+	string product_uid = 2; // Caption: Product Identifier;
+	string type = 3; // Caption: Type;
+	string uid = 4; // Caption: Unique ID;
+}
+
+// Object
+message Remediation {
+	string desc = 1; // Caption: Description;
+	repeated string kb_articles = 2; // Caption: Knowledgebase Articles;
+}
+
+// Object
+message Reputation {
+	string provider = 1; // Caption: Provider;
+	string score = 2; // Caption: Reputation Score;
+	SCORE_ID score_id = 3; // Caption: Reputation Score ID;
+	float base_score = 4; // Caption: Reputation Score;
+}
+
+// Object
+message Request {
+	repeated string flags = 1; // Caption: Flags;
+	string uid = 2; // Caption: Unique ID;
+}
+
+// Object
+message ResourceDetails {
+	string data = 1; // Caption: Data;
+	string type = 2; // Caption: Type;
+	string version = 3; // Caption: Version;
+	Group group = 4; // Caption: Group;
+	string uid = 5; // Caption: Unique ID;
+	string region = 6; // Caption: Region; Profile: cloud;
+	string name = 7; // Caption: Name;
+	User owner = 8; // Caption: Owner;
+	repeated string labels = 9; // Caption: Labels;
+	string cloud_partition = 10; // Profile: cloud; Caption: Cloud Partition;
+	string criticality = 11; // Caption: Criticality;
+}
+
+// Object
+message Response {
+	string message = 1; // Caption: Message;
+	string error_message = 2; // Caption: Error Message;
+	string error = 3; // Caption: Error Code;
+	int32 code = 4; // Caption: Response Code;
+	repeated string flags = 5; // Caption: Flags;
+}
+
+// Object
+message RpcInterface {
+	string version = 1; // Caption: Version;
+	string uuid = 2; // Caption: UUID;
+	int32 ack_reason = 3; // Caption: Acknowledgement Reason;
+	int32 ack_result = 4; // Caption: Acknowledgement Result;
+}
+
+// Object
+message Rule {
+	string name = 1; // Caption: Name;
+	string type = 2; // Caption: Type;
+	string version = 3; // Caption: Version;
+	string desc = 4; // Caption: Description;
+	string uid = 5; // Caption: Unique ID;
+	string category = 6; // Caption: Category;
+}
+
+// Object
+message San {
+	string name = 1; // Caption: Name;
+	string type = 2; // Caption: Type;
+}
+
+// Object
+message Service {
+	string name = 1; // Caption: Name;
+	string version = 2; // Caption: Version;
+	string uid = 3; // Caption: Unique ID;
+	repeated string labels = 4; // Caption: Labels;
+}
+
+// Object
+message Session {
+	string uid = 1; // Caption: Unique ID;
+	string uuid = 2; // Caption: UUID;
+	string issuer = 3; // Caption: Issuer Details;
+	int64 created_time = 4; // Caption: Created Time;
+	string credential_uid = 5; // Caption: User Credential ID;
+	int64 expiration_time = 6; // Caption: Expiration Time;
+	bool is_remote = 7; // Caption: Remote;
+}
+
+// Object
+message Tactic {
+	string name = 1; // Caption: Name;
+	string uid = 2; // Caption: Unique ID;
+}
+
+// Object
+message Technique {
+	string name = 1; // Caption: Name;
+	string uid = 2; // Caption: Unique ID;
+}
+
+// Object
+message Tls {
+	Certificate certificate = 1; // Caption: Certificate;
+	Fingerprint ja3_hash = 2; // Caption: JA3 Hash;
+	repeated string server_ciphers = 3; // Caption: Server Cipher Suites;
+	int32 alert = 4; // Caption: Client TLS Alert;
+	int32 key_length = 5; // Caption: Key Length;
+	string cipher = 6; // Caption: Cipher Suite;
+	repeated string client_ciphers = 7; // Caption: Client Cipher Suites;
+	int32 handshake_dur = 8; // Caption: Handshake Duration;
+	repeated San sans = 9; // Caption: Subject Alternative Names;
+	string version = 10; // Caption: Version;
+	repeated string certificate_chain = 11; // Caption: Certificate Chain;
+	repeated TlsExtension extension_list = 12; // Caption: Extension List;
+	Fingerprint ja3s_hash = 13; // Caption: JA3S Hash;
+	string sni = 14; // Caption: Server Name Indication;
+}
+
+// Object
+message TlsExtension {
+	string data = 1; // Caption: Data;
+	string type = 2; // Caption: Type;
+	TYPE_ID type_id = 3; // Caption: Type ID;
+}
+
+// Object
+message Url {
+	string scheme = 1; // Caption: Scheme;
+	string path = 2; // Caption: Path;
+	string hostname = 3; // Caption: Hostname;
+	string query_string = 4; // Caption: HTTP Query String;
+	repeated string categories = 5; // Caption: Website Categorization;
+	string subdomain = 6; // Caption: Subdomain;
+	int32 port = 7; // Caption: Port;
+	repeated CATEGORY_IDS category_ids = 8; // Caption: Website Categorization IDs;
+	string resource_type = 9; // Caption: Resource Type;
+	string url_string = 10; // Caption: URL String;
+}
+
+// Object
+message User {
+	string name = 1; // Caption: Name;
+	string type = 2; // Caption: Type;
+	string domain = 3; // Caption: Domain;
+	string credential_uid = 4; // Caption: User Credential ID;
+	Account account = 5; // Caption: Account;
+	string email_addr = 6; // Caption: Email Address;
+	string uid_alt = 7; // Caption: Alternate ID;
+	string uid = 8; // Caption: Unique ID;
+	Organization org = 9; // Caption: Organization;
+	repeated Group groups = 10; // Caption: Groups;
+	TYPE_ID type_id = 11; // Caption: Type ID;
+	string full_name = 12; // Caption: Full Name;
+}
+
+// Object
+message Vulnerability {
+	bool fix_available = 1; // Caption: Fix Availability;
+	repeated string kb_articles = 2; // Caption: Knowledgebase Articles;
+	repeated Package packages = 3; // Caption: Software Packages;
+	string vendor_name = 4; // Caption: Vendor Name;
+	string title = 5; // Caption: Title;
+	string desc = 6; // Caption: Description;
+	string severity = 7; // Caption: Severity;
+	repeated string references = 8; // Caption: References;
+	Cve cve = 9; // Caption: CVE;
+	repeated string related_vulnerabilities = 10; // Caption: Related Vulnerabilities;
+}
+
+// Object
+message WebResource {
+	string data = 1; // Caption: Data;
+	string name = 2; // Caption: Name;
+	string type = 3; // Caption: Type;
+	string desc = 4; // Caption: Description;
+	string uid = 5; // Caption: Unique ID;
+	repeated string labels = 6; // Caption: Labels;
+	string url_string = 7; // Caption: URL String;
+}
+
+// Object
+message WinResource {
+	string data = 1; // Caption: Data;
+	string name = 2; // Caption: Name;
+	string type = 3; // Caption: Type;
+	string uid = 4; // Caption: Unique ID;
+	repeated string labels = 5; // Caption: Labels;
+	TYPE_ID type_id = 6; // Caption: Type ID;
+	string details = 7; // Caption: Details;
+	string svc_name = 8; // Caption: Service Name;
+}
+
+enum TYPE_ID {
+	TYPE_ID_STATISTICAL = 0;
+	TYPE_ID_OTHER = 1;
+	TYPE_ID_UNKNOWN = 2;
+	TYPE_ID_RULE = 3;
+	TYPE_ID_BEHAVIORAL = 4;
+	TYPE_ID_LEARNING_ML_DL = 5;
+}
+
+enum TYPE_UID {
+	TYPE_UID_SECURITY_FINDING_OTHER = 0;
+	TYPE_UID_SECURITY_FINDING_UNKNOWN = 1;
+	TYPE_UID_SECURITY_FINDING_CREATE = 2;
+	TYPE_UID_SECURITY_FINDING_UPDATE = 3;
+}
+
+enum SCORE_ID {
+	SCORE_ID_PROBABLY_MALICIOUS = 0;
+	SCORE_ID_EXERCISE_CAUTION = 1;
+	SCORE_ID_OTHER = 2;
+	SCORE_ID_UNKNOWN = 3;
+	SCORE_ID_VERY_SAFE = 4;
+	SCORE_ID_MALICIOUS = 5;
+	SCORE_ID_SAFE = 6;
+	SCORE_ID_PROBABLY_SAFE = 7;
+	SCORE_ID_LEANS_SAFE = 8;
+	SCORE_ID_MAY_NOT_BE_SAFE = 9;
+	SCORE_ID_SUSPICIOUS_RISKY = 10;
+	SCORE_ID_POSSIBLY_MALICIOUS = 11;
+}
+
+enum HTTP_METHOD {
+	HTTP_METHOD_TRACE = 0;
+	HTTP_METHOD_CONNECT = 1;
+	HTTP_METHOD_OPTIONS = 2;
+	HTTP_METHOD_GET = 3;
+	HTTP_METHOD_HEAD = 4;
+	HTTP_METHOD_POST = 5;
+	HTTP_METHOD_PUT = 6;
+	HTTP_METHOD_DELETE = 7;
+}
+
+enum RCODE_ID {
+	RCODE_ID_NO_ERROR = 0;
+	RCODE_ID_YXRR_SET = 1;
+	RCODE_ID_DSOTYPENI = 2;
+	RCODE_ID_BADNAME = 3;
+	RCODE_ID_BADMODE = 4;
+	RCODE_ID_NX_DOMAIN = 5;
+	RCODE_ID_NOT_IMP = 6;
+	RCODE_ID_BADCOOKIE = 7;
+	RCODE_ID_SERV_ERROR = 8;
+	RCODE_ID_FORM_ERROR = 9;
+	RCODE_ID_NXRR_SET = 10;
+	RCODE_ID_NOT_AUTH = 11;
+	RCODE_ID_BADSIG_VERS = 12;
+	RCODE_ID_UNASSIGNED = 13;
+	RCODE_ID_RESERVED = 14;
+	RCODE_ID_OTHER = 15;
+	RCODE_ID_NOT_ZONE = 16;
+	RCODE_ID_REFUSED = 17;
+	RCODE_ID_BADKEY = 18;
+	RCODE_ID_BADTIME = 19;
+	RCODE_ID_BADALG = 20;
+	RCODE_ID_BADTRUNC = 21;
+	RCODE_ID_YX_DOMAIN = 22;
+}
+
+enum FLAG_IDS {
+	FLAG_IDS_UNKNOWN = 0;
+	FLAG_IDS_AUTHORITATIVE_ANSWER = 1;
+	FLAG_IDS_TRUNCATED_RESPONSE = 2;
+	FLAG_IDS_RECURSION_AVAILABLE = 3;
+	FLAG_IDS_AUTHENTIC_DATA = 4;
+	FLAG_IDS_RECURSION_DESIRED = 5;
+	FLAG_IDS_CHECKING_DISABLED = 6;
+	FLAG_IDS_OTHER = 7;
+}
+
+enum ALGORITHM_ID {
+	ALGORITHM_ID_AUTHENTICODE = 0;
+	ALGORITHM_ID_ECDSA = 1;
+	ALGORITHM_ID_OTHER = 2;
+	ALGORITHM_ID_UNKNOWN = 3;
+	ALGORITHM_ID_DSA = 4;
+	ALGORITHM_ID_RSA = 5;
+}
+
+enum AUTH_PROTOCOL_ID {
+	AUTH_PROTOCOL_ID_OTHER = 0;
+	AUTH_PROTOCOL_ID_NTLM = 1;
+	AUTH_PROTOCOL_ID_KERBEROS = 2;
+	AUTH_PROTOCOL_ID_OPEN_ID = 3;
+	AUTH_PROTOCOL_ID_PAP = 4;
+	AUTH_PROTOCOL_ID_CHAP = 5;
+	AUTH_PROTOCOL_ID_DIGEST = 6;
+	AUTH_PROTOCOL_ID_OAUTH_2_0 = 7;
+	AUTH_PROTOCOL_ID_SAML = 8;
+	AUTH_PROTOCOL_ID_EAP = 9;
+	AUTH_PROTOCOL_ID_UNKNOWN = 10;
+	AUTH_PROTOCOL_ID_RADIUS = 11;
+}
+
+enum DEPTH {
+	DEPTH_BASE = 0;
+	DEPTH_ENVIRONMENTAL = 1;
+	DEPTH_TEMPORAL = 2;
+}
+
+enum DIRECTION_ID {
+	DIRECTION_ID_INTERNAL = 0;
+	DIRECTION_ID_OTHER = 1;
+	DIRECTION_ID_UNKNOWN = 2;
+	DIRECTION_ID_INBOUND = 3;
+	DIRECTION_ID_OUTBOUND = 4;
+}
+
+enum BOUNDARY_ID {
+	BOUNDARY_ID_INTERNET_GATEWAY = 0;
+	BOUNDARY_ID_UNKNOWN = 1;
+	BOUNDARY_ID_INTERNET_VPC_GATEWAY = 2;
+	BOUNDARY_ID_INTRA_REGION_VPC = 3;
+	BOUNDARY_ID_VIRTUAL_PRIVATE_GATEWAY = 4;
+	BOUNDARY_ID_OTHER = 5;
+	BOUNDARY_ID_EXTERNAL = 6;
+	BOUNDARY_ID_INTERNAL = 7;
+	BOUNDARY_ID_SAME_VPC = 8;
+	BOUNDARY_ID_INTER_REGION_VPC = 9;
+	BOUNDARY_ID_LOCAL_GATEWAY = 10;
+	BOUNDARY_ID_LOCALHOST = 11;
+	BOUNDARY_ID_GATEWAY_VPC = 12;
+}
+
+enum INJECTION_TYPE_ID {
+	INJECTION_TYPE_ID_OTHER = 0;
+	INJECTION_TYPE_ID_UNKNOWN = 1;
+	INJECTION_TYPE_ID_REMOTE_THREAD = 2;
+	INJECTION_TYPE_ID_LOAD_LIBRARY = 3;
+}
+
+enum OPCODE_ID {
+	OPCODE_ID_QUERY = 0;
+	OPCODE_ID_INVERSE_QUERY = 1;
+	OPCODE_ID_STATUS = 2;
+	OPCODE_ID_NOTIFY = 3;
+	OPCODE_ID_UPDATE = 4;
+	OPCODE_ID_RESERVED = 5;
+	OPCODE_ID_DSO_MESSAGE = 6;
+}
+
+enum SEVERITY_ID {
+	SEVERITY_ID_LOW = 0;
+	SEVERITY_ID_HIGH = 1;
+	SEVERITY_ID_CRITICAL = 2;
+	SEVERITY_ID_MEDIUM = 3;
+	SEVERITY_ID_FATAL = 4;
+	SEVERITY_ID_OTHER = 5;
+	SEVERITY_ID_UNKNOWN = 6;
+	SEVERITY_ID_INFORMATIONAL = 7;
+}
+
+enum STATUS_ID {
+	STATUS_ID_FAILURE = 0;
+	STATUS_ID_OTHER = 1;
+	STATUS_ID_UNKNOWN = 2;
+	STATUS_ID_SUCCESS = 3;
+}
+
+enum PROTOCOL_VER_ID {
+	PROTOCOL_VER_ID_INTERNET_PROTOCOL_VERSION_6_I_PV_6 = 0;
+	PROTOCOL_VER_ID_OTHER = 1;
+	PROTOCOL_VER_ID_UNKNOWN = 2;
+	PROTOCOL_VER_ID_INTERNET_PROTOCOL_VERSION_4_I_PV_4 = 3;
+}
+
+enum CLASS_UID {
+	CLASS_UID_SECURITY_FINDING = 0;
+}
+
+enum CONFIDENTIALITY_ID {
+	CONFIDENTIALITY_ID_UNKNOWN = 0;
+	CONFIDENTIALITY_ID_NOT_CONFIDENTIAL = 1;
+	CONFIDENTIALITY_ID_CONFIDENTIAL = 2;
+	CONFIDENTIALITY_ID_TOP_SECRET = 3;
+	CONFIDENTIALITY_ID_SECRET = 4;
+	CONFIDENTIALITY_ID_OTHER = 5;
+}
+
+enum RISK_LEVEL_ID {
+	RISK_LEVEL_ID_HIGH = 0;
+	RISK_LEVEL_ID_INFO = 1;
+	RISK_LEVEL_ID_LOW = 2;
+	RISK_LEVEL_ID_MEDIUM = 3;
+	RISK_LEVEL_ID_CRITICAL = 4;
+}
+
+enum LOAD_TYPE_ID {
+	LOAD_TYPE_ID_MAPPED = 0;
+	LOAD_TYPE_ID_NON_STANDARD_BACKED = 1;
+	LOAD_TYPE_ID_SHELL_CODE = 2;
+	LOAD_TYPE_ID_OTHER = 3;
+	LOAD_TYPE_ID_UNKNOWN = 4;
+	LOAD_TYPE_ID_STANDARD = 5;
+	LOAD_TYPE_ID_NON_STANDARD = 6;
+}
+
+enum PHASE_ID {
+	PHASE_ID_COMMAND_CONTROL = 0;
+	PHASE_ID_OTHER = 1;
+	PHASE_ID_UNKNOWN = 2;
+	PHASE_ID_RECONNAISSANCE = 3;
+	PHASE_ID_WEAPONIZATION = 4;
+	PHASE_ID_INSTALLATION = 5;
+	PHASE_ID_DELIVERY = 6;
+	PHASE_ID_EXPLOITATION = 7;
+	PHASE_ID_ACTIONS_ON_OBJECTIVES = 8;
+}
+
+enum ACTIVITY_ID {
+	ACTIVITY_ID_OTHER = 0;
+	ACTIVITY_ID_UNKNOWN = 1;
+	ACTIVITY_ID_CREATE = 2;
+	ACTIVITY_ID_UPDATE = 3;
+}
+
+enum CATEGORY_IDS {
+	CATEGORY_IDS_RESTAURANTS_DINING_FOOD = 0;
+	CATEGORY_IDS_BUSINESS_ECONOMY = 1;
+	CATEGORY_IDS_REFERENCE = 2;
+	CATEGORY_IDS_AUCTIONS = 3;
+	CATEGORY_IDS_UNCATEGORIZED = 4;
+	CATEGORY_IDS_OFFICE_BUSINESS_APPLICATIONS = 5;
+	CATEGORY_IDS_GAMBLING = 6;
+	CATEGORY_IDS_SEX_EDUCATION = 7;
+	CATEGORY_IDS_REMOTE_ACCESS_TOOLS = 8;
+	CATEGORY_IDS_CHILD_PORNOGRAPHY = 9;
+	CATEGORY_IDS_TOBACCO = 10;
+	CATEGORY_IDS_TV_VIDEO_STREAMS = 11;
+	CATEGORY_IDS_EMAIL = 12;
+	CATEGORY_IDS_FINANCIAL_SERVICES = 13;
+	CATEGORY_IDS_GAMES = 14;
+	CATEGORY_IDS_SPAM = 15;
+	CATEGORY_IDS_ADULT_MATURE_CONTENT = 16;
+	CATEGORY_IDS_EDUCATION = 17;
+	CATEGORY_IDS_WEAPONS = 18;
+	CATEGORY_IDS_HUMOR_JOKES = 19;
+	CATEGORY_IDS_WEB_HOSTING = 20;
+	CATEGORY_IDS_SHOPPING = 21;
+	CATEGORY_IDS_MILITARY = 22;
+	CATEGORY_IDS_NUDITY = 23;
+	CATEGORY_IDS_SEXUAL_EXPRESSION = 24;
+	CATEGORY_IDS_FOR_KIDS = 25;
+	CATEGORY_IDS_RELIGION = 26;
+	CATEGORY_IDS_ENTERTAINMENT = 27;
+	CATEGORY_IDS_NEWS_MEDIA = 28;
+	CATEGORY_IDS_NEWSGROUPS_FORUMS = 29;
+	CATEGORY_IDS_ART_CULTURE = 30;
+	CATEGORY_IDS_PHISHING = 31;
+	CATEGORY_IDS_AUDIO_VIDEO_CLIPS = 32;
+	CATEGORY_IDS_PROXY_AVOIDANCE = 33;
+	CATEGORY_IDS_GOVERNMENT_LEGAL = 34;
+	CATEGORY_IDS_BROKERAGE_TRADING = 35;
+	CATEGORY_IDS_TECHNOLOGY_INTERNET = 36;
+	CATEGORY_IDS_NON_VIEWABLE_INFRASTRUCTURE = 37;
+	CATEGORY_IDS_POTENTIALLY_UNWANTED_SOFTWARE = 38;
+	CATEGORY_IDS_ALTERNATIVE_SPIRITUALITY_BELIEF = 39;
+	CATEGORY_IDS_E_CARD_INVITATIONS = 40;
+	CATEGORY_IDS_MIXED_CONTENT_POTENTIALLY_ADULT = 41;
+	CATEGORY_IDS_PIRACY_COPYRIGHT_CONCERNS = 42;
+	CATEGORY_IDS_SEARCH_ENGINES_PORTALS = 43;
+	CATEGORY_IDS_PORNOGRAPHY = 44;
+	CATEGORY_IDS_SOCIAL_NETWORKING = 45;
+	CATEGORY_IDS_PLACEHOLDERS = 46;
+	CATEGORY_IDS_POLITICAL_SOCIAL_ADVOCACY = 47;
+	CATEGORY_IDS_MEDIA_SHARING = 48;
+	CATEGORY_IDS_ABORTION = 49;
+	CATEGORY_IDS_DYNAMIC_DNS_HOST = 50;
+	CATEGORY_IDS_MALICIOUS_SOURCES_MALNETS = 51;
+	CATEGORY_IDS_SPORTS_RECREATION = 52;
+	CATEGORY_IDS_INTIMATE_APPAREL_SWIMSUIT = 53;
+	CATEGORY_IDS_ALCOHOL = 54;
+	CATEGORY_IDS_OTHER = 55;
+	CATEGORY_IDS_INFORMATIONAL = 56;
+	CATEGORY_IDS_FILE_STORAGE_SHARING = 57;
+	CATEGORY_IDS_MALICIOUS_OUTBOUND_DATA_BOTNETS = 58;
+	CATEGORY_IDS_WEB_ADS_ANALYTICS = 59;
+	CATEGORY_IDS_HEALTH = 60;
+	CATEGORY_IDS_VEHICLES = 61;
+	CATEGORY_IDS_PERSONAL_SITES = 62;
+	CATEGORY_IDS_TRAVEL = 63;
+	CATEGORY_IDS_VIOLENCE_HATE_RACISM = 64;
+	CATEGORY_IDS_INTERNET_CONNECTED_DEVICES = 65;
+	CATEGORY_IDS_CHAT_IM_SMS = 66;
+	CATEGORY_IDS_EXTREME = 67;
+	CATEGORY_IDS_SOCIETY_DAILY_LIVING = 68;
+	CATEGORY_IDS_MARIJUANA = 69;
+	CATEGORY_IDS_RADIO_AUDIO_STREAMS = 70;
+	CATEGORY_IDS_SCAM_QUESTIONABLE_ILLEGAL = 71;
+	CATEGORY_IDS_REAL_ESTATE = 72;
+	CATEGORY_IDS_CONTENT_SERVERS = 73;
+	CATEGORY_IDS_SOFTWARE_DOWNLOADS = 74;
+	CATEGORY_IDS_JOB_SEARCH_CAREERS = 75;
+	CATEGORY_IDS_PERSONALS_DATING = 76;
+	CATEGORY_IDS_CHARITABLE_ORGANIZATIONS = 77;
+	CATEGORY_IDS_PEER_TO_PEER_P_2_P = 78;
+	CATEGORY_IDS_TRANSLATION = 79;
+	CATEGORY_IDS_UNKNOWN = 80;
+	CATEGORY_IDS_HACKING = 81;
+	CATEGORY_IDS_CONTROLLED_SUBSTANCES = 82;
+	CATEGORY_IDS_INTERNET_TELEPHONY = 83;
+	CATEGORY_IDS_COMPUTER_INFORMATION_SECURITY = 84;
+	CATEGORY_IDS_ONLINE_MEETINGS = 85;
+	CATEGORY_IDS_SUSPICIOUS = 86;
+}
+
+enum RUN_STATE_ID {
+	RUN_STATE_ID_READY = 0;
+	RUN_STATE_ID_QUEUED = 1;
+	RUN_STATE_ID_STOPPED = 2;
+	RUN_STATE_ID_RUNNING = 3;
+	RUN_STATE_ID_OTHER = 4;
+	RUN_STATE_ID_UNKNOWN = 5;
+}
+
+enum SHARE_TYPE_ID {
+	SHARE_TYPE_ID_OTHER = 0;
+	SHARE_TYPE_ID_UNKNOWN = 1;
+	SHARE_TYPE_ID_FILE = 2;
+	SHARE_TYPE_ID_PIPE = 3;
+	SHARE_TYPE_ID_PRINT = 4;
+}
+
+enum CLASSIFICATION_IDS {
+	CLASSIFICATION_IDS_TROJAN = 0;
+	CLASSIFICATION_IDS_WEBSHELL = 1;
+	CLASSIFICATION_IDS_WORM = 2;
+	CLASSIFICATION_IDS_DOWNLOADER = 3;
+	CLASSIFICATION_IDS_OTHER = 4;
+	CLASSIFICATION_IDS_KEYLOGGER = 5;
+	CLASSIFICATION_IDS_SCREEN_CAPTURE = 6;
+	CLASSIFICATION_IDS_SPYWARE = 7;
+	CLASSIFICATION_IDS_BOOTKIT = 8;
+	CLASSIFICATION_IDS_DROPPER = 9;
+	CLASSIFICATION_IDS_ROGUE_SECURITY_SOFTWARE = 10;
+	CLASSIFICATION_IDS_ADWARE = 11;
+	CLASSIFICATION_IDS_REMOTE_ACCESS_TROJAN = 12;
+	CLASSIFICATION_IDS_ROOTKIT = 13;
+	CLASSIFICATION_IDS_BACKDOOR = 14;
+	CLASSIFICATION_IDS_DDOS = 15;
+	CLASSIFICATION_IDS_EXPLOIT_KIT = 16;
+	CLASSIFICATION_IDS_WIPER = 17;
+	CLASSIFICATION_IDS_RESOURCE_EXPLOITATION = 18;
+	CLASSIFICATION_IDS_BOT = 19;
+	CLASSIFICATION_IDS_UNKNOWN = 20;
+	CLASSIFICATION_IDS_RANSOMWARE = 21;
+	CLASSIFICATION_IDS_VIRUS = 22;
+}
+
+enum LOGON_TYPE_ID {
+	LOGON_TYPE_ID_NETWORK = 0;
+	LOGON_TYPE_ID_INTERACTIVE = 1;
+	LOGON_TYPE_ID_OS_SERVICE = 2;
+	LOGON_TYPE_ID_UNLOCK = 3;
+	LOGON_TYPE_ID_NETWORK_CLEARTEXT = 4;
+	LOGON_TYPE_ID_CACHED_REMOTE_INTERACTIVE = 5;
+	LOGON_TYPE_ID_SYSTEM = 6;
+	LOGON_TYPE_ID_CACHED_UNLOCK = 7;
+	LOGON_TYPE_ID_OTHER = 8;
+	LOGON_TYPE_ID_REMOTE_INTERACTIVE = 9;
+	LOGON_TYPE_ID_BATCH = 10;
+	LOGON_TYPE_ID_NEW_CREDENTIALS = 11;
+	LOGON_TYPE_ID_CACHED_INTERACTIVE = 12;
+}
+
+enum STATE_ID {
+	STATE_ID_OTHER = 0;
+	STATE_ID_UNKNOWN = 1;
+	STATE_ID_NEW = 2;
+	STATE_ID_IN_PROGRESS = 3;
+	STATE_ID_RESOLVED = 4;
+	STATE_ID_SUPPRESSED = 5;
+}
+
+enum INTEGRITY_ID {
+	INTEGRITY_ID_LOW = 0;
+	INTEGRITY_ID_HIGH = 1;
+	INTEGRITY_ID_SYSTEM = 2;
+	INTEGRITY_ID_MEDIUM = 3;
+	INTEGRITY_ID_PROTECTED = 4;
+	INTEGRITY_ID_OTHER = 5;
+	INTEGRITY_ID_UNKNOWN = 6;
+	INTEGRITY_ID_UNTRUSTED = 7;
+}
+
+enum CATEGORY_UID {
+	CATEGORY_UID_FINDINGS = 0;
+}
+
+enum IMPACT_ID {
+	IMPACT_ID_HIGH = 0;
+	IMPACT_ID_OTHER = 1;
+	IMPACT_ID_UNKNOWN = 2;
+	IMPACT_ID_LOW = 3;
+	IMPACT_ID_MEDIUM = 4;
+	IMPACT_ID_CRITICAL = 5;
+}
+
+enum CONFIDENCE_ID {
+	CONFIDENCE_ID_HIGH = 0;
+	CONFIDENCE_ID_OTHER = 1;
+	CONFIDENCE_ID_UNKNOWN = 2;
+	CONFIDENCE_ID_LOW = 3;
+	CONFIDENCE_ID_MEDIUM = 4;
 }

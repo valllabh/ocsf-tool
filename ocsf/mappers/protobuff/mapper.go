@@ -1,73 +1,136 @@
 package protobuff
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/valllabh/ocsf-schema-processor/ocsf"
+	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff/commons"
+	v3 "github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff/v3"
 )
 
-type Messages map[string]Message
-
-type Mapper struct {
-	messages Messages
-	Events   []ocsf.Event
-	Schema   ocsf.OCSFSchema
+type mapper struct {
+	proto  *v3.Proto
+	Schema ocsf.OCSFSchema
 }
 
-func (mapper Mapper) Marshal() string {
+func NewMapper(schema ocsf.OCSFSchema) mapper {
 
-	pack := []string{}
+	proto := v3.NewProto()
+	proto.Preprocessor = v3.Preprocessor{
+		MessageName: messageNamePreprocessor,
+	}
 
-	mapper.messages = Messages{}
+	return mapper{
+		proto:  proto,
+		Schema: schema,
+	}
+}
 
-	for _, event := range mapper.Events {
-		mapper.messages[event.Name] = Message{
-			name:   event.Name,
-			fields: mapper.getFieldsFromAttributes(event.Name, event.Attributes),
+func messageNamePreprocessor(name string) string {
+	splitName := strings.Split(name, "/")
+	return splitName[len(splitName)-1]
+}
+
+func (mapper *mapper) Marshal(events []ocsf.Event) string {
+
+	for _, event := range events {
+
+		m := v3.Message{
+			Name:     event.Name,
+			GroupKey: "Event: " + event.Category,
 		}
+
+		mapper.populateFieldsFromAttributes(&m, event.Attributes)
+
+		mapper.proto.AddMessage(&m)
+
 	}
 
-	for _, m := range mapper.messages {
-		pack = append(pack, m.Marshal())
-	}
-
-	return strings.Join(pack, "\n\n")
+	return mapper.proto.Marshal()
 }
 
-func (mapper Mapper) getFieldsFromAttributes(messageDataType string, attributes map[string]ocsf.Attribute) []Field {
-	fields := []Field{}
-
+func (mapper *mapper) populateFieldsFromAttributes(message *v3.Message, attributes map[string]ocsf.Attribute) {
 	for k := range attributes {
 		attr := attributes[k]
-		field := Field{
-			name:     k,
-			dataType: getDataType(attr),
-			optional: attr.Requirement != "required",
-			repeated: attr.IsArray,
+
+		// Build Field
+		field := v3.Field{
+			Name:     k,
+			DataType: getDataType(attr),
+			Required: attr.Requirement == "required",
+			Repeated: attr.IsArray,
 		}
-		field.isReference = field.dataType == "object"
 
-		if field.isReference {
-			field.dataType = attr.ObjectType
-			attributeIsSelfReferencing := field.dataType == messageDataType
-			_, attributeIsAlreadyMapped := mapper.messages[field.dataType]
+		// Add Comments
+		comments := commons.Comment{
+			"Caption": attr.Caption,
+		}
+		if len(attr.Profile) > 0 {
+			comments["Profile"] = attr.Profile
+		}
+		field.Comment = comments
 
-			if !attributeIsAlreadyMapped && !attributeIsSelfReferencing {
-				object, schemaForObjectExists := mapper.Schema.Objects[field.dataType]
+		// Detect Type
+		field.Type = v3.FIELD_TYPE_PRIMITIVE
+
+		if field.DataType == "object" {
+			field.Type = v3.FIELD_TYPE_OBJECT
+		}
+
+		if len(attr.Enum) > 0 {
+			field.Type = v3.FIELD_TYPE_ENUM
+		}
+
+		// Processing Based on Type
+		switch field.Type {
+		case v3.FIELD_TYPE_OBJECT:
+			field.DataType = attr.ObjectType
+			attributeIsSelfReferencing := field.DataType == message.Name
+			isObjectMapped := mapper.proto.MessageExists(field.DataType)
+
+			if !isObjectMapped && !attributeIsSelfReferencing {
+				object, schemaForObjectExists := mapper.getObject(field.DataType)
 				if schemaForObjectExists {
-					mapper.messages[field.dataType] = Message{
-						name:   object.Name,
-						fields: mapper.getFieldsFromAttributes(field.dataType, object.Attributes),
+					m := v3.Message{
+						Name:     object.Name,
+						GroupKey: "Object",
 					}
+					mapper.populateFieldsFromAttributes(&m, object.Attributes)
+
+					mapper.proto.AddMessage(&m)
 				}
 			}
+		case v3.FIELD_TYPE_ENUM:
+			field.DataType = attr.ObjectType
+			isEnumMapped := mapper.proto.EnumExists(field.DataType)
 
+			if !isEnumMapped {
+				e := v3.Enum{
+					Name: field.Name,
+				}
+
+				for aek, aev := range attr.Enum {
+					v, _ := strconv.ParseInt(aek, 10, 64)
+					ev := v3.EnumValue{
+						Name:  aev.Caption,
+						Value: v,
+					}
+					e.AddValue(&ev)
+				}
+
+				mapper.proto.AddEnum(&e)
+			}
 		}
 
-		fields = append(fields, field)
+		// Add Field to Message
+		message.AddField(&field)
 	}
+}
 
-	return fields
+func (mapper *mapper) getObject(dataType string) (ocsf.Object, bool) {
+	object, exists := mapper.Schema.Objects[dataType]
+	return object, exists
 }
 
 func getDataType(attr ocsf.Attribute) string {
@@ -84,7 +147,7 @@ func getDataType(attr ocsf.Attribute) string {
 		"resource_uid_t", "subnet_t", "url_t", "username_t", "uuid_t":
 		t = "string"
 	case "float_t":
-		t = "float32"
+		t = "float"
 	case "port_t":
 		t = "int32"
 	case "timestamp_t":

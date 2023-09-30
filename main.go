@@ -5,6 +5,7 @@ import (
 
 	"github.com/valllabh/ocsf-schema-processor/ocsf"
 	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff"
+	"golang.org/x/exp/maps"
 )
 
 func main() {
@@ -16,16 +17,10 @@ func main() {
 }
 
 func mapToProtoFile(ocsfSchema ocsf.OCSFSchema) {
-	mapper := protobuff.Mapper{
-		Events: []ocsf.Event{
-			// ocsfSchema.BaseEvent,
-			// ocsfSchema.Classes["security_finding"],
-			ocsfSchema.Classes["file_activity"],
-		},
-		Schema: ocsfSchema,
-	}
 
-	output := mapper.Marshal()
+	mapper := protobuff.NewMapper(ocsfSchema)
+
+	output := mapper.Marshal(maps.Values(ocsfSchema.Classes))
 
 	WriteToFile("output.proto", []byte(output))
 }
