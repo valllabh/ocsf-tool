@@ -22,7 +22,7 @@ func (f *Field) Marshal(index int) string {
 	case FIELD_TYPE_PRIMITIVE:
 		content = append(content, f.DataType)
 	case FIELD_TYPE_ENUM:
-		content = append(content, f.message.proto.ToEnumName(f.Name))
+		content = append(content, f.message.proto.ToEnumName(f.message.Name+" "+f.Name))
 	}
 
 	content = append(content, f.Name)

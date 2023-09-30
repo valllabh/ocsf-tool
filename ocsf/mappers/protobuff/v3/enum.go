@@ -12,14 +12,21 @@ func (e *Enum) AddValue(value *EnumValue) {
 		e.values = EnumValues{}
 	}
 	value.enum = e
-	e.values = append(e.values, value)
+	e.values[value.Name] = value
+}
+
+func (e *Enum) GetValue(name string) (*EnumValue, bool) {
+	value, exists := e.values[name]
+	return value, exists
 }
 
 func (e *Enum) Marshal() string {
 	content := []string{}
 	content = append(content, fmt.Sprintf("enum %s {", e.proto.ToEnumName(e.Name)))
-	for i, v := range e.values {
+	i := 0
+	for _, v := range e.values {
 		content = append(content, "\t"+v.Marshal(i))
+		i++
 	}
 	content = append(content, "}")
 	return strings.Join(content, "\n")

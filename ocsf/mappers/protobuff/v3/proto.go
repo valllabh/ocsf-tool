@@ -36,6 +36,11 @@ func (p *Proto) AddEnum(enum *Enum) {
 	p.enums[enum.Name] = enum
 }
 
+func (p *Proto) GetEnum(name string) (*Enum, bool) {
+	value, exists := p.enums[name]
+	return value, exists
+}
+
 func (p *Proto) EnumExists(name string) bool {
 	_, exists := p.enums[name]
 	return exists

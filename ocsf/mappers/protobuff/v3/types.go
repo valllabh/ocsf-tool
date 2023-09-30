@@ -7,7 +7,7 @@ import (
 type Messages map[string]*Message
 type Fields []*Field
 type Enums map[string]*Enum
-type EnumValues []*EnumValue
+type EnumValues map[string]*EnumValue
 
 type FieldType int16
 

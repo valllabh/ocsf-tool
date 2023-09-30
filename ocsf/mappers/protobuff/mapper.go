@@ -108,25 +108,30 @@ func (mapper *mapper) populateFieldsFromAttributes(message *v3.Message, attribut
 				}
 			}
 		case v3.FIELD_TYPE_ENUM:
-			field.DataType = attr.ObjectType
-			isEnumMapped := mapper.proto.EnumExists(field.DataType)
+			enumName := message.Name + " " + field.Name
+			field.DataType = enumName
+			e, exists := mapper.proto.GetEnum(enumName)
 
-			if !isEnumMapped {
-				e := v3.Enum{
-					Name: field.Name,
+			if !exists {
+				e = &v3.Enum{
+					Name: enumName,
 				}
+			}
+			for aek, aev := range attr.Enum {
+				ev, evExists := e.GetValue(aev.Caption)
 
-				for aek, aev := range attr.Enum {
+				if !evExists {
 					v, _ := strconv.ParseInt(aek, 10, 64)
-					ev := v3.EnumValue{
+					ev = &v3.EnumValue{
 						Name:  aev.Caption,
 						Value: v,
 					}
-					e.AddValue(&ev)
 				}
-
-				mapper.proto.AddEnum(&e)
+				e.AddValue(ev)
 			}
+
+			mapper.proto.AddEnum(e)
+
 		}
 
 		// Add Field to Message
