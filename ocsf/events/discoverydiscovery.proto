@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+// Event: discovery
+// Event UID: 5002
+// URL: https://schema.ocsf.io/1.0.0/classes/config_state
+message ConfigState {
+	string status = 1; // Caption: Status;
+	ocsf.internal.object.Api api = 2; // Caption: API Details; Profile: cloud;
+	repeated ocsf.internal.object.Observable observables = 3; // Caption: Observables;
+	ocsf.events.discovery.CONFIG_STATE_ACTIVITY_ID activity_id = 4; // Caption: Activity ID;
+	int32 timezone_offset = 5; // Caption: Timezone Offset;
+	string status_code = 6; // Caption: Status Code;
+	ocsf.events.discovery.CONFIG_STATE_STATUS_ID status_id = 7; // Caption: Status ID;
+	ocsf.internal.object.Metadata metadata = 8; // Caption: Metadata;
+	string type_name = 9; // Caption: Type Name;
+	ocsf.events.discovery.CONFIG_STATE_TYPE_UID type_uid = 10; // Caption: Type ID;
+	string category_name = 11; // Caption: Category;
+	string raw_data = 12; // Caption: Raw Data;
+	ocsf.internal.object.Object unmapped = 13; // Caption: Unmapped Data;
+	int64 end_time = 14; // Caption: End Time;
+	string status_detail = 15; // Caption: Status Details;
+	int32 count = 16; // Caption: Count;
+	ocsf.internal.object.Device device = 17; // Caption: Device;
+	int64 start_time = 18; // Caption: Start Time;
+	string severity = 19; // Caption: Severity;
+	ocsf.events.discovery.CONFIG_STATE_CLASS_UID class_uid = 20; // Caption: Class ID;
+	string class_name = 21; // Caption: Class;
+	ocsf.internal.object.Actor actor = 22; // Caption: Actor;
+	repeated ocsf.internal.object.Enrichment enrichments = 23; // Caption: Enrichments;
+	string message = 24; // Caption: Message;
+	int32 duration = 25; // Caption: Duration;
+	ocsf.internal.object.Cloud cloud = 26; // Caption: Cloud; Profile: cloud;
+	int64 time = 27; // Caption: Event Time;
+	ocsf.events.discovery.CONFIG_STATE_CATEGORY_UID category_uid = 28; // Caption: Category ID;
+	string activity_name = 29; // Caption: Activity;
+	ocsf.internal.object.CisBenchmarkResult cis_benchmark_result = 30; // Caption: CIS Benchmark Result;
+	ocsf.events.discovery.CONFIG_STATE_SEVERITY_ID severity_id = 31; // Caption: Severity ID;
+}
+
+// Event: discovery
+// Event UID: 5001
+// URL: https://schema.ocsf.io/1.0.0/classes/inventory_info
+message InventoryInfo {
+	ocsf.internal.object.Metadata metadata = 1; // Caption: Metadata;
+	ocsf.events.discovery.INVENTORY_INFO_TYPE_UID type_uid = 2; // Caption: Type ID;
+	string category_name = 3; // Caption: Category;
+	int64 end_time = 4; // Caption: End Time;
+	ocsf.events.discovery.INVENTORY_INFO_SEVERITY_ID severity_id = 5; // Caption: Severity ID;
+	int32 count = 6; // Caption: Count;
+	ocsf.internal.object.Device device = 7; // Caption: Device;
+	int64 start_time = 8; // Caption: Start Time;
+	string class_name = 9; // Caption: Class;
+	string activity_name = 10; // Caption: Activity;
+	ocsf.internal.object.Api api = 11; // Caption: API Details; Profile: cloud;
+	string type_name = 12; // Caption: Type Name;
+	repeated ocsf.internal.object.Observable observables = 13; // Caption: Observables;
+	string status = 14; // Caption: Status;
+	string severity = 15; // Caption: Severity;
+	ocsf.events.discovery.INVENTORY_INFO_CLASS_UID class_uid = 16; // Caption: Class ID;
+	ocsf.events.discovery.INVENTORY_INFO_CATEGORY_UID category_uid = 17; // Caption: Category ID;
+	string raw_data = 18; // Caption: Raw Data;
+	ocsf.internal.object.Object unmapped = 19; // Caption: Unmapped Data;
+	int32 duration = 20; // Caption: Duration;
+	ocsf.events.discovery.INVENTORY_INFO_ACTIVITY_ID activity_id = 21; // Caption: Activity ID;
+	int32 timezone_offset = 22; // Caption: Timezone Offset;
+	string message = 23; // Caption: Message;
+	repeated ocsf.internal.object.Enrichment enrichments = 24; // Caption: Enrichments;
+	ocsf.events.discovery.INVENTORY_INFO_STATUS_ID status_id = 25; // Caption: Status ID;
+	int64 time = 26; // Caption: Event Time;
+	ocsf.internal.object.Actor actor = 27; // Caption: Actor;
+	ocsf.internal.object.Cloud cloud = 28; // Profile: cloud; Caption: Cloud;
+	string status_code = 29; // Caption: Status Code;
+	string status_detail = 30; // Caption: Status Details;
+}

@@ -1,4 +1,4 @@
-package v3
+package protobuff_v3
 
 import (
 	"fmt"
@@ -8,7 +8,8 @@ import (
 func (f *Field) Marshal(index int) string {
 	content := []string{}
 
-	// // Required option is removed from proto3 TODO: confirm alternative for optional/required
+	// Required option is removed from proto3
+	// TODO: confirm alternative for optional/required
 	// if f.Required {
 	// 	content = append(content, "required")
 	// }
@@ -18,11 +19,13 @@ func (f *Field) Marshal(index int) string {
 
 	switch f.Type {
 	case FIELD_TYPE_OBJECT:
-		content = append(content, f.message.proto.ToMessageName(f.DataType))
+		m, _ := GetMessage(f.DataType)
+		content = append(content, m.GetReference())
 	case FIELD_TYPE_PRIMITIVE:
 		content = append(content, f.DataType)
 	case FIELD_TYPE_ENUM:
-		content = append(content, f.message.proto.ToEnumName(f.message.Name+" "+f.Name))
+		e, _ := GetEnum(f.message.Name + " " + f.Name)
+		content = append(content, e.GetReference())
 	}
 
 	content = append(content, f.Name)

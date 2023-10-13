@@ -11,3 +11,5 @@ apt install -y protobuf-compiler
 protoc ./*.proto --golang_out=./output
 go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
 export PATH="$PATH:$(go env GOPATH)/bin"
+
+go get -u google.golang.org/protobuf/cmd/protoc-gen-go

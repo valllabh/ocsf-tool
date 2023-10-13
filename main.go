@@ -1,11 +1,8 @@
 package main
 
 import (
-	"os"
-
 	"github.com/valllabh/ocsf-schema-processor/ocsf"
-	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff"
-	"golang.org/x/exp/maps"
+	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff_v3"
 )
 
 func main() {
@@ -18,25 +15,10 @@ func main() {
 
 func mapToProtoFile(ocsfSchema ocsf.OCSFSchema) {
 
-	mapper := protobuff.NewMapper(ocsfSchema)
+	protobuff_v3.InitMapper(ocsfSchema, "./output/proto")
 
-	output := mapper.Marshal(maps.Values(ocsfSchema.Classes))
+	events := []ocsf.Event{ocsfSchema.Classes["file_activity"]}
 
-	WriteToFile("output.proto", []byte(output))
-}
-func WriteToFile(filePath string, data []byte) error {
-	// Open the file with write permissions, create it if it doesn't exist, and truncate it
-	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
+	protobuff_v3.Mapper().Marshal(events)
 
-	// Write the data to the file
-	_, err = file.Write(data)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

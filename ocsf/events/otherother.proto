@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+// URL: https://schema.ocsf.io/1.0.0/classes/base_event
+// Event: other
+// Event UID: 0
+message BaseEvent {
+	string status = 1; // Caption: Status;
+	ocsf.internal.object.Metadata metadata = 2; // Caption: Metadata;
+	ocsf.internal.object.Cloud cloud = 3; // Caption: Cloud; Profile: cloud;
+	repeated ocsf.internal.object.Enrichment enrichments = 4; // Caption: Enrichments;
+	ocsf.events.other.BASE_EVENT_SEVERITY_ID severity_id = 5; // Caption: Severity ID;
+	ocsf.internal.object.Api api = 6; // Caption: API Details; Profile: cloud;
+	string type_name = 7; // Caption: Type Name;
+	ocsf.events.other.BASE_EVENT_ACTIVITY_ID activity_id = 8; // Caption: Activity ID;
+	ocsf.events.other.BASE_EVENT_CATEGORY_UID category_uid = 9; // Caption: Category ID;
+	int64 end_time = 10; // Caption: End Time;
+	int64 start_time = 11; // Caption: Start Time;
+	string activity_name = 12; // Caption: Activity;
+	string status_detail = 13; // Caption: Status Details;
+	ocsf.events.other.BASE_EVENT_STATUS_ID status_id = 14; // Caption: Status ID;
+	int32 duration = 15; // Caption: Duration;
+	ocsf.events.other.BASE_EVENT_TYPE_UID type_uid = 16; // Caption: Type ID;
+	repeated ocsf.internal.object.Observable observables = 17; // Caption: Observables;
+	string status_code = 18; // Caption: Status Code;
+	string category_name = 19; // Caption: Category;
+	int32 count = 20; // Caption: Count;
+	string class_name = 21; // Caption: Class;
+	int32 timezone_offset = 22; // Caption: Timezone Offset;
+	ocsf.internal.object.Object unmapped = 23; // Caption: Unmapped Data;
+	string raw_data = 24; // Caption: Raw Data;
+	string message = 25; // Caption: Message;
+	int64 time = 26; // Caption: Event Time;
+	string severity = 27; // Caption: Severity;
+	ocsf.events.other.BASE_EVENT_CLASS_UID class_uid = 28; // Caption: Class ID;
+}

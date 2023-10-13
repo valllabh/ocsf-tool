@@ -1,31 +1,43 @@
-package protobuff
+package protobuff_v3
 
 import (
 	"fmt"
 	"strconv"
 	"strings"
 
+	"github.com/spf13/afero"
 	"github.com/valllabh/ocsf-schema-processor/ocsf"
-	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff/commons"
-	v3 "github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff/v3"
+	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/commons"
 )
 
-type mapper struct {
-	proto  *v3.Proto
-	Schema ocsf.OCSFSchema
+var _mapper *mapper
+
+func InitMapper(schema ocsf.OCSFSchema, dir string) {
+	_mapper = &mapper{
+		Schema: schema,
+		Preprocessor: Preprocessor{
+			MessageName:       messageNamePreprocessor,
+			GolangPackageName: golangPackageName,
+		},
+		Messages:    Messages{},
+		Enums:       Enums{},
+		RootPackage: NewPackage("ocsf", nil),
+		Cache: CacheMap{
+			Messages:   *commons.NewCache(),
+			Enums:      *commons.NewCache(),
+			EnumValues: *commons.NewCache(),
+		},
+		Fs: afero.NewOsFs(),
+	}
+	_mapper.RootPackage.Path = dir
 }
 
-func NewMapper(schema ocsf.OCSFSchema) mapper {
+func Mapper() *mapper {
+	return _mapper
+}
 
-	proto := v3.NewProto()
-	proto.Preprocessor = v3.Preprocessor{
-		MessageName: messageNamePreprocessor,
-	}
-
-	return mapper{
-		proto:  proto,
-		Schema: schema,
-	}
+func golangPackageName(name string) string {
+	return "github.com/valllabh/ocsf-schema-processor/output/golang/" + name
 }
 
 func messageNamePreprocessor(name string) string {
@@ -33,14 +45,15 @@ func messageNamePreprocessor(name string) string {
 	return splitName[len(splitName)-1]
 }
 
-func (mapper *mapper) Marshal(events []ocsf.Event) string {
+func (mapper *mapper) Marshal(events []ocsf.Event) {
 
 	for _, event := range events {
 
-		m := v3.Message{
+		m := Message{
 			Name:     event.Name,
 			GroupKey: "Event: " + event.Category,
-			Comment:  commons.Comment{},
+			Comment:  Comment{},
+			Package:  mapper.PackageRef("events", event.Category),
 		}
 
 		m.Comment["Event"] = event.Category
@@ -49,19 +62,19 @@ func (mapper *mapper) Marshal(events []ocsf.Event) string {
 
 		mapper.populateFieldsFromAttributes(&m, event.Attributes)
 
-		mapper.proto.AddMessage(&m)
+		AddMessage(&m)
 
 	}
 
-	return mapper.proto.Marshal()
+	mapper.RootPackage.Marshal()
 }
 
-func (mapper *mapper) populateFieldsFromAttributes(message *v3.Message, attributes map[string]ocsf.Attribute) {
+func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes map[string]ocsf.Attribute) {
 	for k := range attributes {
 		attr := attributes[k]
 
 		// Build Field
-		field := v3.Field{
+		field := Field{
 			Name:     k,
 			DataType: getDataType(attr),
 			Required: attr.Requirement == "required",
@@ -69,7 +82,7 @@ func (mapper *mapper) populateFieldsFromAttributes(message *v3.Message, attribut
 		}
 
 		// Add Comments
-		comments := commons.Comment{
+		comments := Comment{
 			"Caption": attr.Caption,
 		}
 		if len(attr.Profile) > 0 {
@@ -78,43 +91,46 @@ func (mapper *mapper) populateFieldsFromAttributes(message *v3.Message, attribut
 		field.Comment = comments
 
 		// Detect Type
-		field.Type = v3.FIELD_TYPE_PRIMITIVE
+		field.Type = FIELD_TYPE_PRIMITIVE
 
 		if field.DataType == "object" {
-			field.Type = v3.FIELD_TYPE_OBJECT
+			field.Type = FIELD_TYPE_OBJECT
 		}
 
 		if len(attr.Enum) > 0 {
-			field.Type = v3.FIELD_TYPE_ENUM
+			field.Type = FIELD_TYPE_ENUM
 		}
 
 		// Processing Based on Type
 		switch field.Type {
-		case v3.FIELD_TYPE_OBJECT:
+		case FIELD_TYPE_OBJECT:
 			field.DataType = attr.ObjectType
 			attributeIsSelfReferencing := field.DataType == message.Name
-			isObjectMapped := mapper.proto.MessageExists(field.DataType)
+			_, isObjectMapped := GetMessage(field.DataType)
 
 			if !isObjectMapped && !attributeIsSelfReferencing {
 				object, schemaForObjectExists := mapper.getObject(field.DataType)
 				if schemaForObjectExists {
-					m := v3.Message{
+					m := &Message{
 						Name:     object.Name,
 						GroupKey: "Object",
+						Package:  mapper.PackageRef("internal", "object"),
 					}
-					mapper.populateFieldsFromAttributes(&m, object.Attributes)
+					mapper.populateFieldsFromAttributes(m, object.Attributes)
 
-					mapper.proto.AddMessage(&m)
+					AddMessage(m)
 				}
 			}
-		case v3.FIELD_TYPE_ENUM:
+
+		case FIELD_TYPE_ENUM:
 			enumName := message.Name + " " + field.Name
 			field.DataType = enumName
-			e, exists := mapper.proto.GetEnum(enumName)
+			e, exists := GetEnum(enumName)
 
 			if !exists {
-				e = &v3.Enum{
-					Name: enumName,
+				e = &Enum{
+					Name:    enumName,
+					Package: message.Package.NewPackage("enum"),
 				}
 			}
 			for aek, aev := range attr.Enum {
@@ -122,7 +138,7 @@ func (mapper *mapper) populateFieldsFromAttributes(message *v3.Message, attribut
 
 				if !evExists {
 					v, _ := strconv.ParseInt(aek, 10, 64)
-					ev = &v3.EnumValue{
+					ev = &EnumValue{
 						Name:  aev.Caption,
 						Value: v,
 					}
@@ -130,7 +146,7 @@ func (mapper *mapper) populateFieldsFromAttributes(message *v3.Message, attribut
 				e.AddValue(ev)
 			}
 
-			mapper.proto.AddEnum(e)
+			AddEnum(e)
 
 		}
 
@@ -142,6 +158,14 @@ func (mapper *mapper) populateFieldsFromAttributes(message *v3.Message, attribut
 func (mapper *mapper) getObject(dataType string) (ocsf.Object, bool) {
 	object, exists := mapper.Schema.Objects[dataType]
 	return object, exists
+}
+
+func (mapper *mapper) PackageRef(pkgs ...string) *Pkg {
+	pkgRef := mapper.RootPackage
+	for _, pkg := range pkgs {
+		pkgRef = pkgRef.NewPackage(pkg)
+	}
+	return pkgRef
 }
 
 func getDataType(attr ocsf.Attribute) string {
@@ -170,4 +194,22 @@ func getDataType(attr ocsf.Attribute) string {
 	}
 
 	return t
+}
+
+func AddEnum(enum *Enum) {
+	Mapper().Enums[enum.Name] = enum
+}
+
+func GetEnum(name string) (*Enum, bool) {
+	value, exists := Mapper().Enums[name]
+	return value, exists
+}
+
+func AddMessage(message *Message) {
+	Mapper().Messages[ToMessageName(message.Name)] = message
+}
+
+func GetMessage(name string) (*Message, bool) {
+	value, exists := Mapper().Messages[ToMessageName(name)]
+	return value, exists
 }

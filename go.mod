@@ -10,7 +10,12 @@ require (
 	github.com/go-openapi/validate v0.22.1
 )
 
-require github.com/iancoleman/strcase v0.3.0 // indirect
+require (
+	github.com/iancoleman/strcase v0.3.0 // indirect
+	github.com/spf13/afero v1.10.0 // indirect
+	golang.org/x/text v0.3.7 // indirect
+	google.golang.org/protobuf v1.31.0 // indirect
+)
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect

@@ -1,4 +1,4 @@
-package v3
+package protobuff_v3
 
 import (
 	"fmt"
@@ -24,7 +24,7 @@ func (e *Enum) GetValue(name string) (*EnumValue, bool) {
 
 func (e *Enum) Marshal() string {
 	content := []string{}
-	content = append(content, fmt.Sprintf("enum %s {", e.proto.ToEnumName(e.Name)))
+	content = append(content, fmt.Sprintf("enum %s {", ToEnumName(e.Name)))
 
 	values := maps.Values(e.values)
 
@@ -40,6 +40,19 @@ func (e *Enum) Marshal() string {
 	content = append(content, "}")
 	return strings.Join(content, "\n")
 }
+
+func (e *Enum) GetName() string {
+	return ToEnumName(e.Name)
+}
+
+func (e *Enum) GetReference() string {
+	return e.GetPackage() + "." + e.GetName()
+}
+
+func (e *Enum) GetPackage() string {
+	return e.Package.GetFullName()
+}
+
 func valueSorter(values []*EnumValue, i int, j int) bool {
 
 	valueI := values[i].Name
@@ -49,21 +62,21 @@ func valueSorter(values []*EnumValue, i int, j int) bool {
 	lenValueJ := len(valueJ)
 
 	// Check if the string at index i ends with "UNKNOWN"
-	endsWithUNKNOWNI := false
+	endsWithUnknownI := false
 	if lenValueI >= lenUnknown {
-		endsWithUNKNOWNI = valueI[lenValueI-lenUnknown:] == "UNKNOWN"
+		endsWithUnknownI = valueI[lenValueI-lenUnknown:] == "UNKNOWN"
 	}
 
 	// Check if the string at index j ends with "UNKNOWN"
-	endsWithUNKNOWNJ := false
+	endsWithUnknownJ := false
 	if lenValueJ >= lenUnknown {
-		endsWithUNKNOWNJ = valueJ[lenValueJ-lenUnknown:] == "UNKNOWN"
+		endsWithUnknownJ = valueJ[lenValueJ-lenUnknown:] == "UNKNOWN"
 	}
 
 	// If only one of them ends with "UNKNOWN," it should come first
-	if endsWithUNKNOWNI && !endsWithUNKNOWNJ {
+	if endsWithUnknownI && !endsWithUnknownJ {
 		return true
-	} else if !endsWithUNKNOWNI && endsWithUNKNOWNJ {
+	} else if !endsWithUnknownI && endsWithUnknownJ {
 		return false
 	}
 
@@ -71,10 +84,10 @@ func valueSorter(values []*EnumValue, i int, j int) bool {
 	return valueI > valueJ
 }
 
-func (p *Proto) ToEnumName(input string) string {
+func ToEnumName(input string) string {
 
 	// Return if Cache exists
-	value, exists := p.cache.Enums.Get(input)
+	value, exists := Mapper().Cache.Enums.Get(input)
 
 	if exists {
 		return fmt.Sprint(value)
@@ -83,8 +96,8 @@ func (p *Proto) ToEnumName(input string) string {
 	output := input
 
 	// Apply Name Processor
-	if p.Preprocessor.EnumName != nil {
-		output = p.Preprocessor.EnumName(input)
+	if Mapper().Preprocessor.EnumName != nil {
+		output = Mapper().Preprocessor.EnumName(input)
 	}
 
 	// Clean Name
@@ -92,7 +105,7 @@ func (p *Proto) ToEnumName(input string) string {
 	output = strcase.ToScreamingSnake(output)
 
 	// Set Cache
-	p.cache.Enums.Set(input, output)
+	Mapper().Cache.Enums.Set(input, output)
 
 	return output
 }

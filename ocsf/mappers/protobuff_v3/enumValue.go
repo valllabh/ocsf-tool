@@ -1,4 +1,4 @@
-package v3
+package protobuff_v3
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 func (ev *EnumValue) Marshal(index int) string {
 	content := []string{}
 
-	content = append(content, ev.enum.proto.ToEnumValueName(ev.enum.Name+" "+ev.Name))
+	content = append(content, ToEnumValueName(ev.enum.Name+" "+ev.Name))
 
 	content = append(content, fmt.Sprintf("= %d;", index))
 
@@ -24,10 +24,10 @@ func (ev *EnumValue) Marshal(index int) string {
 	return strings.Join(content, " ")
 }
 
-func (p *Proto) ToEnumValueName(input string) string {
+func ToEnumValueName(input string) string {
 
 	// Return if Cache exists
-	value, exists := p.cache.EnumValues.Get(input)
+	value, exists := Mapper().Cache.EnumValues.Get(input)
 
 	if exists {
 		return fmt.Sprint(value)
@@ -36,8 +36,8 @@ func (p *Proto) ToEnumValueName(input string) string {
 	output := input
 
 	// Apply Name Processor
-	if p.Preprocessor.EnumName != nil {
-		output = p.Preprocessor.EnumValueName(input)
+	if Mapper().Preprocessor.EnumName != nil {
+		output = Mapper().Preprocessor.EnumValueName(input)
 	}
 
 	// Clean Name
@@ -45,7 +45,7 @@ func (p *Proto) ToEnumValueName(input string) string {
 	output = strcase.ToScreamingSnake(output)
 
 	// Set Cache
-	p.cache.EnumValues.Set(input, output)
+	Mapper().Cache.EnumValues.Set(input, output)
 
 	return output
 }
