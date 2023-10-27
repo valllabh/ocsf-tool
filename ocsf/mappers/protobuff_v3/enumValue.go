@@ -27,7 +27,7 @@ func (ev *EnumValue) Marshal(index int) string {
 func ToEnumValueName(input string) string {
 
 	// Return if Cache exists
-	value, exists := Mapper().Cache.EnumValues.Get(input)
+	value, exists := GetMapper().Cache.EnumValues.Get(input)
 
 	if exists {
 		return fmt.Sprint(value)
@@ -36,8 +36,8 @@ func ToEnumValueName(input string) string {
 	output := input
 
 	// Apply Name Processor
-	if Mapper().Preprocessor.EnumName != nil {
-		output = Mapper().Preprocessor.EnumValueName(input)
+	if GetMapper().Preprocessor.EnumName != nil {
+		output = GetMapper().Preprocessor.EnumValueName(input)
 	}
 
 	// Clean Name
@@ -45,7 +45,7 @@ func ToEnumValueName(input string) string {
 	output = strcase.ToScreamingSnake(output)
 
 	// Set Cache
-	Mapper().Cache.EnumValues.Set(input, output)
+	GetMapper().Cache.EnumValues.Set(input, output)
 
 	return output
 }

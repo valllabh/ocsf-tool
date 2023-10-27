@@ -87,7 +87,7 @@ func valueSorter(values []*EnumValue, i int, j int) bool {
 func ToEnumName(input string) string {
 
 	// Return if Cache exists
-	value, exists := Mapper().Cache.Enums.Get(input)
+	value, exists := GetMapper().Cache.Enums.Get(input)
 
 	if exists {
 		return fmt.Sprint(value)
@@ -96,8 +96,8 @@ func ToEnumName(input string) string {
 	output := input
 
 	// Apply Name Processor
-	if Mapper().Preprocessor.EnumName != nil {
-		output = Mapper().Preprocessor.EnumName(input)
+	if GetMapper().Preprocessor.EnumName != nil {
+		output = GetMapper().Preprocessor.EnumName(input)
 	}
 
 	// Clean Name
@@ -105,7 +105,7 @@ func ToEnumName(input string) string {
 	output = strcase.ToScreamingSnake(output)
 
 	// Set Cache
-	Mapper().Cache.Enums.Set(input, output)
+	GetMapper().Cache.Enums.Set(input, output)
 
 	return output
 }

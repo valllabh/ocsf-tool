@@ -1,23 +1,21 @@
-package ocsf
+package schema
 
-import (
-	"encoding/json"
-	"log"
-	"os"
-)
-
+// EnumAttribute represents an attribute of an enum.
 type EnumAttribute struct {
 	Caption     string `json:"caption"`
 	Description string `json:"description"`
 }
 
+// Enum represents a map of string keys to EnumAttribute values.
 type Enum map[string]EnumAttribute
 
+// Constraints represents the constraints for an object.
 type Constraints struct {
 	AtLeastOne []string `json:"at_least_one"`
 	JustOne    []string `json:"just_one"`
 }
 
+// Attribute represents an attribute of an object or event.
 type Attribute struct {
 	Caption     string   `json:"caption"`
 	Description string   `json:"description"`
@@ -35,6 +33,7 @@ type Attribute struct {
 	Profile     string   `json:"profile"`
 }
 
+// Event represents an event in the schema.
 type Event struct {
 	Attributes   map[string]Attribute `json:"attributes"`
 	Name         string               `json:"name"`
@@ -46,6 +45,7 @@ type Event struct {
 	CategoryName interface{}          `json:"category_name"`
 }
 
+// Object represents an object in the schema.
 type Object struct {
 	Attributes  map[string]Attribute `json:"attributes"`
 	Caption     string               `json:"caption"`
@@ -55,6 +55,7 @@ type Object struct {
 	Name        string               `json:"name"`
 }
 
+// Type represents a type in the schema.
 type Type struct {
 	Caption     string `json:"caption"`
 	Description string `json:"description"`
@@ -67,31 +68,11 @@ type Type struct {
 	Range       []int  `json:"range"`
 }
 
+// OCSFSchema represents the entire schema.
 type OCSFSchema struct {
 	BaseEvent Event             `json:"base_event"`
 	Classes   map[string]Event  `json:"classes"`
 	Objects   map[string]Object `json:"objects"`
 	Types     map[string]Type   `json:"types"`
 	Version   string            `json:"version"`
-}
-
-func LoadOCSFSchema() (OCSFSchema, error) {
-	// Specify the path to the JSON file
-	filePath := "./ocsf/schema.json"
-
-	// Read the JSON file
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		log.Fatalf("Error reading JSON file: %v", err)
-	}
-
-	// Define a variable of the struct type
-	var schema OCSFSchema
-
-	// Unmarshal the JSON data into the struct
-	if err := json.Unmarshal(data, &schema); err != nil {
-		log.Fatalf("Error unmarshalling JSON data: %v", err)
-	}
-
-	return schema, err
 }

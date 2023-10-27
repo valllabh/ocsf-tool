@@ -7,6 +7,6 @@ import (
 
 func (i *Import) Marshal() string {
 	path := i.Name
-	path = strings.ReplaceAll(path, Mapper().RootPackage.Path+"/", "")
+	path = strings.ReplaceAll(path, GetMapper().RootPackage.GetDirPath()+"/", "")
 	return fmt.Sprintf("import \"%s\";", path)
 }

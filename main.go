@@ -1,24 +1,22 @@
 package main
 
 import (
-	"github.com/valllabh/ocsf-schema-processor/ocsf"
-	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff_v3"
+	"fmt"
+	"os"
+
+	"github.com/spf13/cobra"
+	"github.com/valllabh/ocsf-schema-processor/commands"
 )
 
+var rootCmd = &cobra.Command{Use: "ocsf-schema"}
+
 func main() {
-
-	// Loads to provided OCSF schema version in schema.json
-	ocsfSchema, _ := ocsf.LoadOCSFSchema()
-
-	mapToProtoFile(ocsfSchema)
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
 
-func mapToProtoFile(ocsfSchema ocsf.OCSFSchema) {
-
-	protobuff_v3.InitMapper(ocsfSchema, "./output/proto")
-
-	events := []ocsf.Event{ocsfSchema.Classes["file_activity"]}
-
-	protobuff_v3.Mapper().Marshal(events)
-
+func init() {
+	rootCmd.AddCommand(commands.GenerateCmd)
 }

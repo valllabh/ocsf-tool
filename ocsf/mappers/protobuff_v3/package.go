@@ -3,6 +3,7 @@ package protobuff_v3
 import (
 	"strings"
 
+	"github.com/iancoleman/strcase"
 	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/commons"
 	"golang.org/x/exp/maps"
 )
@@ -81,7 +82,7 @@ func (p *Pkg) GetDirPath() string {
 }
 
 func (p *Pkg) GetMessages() []*Message {
-	msgs := maps.Values(Mapper().Messages)
+	msgs := maps.Values(GetMapper().Messages)
 
 	filterFunc := func(m *Message) bool {
 		return m.Package.GetName() == p.GetName()
@@ -91,11 +92,15 @@ func (p *Pkg) GetMessages() []*Message {
 }
 
 func (p *Pkg) GetEnums() []*Enum {
-	msgs := maps.Values(Mapper().Enums)
+	msgs := maps.Values(GetMapper().Enums)
 
 	filterFunc := func(e *Enum) bool {
 		return e.Package.GetName() == p.GetName()
 	}
 
 	return commons.Filter(msgs, filterFunc)
+}
+
+func cleanPackageName(s string) string {
+	return strcase.ToSnake(s)
 }

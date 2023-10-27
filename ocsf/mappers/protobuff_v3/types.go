@@ -2,8 +2,8 @@ package protobuff_v3
 
 import (
 	"github.com/spf13/afero"
-	"github.com/valllabh/ocsf-schema-processor/ocsf"
 	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/commons"
+	"github.com/valllabh/ocsf-schema-processor/ocsf/schema"
 )
 
 type Comment map[string]string
@@ -89,7 +89,7 @@ type CacheMap struct {
 }
 
 type mapper struct {
-	Schema       ocsf.OCSFSchema
+	Schema       schema.OCSFSchema
 	Preprocessor Preprocessor
 	Messages     Messages
 	Enums        Enums

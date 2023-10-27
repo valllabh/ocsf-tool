@@ -34,7 +34,7 @@ func (m *Message) Marshal() string {
 func ToMessageName(input string) string {
 
 	// Return if Cache exists
-	value, exists := Mapper().Cache.Messages.Get(input)
+	value, exists := GetMapper().Cache.Messages.Get(input)
 
 	if exists {
 		return fmt.Sprint(value)
@@ -43,8 +43,8 @@ func ToMessageName(input string) string {
 	output := input
 
 	// Apply Name Processor
-	if Mapper().Preprocessor.MessageName != nil {
-		output = Mapper().Preprocessor.MessageName(input)
+	if GetMapper().Preprocessor.MessageName != nil {
+		output = GetMapper().Preprocessor.MessageName(input)
 	}
 
 	// Clean Name
@@ -52,7 +52,7 @@ func ToMessageName(input string) string {
 	output = strcase.ToCamel(output)
 
 	// Set Cache
-	Mapper().Cache.Messages.Set(input, output)
+	GetMapper().Cache.Messages.Set(input, output)
 
 	return output
 }

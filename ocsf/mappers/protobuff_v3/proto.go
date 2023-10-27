@@ -36,12 +36,10 @@ func (p *Proto) Marshal() {
 	goPackage := p.Pkg.GetFullName()
 	goPackage = strings.ReplaceAll(goPackage, ".", "/")
 
-	if Mapper().Preprocessor.GolangPackageName != nil {
-		goPackage = Mapper().Preprocessor.GolangPackageName(goPackage)
+	if GetMapper().Preprocessor.GolangPackageName != nil {
+		goPackage = GetMapper().Preprocessor.GolangPackageName(goPackage)
 	}
 	content = append(content, fmt.Sprintf("option go_package = \"%s\";", goPackage))
-
-	// option go_package = "example.com/project/protos/fizz";
 
 	// Proto Body >>>
 

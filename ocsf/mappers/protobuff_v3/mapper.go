@@ -6,13 +6,13 @@ import (
 	"strings"
 
 	"github.com/spf13/afero"
-	"github.com/valllabh/ocsf-schema-processor/ocsf"
 	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/commons"
+	"github.com/valllabh/ocsf-schema-processor/ocsf/schema"
 )
 
 var _mapper *mapper
 
-func InitMapper(schema ocsf.OCSFSchema, dir string) {
+func NewMapper(schema schema.OCSFSchema) *mapper {
 	_mapper = &mapper{
 		Schema: schema,
 		Preprocessor: Preprocessor{
@@ -29,15 +29,16 @@ func InitMapper(schema ocsf.OCSFSchema, dir string) {
 		},
 		Fs: afero.NewOsFs(),
 	}
-	_mapper.RootPackage.Path = dir
+
+	return GetMapper()
 }
 
-func Mapper() *mapper {
+func GetMapper() *mapper {
 	return _mapper
 }
 
 func golangPackageName(name string) string {
-	return "github.com/valllabh/ocsf-schema-processor/output/golang/" + name
+	return "github.com/your-project/generated/golang/" + name
 }
 
 func messageNamePreprocessor(name string) string {
@@ -45,7 +46,7 @@ func messageNamePreprocessor(name string) string {
 	return splitName[len(splitName)-1]
 }
 
-func (mapper *mapper) Marshal(events []ocsf.Event) {
+func (mapper *mapper) Marshal(events []schema.Event) {
 
 	for _, event := range events {
 
@@ -69,7 +70,7 @@ func (mapper *mapper) Marshal(events []ocsf.Event) {
 	mapper.RootPackage.Marshal()
 }
 
-func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes map[string]ocsf.Attribute) {
+func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes map[string]schema.Attribute) {
 	for k := range attributes {
 		attr := attributes[k]
 
@@ -155,7 +156,7 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 	}
 }
 
-func (mapper *mapper) getObject(dataType string) (ocsf.Object, bool) {
+func (mapper *mapper) getObject(dataType string) (schema.Object, bool) {
 	object, exists := mapper.Schema.Objects[dataType]
 	return object, exists
 }
@@ -168,7 +169,7 @@ func (mapper *mapper) PackageRef(pkgs ...string) *Pkg {
 	return pkgRef
 }
 
-func getDataType(attr ocsf.Attribute) string {
+func getDataType(attr schema.Attribute) string {
 	var t string
 	switch attr.Type {
 	case "boolean_t":
@@ -197,19 +198,19 @@ func getDataType(attr ocsf.Attribute) string {
 }
 
 func AddEnum(enum *Enum) {
-	Mapper().Enums[enum.Name] = enum
+	GetMapper().Enums[enum.Name] = enum
 }
 
 func GetEnum(name string) (*Enum, bool) {
-	value, exists := Mapper().Enums[name]
+	value, exists := GetMapper().Enums[name]
 	return value, exists
 }
 
 func AddMessage(message *Message) {
-	Mapper().Messages[ToMessageName(message.Name)] = message
+	GetMapper().Messages[ToMessageName(message.Name)] = message
 }
 
 func GetMessage(name string) (*Message, bool) {
-	value, exists := Mapper().Messages[ToMessageName(name)]
+	value, exists := GetMapper().Messages[ToMessageName(name)]
 	return value, exists
 }
