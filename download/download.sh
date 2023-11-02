@@ -17,10 +17,10 @@ TAR_FILE="${FILE_BASENAME}_${OS}_${ARCH}.tar.gz"
 
 # Get the latest release URL
 LATEST_VERSION_URL=$(curl -sSLI -o /dev/null -w %{url_effective} "$RELEASES_URL/latest")
-
+echo $LATEST_VERSION_URL
 # Extract the latest release version from the URL
-VERSION=$(echo "$LATEST_VERSION_URL" | sed -n 's/.*\/tag\/\(v[0-9]\+.[0-9]\+.[0-9]\+\).*/\1/p')
-
+VERSION=$(echo "$LATEST_VERSION_URL" | awk 'match($0, /v[0-9]+\.[0-9]+\.[0-9]+/) { print substr($0, RSTART, RLENGTH) }')
+echo $VERSION
 # Error if Version is not there
 if [ -z "$VERSION" ]; then
     echo
