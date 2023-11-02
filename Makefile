@@ -1,8 +1,12 @@
 .PHONY: clean create-proto compile-proto run
 
 clean:
+	rm -rf ./docs/*
 	rm -rf ./output/*
 	rm -rf ./bin/*
+
+docs:
+	go run doc-generator/doc-generator.go
 
 build:
 	mkdir -p ./bin/
@@ -16,4 +20,4 @@ compile-proto:
 test-run:
 	./bin/ocsf-tool generate proto file_activity security_finding
 
-run: clean build test-run
+run: clean docs build test-run

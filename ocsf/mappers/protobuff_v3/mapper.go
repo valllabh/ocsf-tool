@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/spf13/afero"
-	"github.com/valllabh/ocsf-tool/ocsf/mappers/commons"
+	"github.com/valllabh/ocsf-tool/commons"
 	"github.com/valllabh/ocsf-tool/ocsf/schema"
 )
 

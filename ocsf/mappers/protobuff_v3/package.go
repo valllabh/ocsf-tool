@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/iancoleman/strcase"
-	"github.com/valllabh/ocsf-tool/ocsf/mappers/commons"
+	"github.com/valllabh/ocsf-tool/commons"
 	"golang.org/x/exp/maps"
 )
 

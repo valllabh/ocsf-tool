@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/valllabh/ocsf-tool/ocsf/mappers/commons"
+	"github.com/valllabh/ocsf-tool/commons"
 )
 
 func NewProto(p *Pkg) {
