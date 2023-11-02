@@ -8,14 +8,17 @@ This README file aims to provide an overview of OCSF-Tool, its features, install
 ### Proto File Generation
 The tool includes a generator that simplifies the creation of Proto files from OCSF schemas, helping you generate code for various programming languages.
 
-## Installation
-To install OCSF-Tool, follow these steps:
+## Download
+To download OCSF-Tool, follow these steps:
 
+### Option 1 - Automatic
+
+- `curl -sfL https://raw.githubusercontent.com/valllabh/ocsf-tool/main/download/download.sh | bash`
+
+### Option 2 - Manually
 - Go to the releases section of the OCSF-Tool repository.
 - Download the latest binary release suitable for your platform (e.g., Windows, Linux, macOS).
-- Make the binary executable (if necessary) using the appropriate command for your operating system.
-- - On Linux/macOS: chmod +x ocsf-tool
-- Place the binary in a directory included in your system's PATH to make it accessible from anywhere on your command line.
+
 
 ## Usage
 [Command Documentation](docs/ocsf-tool.md)
