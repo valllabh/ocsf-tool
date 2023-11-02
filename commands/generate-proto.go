@@ -6,10 +6,11 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"github.com/iancoleman/strcase"
 	"github.com/spf13/cobra"
-	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/protobuff_v3"
-	"github.com/valllabh/ocsf-schema-processor/ocsf/schema"
+	"github.com/valllabh/ocsf-tools/ocsf/mappers/protobuff_v3"
+	"github.com/valllabh/ocsf-tools/ocsf/schema"
 )
 
+// Define the GenerateProtoCmd command
 var GenerateProtoCmd = &cobra.Command{
 	Use:   "proto",
 	Short: "Generate a Proto file",
@@ -17,17 +18,28 @@ var GenerateProtoCmd = &cobra.Command{
 	Run:   run,
 }
 
+// Initialize the GenerateProtoCmd command
 func init() {
+	// Add flags to the GenerateProtoCmd command
+
+	// Specifies the output directory for the Proto file.
+	// The default value is `./output/proto`.
 	GenerateProtoCmd.Flags().StringP("proto-output", "", "./output/proto", "Output directory for the Proto file")
+
+	// Specifies the base package for the Proto file.
+	// The default value is `ocsf`.
 	GenerateProtoCmd.Flags().StringP("proto-root-package", "", "ocsf", "Base package for the Proto file")
+
+	// Specifies the Golang package prefix.
+	// The default value is `github.com/your-project/generated/golang/`.
 	GenerateProtoCmd.Flags().StringP("golang-root-package", "", "github.com/your-project/generated/golang/", "Golang package prefix")
 }
 
+// Define the run function for the GenerateProtoCmd command
 func run(cmd *cobra.Command, args []string) {
 	var errors error
 	protoOutput, _ := cmd.Flags().GetString("proto-output")
 	protoRootPackage, _ := cmd.Flags().GetString("proto-root-package")
-
 	golangPackageName, _ := cmd.Flags().GetString("golang-root-package")
 
 	ocsfSchema, _ := schema.LoadOCSFSchema()
@@ -66,5 +78,7 @@ func run(cmd *cobra.Command, args []string) {
 
 	// Produce Output
 	mapper.Marshal(events)
-	println("Done")
+
+	// Print a console message indicating where the output is generated
+	fmt.Printf("Proto files are generated in %s\n", protoOutput)
 }

@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/spf13/afero"
-	"github.com/valllabh/ocsf-schema-processor/ocsf/mappers/commons"
-	"github.com/valllabh/ocsf-schema-processor/ocsf/schema"
+	"github.com/valllabh/ocsf-tools/ocsf/mappers/commons"
+	"github.com/valllabh/ocsf-tools/ocsf/schema"
 )
 
 var _mapper *mapper

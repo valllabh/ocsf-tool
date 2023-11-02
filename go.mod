@@ -1,4 +1,4 @@
-module github.com/valllabh/ocsf-schema-processor
+module github.com/valllabh/ocsf-tools
 
 go 1.21.0
 
