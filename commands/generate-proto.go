@@ -6,8 +6,8 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"github.com/iancoleman/strcase"
 	"github.com/spf13/cobra"
-	"github.com/valllabh/ocsf-tools/ocsf/mappers/protobuff_v3"
-	"github.com/valllabh/ocsf-tools/ocsf/schema"
+	"github.com/valllabh/ocsf-tool/ocsf/mappers/protobuff_v3"
+	"github.com/valllabh/ocsf-tool/ocsf/schema"
 )
 
 // Define the GenerateProtoCmd command

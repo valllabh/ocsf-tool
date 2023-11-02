@@ -1,6 +1,6 @@
 package protobuff_v3
 
-import "github.com/valllabh/ocsf-tools/ocsf/mappers/commons"
+import "github.com/valllabh/ocsf-tool/ocsf/mappers/commons"
 
 var cache CacheMap
 

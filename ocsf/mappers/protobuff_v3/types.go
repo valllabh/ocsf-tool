@@ -2,8 +2,8 @@ package protobuff_v3
 
 import (
 	"github.com/spf13/afero"
-	"github.com/valllabh/ocsf-tools/ocsf/mappers/commons"
-	"github.com/valllabh/ocsf-tools/ocsf/schema"
+	"github.com/valllabh/ocsf-tool/ocsf/mappers/commons"
+	"github.com/valllabh/ocsf-tool/ocsf/schema"
 )
 
 type Comment map[string]string

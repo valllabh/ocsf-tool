@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/valllabh/ocsf-tools/commands"
+	"github.com/valllabh/ocsf-tool/commands"
 )
 
 // Define the root command

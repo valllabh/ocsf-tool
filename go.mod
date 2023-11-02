@@ -1,4 +1,4 @@
-module github.com/valllabh/ocsf-tools
+module github.com/valllabh/ocsf-tool
 
 go 1.21.0
 
