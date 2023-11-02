@@ -42,7 +42,7 @@ archives:
     files:
       - LICENSE
       - readme.md
-      - docs
+      - docs/*
 
 checksum:
   name_template: 'checksums.txt'
