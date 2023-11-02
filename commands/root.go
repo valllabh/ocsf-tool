@@ -8,7 +8,8 @@ var rootCmd = &cobra.Command{Use: "ocsf-tool"}
 // Initialize the root command
 func init() {
 	// Add the generate command to the root command
-	rootCmd.AddCommand(GenerateCmd)
+	rootCmd.AddCommand(GenerateProtoCmd)
+	rootCmd.AddCommand(SchemaClassListCmd)
 }
 
 func GetRootCmd() *cobra.Command {

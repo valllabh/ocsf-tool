@@ -43,6 +43,13 @@ func LoadOCSFSchema() (OCSFSchema, error) {
 
 // DownloadSchemaAndSave downloads the schema JSON from the API and saves it to a file.
 func DownloadSchemaAndSave(extensions []string, profiles []string) error {
+
+	// Return if the schema JSON file already exists
+	if _, err := os.Stat(schemaJSON); err == nil {
+		fmt.Printf("Using schema file: %s\n", schemaJSON)
+		return nil
+	}
+
 	// Build the query string for extensions and profiles
 	queryParams := []string{}
 	if len(extensions) > 0 {

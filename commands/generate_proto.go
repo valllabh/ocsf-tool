@@ -12,10 +12,12 @@ import (
 
 // Define the GenerateProtoCmd command
 var GenerateProtoCmd = &cobra.Command{
-	Use:   "proto",
-	Short: "Generate a Proto file",
-	Args:  cobra.MinimumNArgs(1),
-	Run:   run,
+	Use:     "generate-proto [ocsf_class_name]...",
+	Short:   "Generate a Proto file",
+	Example: "ocsf-tool generate-proto file_activity process_activity",
+	Long:    "Generate a Proto file for the specified OCSF classes.\nUse the `ocsf-tool schema-class-list` command to see a list of all OCSF classes.",
+	Args:    cobra.MinimumNArgs(1),
+	Run:     runGenerateProtoCmd,
 }
 
 // Initialize the GenerateProtoCmd command
@@ -36,7 +38,7 @@ func init() {
 }
 
 // Define the run function for the GenerateProtoCmd command
-func run(cmd *cobra.Command, args []string) {
+func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 	var errors error
 	protoOutput, _ := cmd.Flags().GetString("proto-output")
 	protoRootPackage, _ := cmd.Flags().GetString("proto-root-package")

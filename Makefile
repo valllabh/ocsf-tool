@@ -18,6 +18,6 @@ compile-proto:
 	find ./output/proto -type f -name "*.proto" | xargs protoc --proto_path=./output/proto --java_out=./output/java --go_opt=paths=source_relative --go_out=./output/golang
 
 test-run:
-	./bin/ocsf-tool generate proto file_activity security_finding
+	./bin/ocsf-tool generate-proto file_activity security_finding
 
 run: clean docs build test-run
