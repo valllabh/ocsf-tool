@@ -18,7 +18,7 @@ To acquire OCSF-Tool, you have two options:
 Execute the following command to automatically download OCSF-Tool acording to OS and Processor Architecture:
 
 ```shell
-curl -sfL https://raw.githubusercontent.com/valllabh/ocsf-tool/main/download/download.sh | bash`
+curl -sfL https://raw.githubusercontent.com/valllabh/ocsf-tool/main/download/download.sh | bash
 ```
 
 Upon successful execution of the command, you will receive output similar to the following:
