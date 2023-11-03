@@ -79,7 +79,7 @@ echo "👍 Tar and Checksums removed"
 
 # Done
 echo
-echo "🎉 Dwonload Complete!"
+echo "🎉 Download Complete!"
 echo
 echo "Go to \"$(pwd)/ocsf-tool\""
 echo "And Run \"./ocsf-tool\""
