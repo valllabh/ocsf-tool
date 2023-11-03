@@ -33,9 +33,9 @@ Upon successful execution of the command, you will receive output similar to the
 👍 Extracted the Tar in ./ocsf-tool directory
 👍 Tar and Checksums removed
 
-🎉 Dwonload Complete!
+🎉 Download Complete!
 
-Go to "/workspaces/ocsf-tool/download/ocsf-tool"
+Go to "/workspaces/ocsf-tool"
 And Run "./ocsf-tool"
 
 Usage:
