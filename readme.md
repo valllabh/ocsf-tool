@@ -35,7 +35,7 @@ Upon successful execution of the command, you will receive output similar to the
 
 🎉 Download Complete!
 
-Go to "/workspace/ocsf-tool"
+Go to "/workspaces/ocsf-tool"
 And Run "./ocsf-tool"
 
 Usage:
