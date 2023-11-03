@@ -28,7 +28,7 @@ Upon successful execution of the command, you will receive output similar to the
 
 👍 OS and Architecture detected
 👍 Detected latest version of OCSF-Tool
-👍 Downloaded OCSF-Tool v0.1.3 (latest)
+👍 Downloaded OCSF-Tool v0.1.0 (latest)
 👍 Verified downloaded files
 👍 Extracted the Tar in ./ocsf-tool directory
 👍 Tar and Checksums removed
@@ -42,9 +42,10 @@ Usage:
   ocsf-tool [command]
 
 Available Commands:
-  completion  Generate the autocompletion script for the specified shell
-  generate    Generate
-  help        Help about any command
+  completion        Generate the autocompletion script for the specified shell
+  generate-proto    Generate a Proto file
+  help              Help about any command
+  schema-class-list List all classes in the OCSF schema
 
 Flags:
   -h, --help   help for ocsf-tool
