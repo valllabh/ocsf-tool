@@ -6,10 +6,13 @@ It provides a set of utilities to process OCSF schemas, including a generator fo
 Utility uses https://schema.ocsf.io/export/schema to download latest OCSF schema.
 This README file aims to provide an overview of OCSF-Tool, its features, installation instructions, and basic usage examples.
 
-
 ## Features
 ### Proto File Generation (beta)
 The tool includes a generator that simplifies the creation of Proto files from OCSF schemas, helping you generate code for various programming languages.
+
+## Demo
+[![asciicast](https://asciinema.org/a/2A26OaySGAIEoVHypgRR6NjRM.svg)](https://asciinema.org/a/2A26OaySGAIEoVHypgRR6NjRM)
+
 
 ## Download
 To acquire OCSF-Tool, you have two options:
