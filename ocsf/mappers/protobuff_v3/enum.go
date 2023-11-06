@@ -42,11 +42,11 @@ func (e *Enum) Marshal() string {
 }
 
 func (e *Enum) GetName() string {
-	return e.GetPackage() + "." + e.GetName()
+	return ToEnumName(e.Name)
 }
 
 func (e *Enum) GetReference() string {
-	return e.GetName()
+	return e.GetPackage() + "." + e.GetName()
 }
 
 func (e *Enum) GetPackage() string {
