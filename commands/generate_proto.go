@@ -52,7 +52,7 @@ func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 	if len(protoRootPackage) > 0 && len(protoOutput) > 0 {
 		rootPackage := protobuff_v3.NewPackage(protoRootPackage, nil)
 		rootPackage.Path = protoOutput
-		mapper.RootPackage = protobuff_v3.NewPackage(strcase.ToSnake(ocsfSchema.Version), rootPackage)
+		mapper.RootPackage = protobuff_v3.NewPackage(toVersionPackage(strcase.ToSnake(ocsfSchema.Version)), rootPackage)
 	}
 
 	if len(golangPackageName) > 0 {
@@ -83,4 +83,9 @@ func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 
 	// Print a console message indicating where the output is generated
 	fmt.Printf("Proto files are generated in %s\n", protoOutput)
+}
+
+// Convert version to package name
+func toVersionPackage(version string) string {
+	return fmt.Sprintf("v%s", version)
 }
