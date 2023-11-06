@@ -42,7 +42,7 @@ func (e *Enum) Marshal() string {
 }
 
 func (e *Enum) GetName() string {
-	return ToEnumName(e.Name)
+	return e.GetPackage() + "." + e.GetName()
 }
 
 func (e *Enum) GetReference() string {
