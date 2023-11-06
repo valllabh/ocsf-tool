@@ -62,7 +62,7 @@ func (m *Message) GetName() string {
 }
 
 func (m *Message) GetReference() string {
-	return m.GetPackage() + "." + m.GetName()
+	return m.GetName()
 }
 
 func (m *Message) GetPackage() string {

@@ -46,7 +46,7 @@ func (e *Enum) GetName() string {
 }
 
 func (e *Enum) GetReference() string {
-	return e.GetPackage() + "." + e.GetName()
+	return e.GetName()
 }
 
 func (e *Enum) GetPackage() string {
