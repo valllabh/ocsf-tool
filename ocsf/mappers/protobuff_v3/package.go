@@ -70,7 +70,6 @@ func (p *Pkg) GetDirName() string {
 }
 
 func (p *Pkg) GetDirPath() string {
-
 	path := p.Path
 
 	if p.Parent != nil {

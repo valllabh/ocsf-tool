@@ -52,6 +52,7 @@ func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 	if len(protoRootPackage) > 0 && len(protoOutput) > 0 {
 		rootPackage := protobuff_v3.NewPackage(protoRootPackage, nil)
 		rootPackage.Path = protoOutput
+		mapper.OutputPath = protoOutput
 		mapper.RootPackage = protobuff_v3.NewPackage(toVersionPackage(strcase.ToSnake(ocsfSchema.Version)), rootPackage)
 	}
 

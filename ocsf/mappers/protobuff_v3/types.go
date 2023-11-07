@@ -95,5 +95,6 @@ type mapper struct {
 	Enums        Enums
 	Cache        CacheMap
 	RootPackage  *Pkg
+	OutputPath   string
 	Fs           afero.Fs
 }
