@@ -48,8 +48,13 @@ func (p *Proto) Marshal() {
 	imports := Imports{}
 
 	for _, m := range messages {
+		// Appending Message
 		messageContent = append(messageContent, m.Marshal())
-		imports = m.GetImports()
+
+		// Merge imports map from all messages
+		for _, i := range m.GetImports() {
+			imports[i.Name] = i
+		}
 	}
 
 	// Appending imports

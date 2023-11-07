@@ -3,7 +3,6 @@ package protobuff_v3
 import (
 	"strings"
 
-	"github.com/iancoleman/strcase"
 	"github.com/valllabh/ocsf-tool/commons"
 	"golang.org/x/exp/maps"
 )
@@ -99,8 +98,4 @@ func (p *Pkg) GetEnums() []*Enum {
 	}
 
 	return commons.Filter(msgs, filterFunc)
-}
-
-func cleanPackageName(s string) string {
-	return strcase.ToSnake(s)
 }

@@ -75,16 +75,19 @@ func (m *Message) GetImports() Imports {
 
 	for _, f := range m.fields {
 		p := ""
+
 		switch f.Type {
 		case FIELD_TYPE_OBJECT:
 			m, _ := GetMessage(f.DataType)
 			p = m.Package.Proto.GetProtoFilePath()
 		case FIELD_TYPE_ENUM:
 			e, _ := GetEnum(f.message.Name + " " + f.Name)
+
 			p = e.Package.Proto.GetProtoFilePath()
 		}
 
 		if len(p) != 0 {
+
 			imports[p] = &Import{
 				Name: p,
 			}
