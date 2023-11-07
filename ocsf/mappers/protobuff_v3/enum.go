@@ -9,6 +9,7 @@ import (
 	"golang.org/x/exp/maps"
 )
 
+// Enum represents a Protobuf Enum
 func (e *Enum) AddValue(value *EnumValue) {
 	if e.values == nil {
 		e.values = EnumValues{}
@@ -17,73 +18,99 @@ func (e *Enum) AddValue(value *EnumValue) {
 	e.values[value.Name] = value
 }
 
+// Enum represents a Protobuf Enum
 func (e *Enum) GetValue(name string) (*EnumValue, bool) {
 	value, exists := e.values[name]
 	return value, exists
 }
 
-func (e *Enum) Marshal() string {
-	content := []string{}
-	content = append(content, fmt.Sprintf("enum %s {", ToEnumName(e.Name)))
+// Get enum values sorted by name (with UNKNOWN coming first)
+func (e *Enum) GetValues() []*EnumValue {
+
+	// Add UNKNOWN if not present
+	if !e.HasUnknown() {
+		e.AddValue(&EnumValue{
+			Name: "UNKNOWN",
+			Comment: Comment{
+				"Type": "NON_OCSF_VALUE",
+			},
+		})
+	}
 
 	values := maps.Values(e.values)
 
+	// Sort values by name (with UNKNOWN coming first)
 	sort.Slice(values, func(i, j int) bool {
 		return valueSorter(values, i, j)
 	})
 
-	i := 0
-	for _, v := range values {
+	return values
+}
+
+// Marshal returns the Enum as a string
+func (e *Enum) Marshal() string {
+	content := []string{}
+	enumName := ToEnumName(e.Name)
+
+	// Start Enum
+	content = append(content, fmt.Sprintf("enum %s {", enumName))
+
+	// Get enum values
+	values := e.GetValues()
+
+	// Marshal values and add to content
+	for i, v := range values {
 		content = append(content, "\t"+v.Marshal(i))
-		i++
 	}
+
+	// Close Enum
 	content = append(content, "}")
+
+	// Return content
 	return strings.Join(content, "\n")
 }
 
+// GetName returns the name of the Enum
 func (e *Enum) GetName() string {
 	return ToEnumName(e.Name)
 }
 
+// GetReference returns the reference of the Enum
 func (e *Enum) GetReference() string {
 	return e.GetPackage() + "." + e.GetName()
 }
 
+// GetPackage returns the package name of the Enum
 func (e *Enum) GetPackage() string {
 	return e.Package.GetFullName()
 }
 
+// Enum has at least one value ending with UNKNOWN
+func (e *Enum) HasUnknown() bool {
+	for _, v := range e.values {
+		if strings.HasSuffix(strings.ToUpper(v.Name), "UNKNOWN") {
+			return true
+		}
+	}
+	return false
+}
+
+// Sorts EnumValues by name, with "UNKNOWN" coming first
 func valueSorter(values []*EnumValue, i int, j int) bool {
 
-	valueI := values[i].Name
-	valueJ := values[j].Name
-	lenUnknown := len("UNKNOWN")
-	lenValueI := len(valueI)
-	lenValueJ := len(valueJ)
-
-	// Check if the string at index i ends with "UNKNOWN"
-	endsWithUnknownI := false
-	if lenValueI >= lenUnknown {
-		endsWithUnknownI = valueI[lenValueI-lenUnknown:] == "UNKNOWN"
-	}
-
-	// Check if the string at index j ends with "UNKNOWN"
-	endsWithUnknownJ := false
-	if lenValueJ >= lenUnknown {
-		endsWithUnknownJ = valueJ[lenValueJ-lenUnknown:] == "UNKNOWN"
-	}
-
-	// If only one of them ends with "UNKNOWN," it should come first
-	if endsWithUnknownI && !endsWithUnknownJ {
+	// if string ends with UNKNOWN, it should be first
+	if strings.HasSuffix(strings.ToUpper(values[i].Name), "UNKNOWN") {
 		return true
-	} else if !endsWithUnknownI && endsWithUnknownJ {
+	}
+
+	if strings.HasSuffix(strings.ToUpper(values[j].Name), "UNKNOWN") {
 		return false
 	}
 
-	// If both end with "UNKNOWN" or neither do, sort lexicographically
-	return valueI > valueJ
+	return values[i].Name < values[j].Name
 }
 
+// ToEnumName converts a string to a valid Enum Name
 func ToEnumName(input string) string {
 
 	// Return if Cache exists

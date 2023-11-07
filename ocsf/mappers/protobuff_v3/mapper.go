@@ -142,6 +142,9 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 					ev = &EnumValue{
 						Name:  aev.Caption,
 						Value: v,
+						Comment: Comment{
+							"Type": "OCSF_VALUE",
+						},
 					}
 				}
 				e.AddValue(ev)
