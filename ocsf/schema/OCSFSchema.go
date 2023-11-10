@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -8,17 +10,38 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/spf13/viper"
 )
 
 const (
-	apiURL     = "https://schema.ocsf.io/export/schema"
-	schemaJSON = "./ocsf-schema.json"
+	apiURL = "https://schema.ocsf.io/export/schema"
 )
 
+var schemaJSON string
+
 func LoadOCSFSchema() (OCSFSchema, error) {
+	// Get the extensions and profiles using viper
+	extensions := viper.GetStringSlice("extensions")
+	profiles := viper.GetStringSlice("profiles")
+
+	// if extensions are empty then print message
+	if len(extensions) == 0 {
+		fmt.Println("No extensions specified. Using All by default.")
+	}
+	println("Extensions: ", strings.Join(extensions, ","))
+
+	// if profiles are empty then print message
+	if len(profiles) == 0 {
+		fmt.Println("No profiles specified. Using All by default.")
+	}
+
+	println("Profiles: ", strings.Join(profiles, ","))
+
+	schemaJSON = getSchemaJsonFileName(extensions, profiles)
 
 	// Download the schema and save it to disk
-	err := DownloadSchemaAndSave(nil, nil)
+	err := downloadSchemaAndSave(extensions, profiles)
 	if err != nil {
 		fmt.Println("Error downloading schema:", err)
 		os.Exit(1)
@@ -41,8 +64,8 @@ func LoadOCSFSchema() (OCSFSchema, error) {
 	return schema, err
 }
 
-// DownloadSchemaAndSave downloads the schema JSON from the API and saves it to a file.
-func DownloadSchemaAndSave(extensions []string, profiles []string) error {
+// downloadSchemaAndSave downloads the schema JSON from the API and saves it to a file.
+func downloadSchemaAndSave(extensions []string, profiles []string) error {
 
 	// Return if the schema JSON file already exists
 	if _, err := os.Stat(schemaJSON); err == nil {
@@ -100,4 +123,19 @@ func DownloadSchemaAndSave(extensions []string, profiles []string) error {
 
 	fmt.Printf("Schema saved to %s\n", schemaJSON)
 	return nil
+}
+
+func getSchemaJsonFileName(extensions []string, profiles []string) string {
+	hash := getSchemaHash(extensions, profiles)
+	return fmt.Sprintf("ocsf-schema-%s.json", hash)
+}
+
+func getSchemaHash(extensions []string, profiles []string) string {
+	extensionsStr := strings.Join(extensions, "")
+	profilesStr := strings.Join(profiles, "")
+
+	hasher := md5.New()
+	hasher.Write([]byte(extensionsStr + profilesStr))
+
+	return hex.EncodeToString(hasher.Sum(nil))
 }

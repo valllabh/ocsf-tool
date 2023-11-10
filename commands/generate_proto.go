@@ -22,6 +22,9 @@ var GenerateProtoCmd = &cobra.Command{
 
 // Initialize the GenerateProtoCmd command
 func init() {
+
+	rootCmd.AddCommand(GenerateProtoCmd)
+
 	// Add flags to the GenerateProtoCmd command
 
 	// Specifies the output directory for the Proto file.
