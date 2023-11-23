@@ -32,7 +32,6 @@ func (p *Proto) Marshal() {
 	content = append(content, fmt.Sprintf("package %s;", p.Pkg.GetFullName()))
 
 	// Go Package
-
 	goPackage := p.Pkg.GetFullName()
 	goPackage = strings.ReplaceAll(goPackage, ".", "/")
 
@@ -40,6 +39,14 @@ func (p *Proto) Marshal() {
 		goPackage = GetMapper().Preprocessor.GolangPackageName(goPackage)
 	}
 	content = append(content, fmt.Sprintf("option go_package = \"%s\";", goPackage))
+
+	// Java Package
+	javaPackage := p.Pkg.GetFullName()
+
+	if GetMapper().Preprocessor.JavaPackageName != nil {
+		javaPackage = GetMapper().Preprocessor.JavaPackageName(javaPackage)
+	}
+	content = append(content, fmt.Sprintf("option java_package = \"%s\";", javaPackage))
 
 	// Proto Body >>>
 

@@ -80,6 +80,7 @@ type Preprocessor struct {
 	EnumName          func(string) string
 	EnumValueName     func(string) string
 	GolangPackageName func(string) string
+	JavaPackageName   func(string) string
 }
 
 type CacheMap struct {

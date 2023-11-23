@@ -16,8 +16,7 @@ func NewMapper(schema schema.OCSFSchema) *mapper {
 	_mapper = &mapper{
 		Schema: schema,
 		Preprocessor: Preprocessor{
-			MessageName:       messageNamePreprocessor,
-			GolangPackageName: golangPackageName,
+			MessageName: messageNamePreprocessor,
 		},
 		Messages:    Messages{},
 		Enums:       Enums{},
@@ -35,10 +34,6 @@ func NewMapper(schema schema.OCSFSchema) *mapper {
 
 func GetMapper() *mapper {
 	return _mapper
-}
-
-func golangPackageName(name string) string {
-	return "github.com/your-project/generated/golang/" + name
 }
 
 func messageNamePreprocessor(name string) string {

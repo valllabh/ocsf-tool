@@ -36,8 +36,12 @@ func init() {
 	GenerateProtoCmd.Flags().StringP("proto-root-package", "", "ocsf", "Base package for the Proto file")
 
 	// Specifies the Golang package prefix.
-	// The default value is `github.com/your-project/generated/golang/`.
-	GenerateProtoCmd.Flags().StringP("golang-root-package", "", "github.com/your-project/generated/golang/", "Golang package prefix")
+	// The default value is `github.com/your-project/generated/`.
+	GenerateProtoCmd.Flags().StringP("golang-root-package", "", "github.com/your-project/generated/", "Golang package prefix with trailing slash")
+
+	// Specifies the Java package prefix.
+	// The default value is `com.your.project.generated`.
+	GenerateProtoCmd.Flags().StringP("java-root-package", "", "com.your.project.generated.", "Java package prefix with trailing dot")
 }
 
 // Define the run function for the GenerateProtoCmd command
@@ -46,6 +50,7 @@ func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 	protoOutput, _ := cmd.Flags().GetString("proto-output")
 	protoRootPackage, _ := cmd.Flags().GetString("proto-root-package")
 	golangPackageName, _ := cmd.Flags().GetString("golang-root-package")
+	javaPackageName, _ := cmd.Flags().GetString("java-root-package")
 
 	ocsfSchema, _ := schema.LoadOCSFSchema()
 	events := []schema.Event{}
@@ -59,9 +64,17 @@ func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 		mapper.RootPackage = protobuff_v3.NewPackage(toVersionPackage(strcase.ToSnake(ocsfSchema.Version)), rootPackage)
 	}
 
+	// Validate Golang Package and add preprocessor
 	if len(golangPackageName) > 0 {
 		mapper.Preprocessor.GolangPackageName = func(name string) string {
 			return golangPackageName + name
+		}
+	}
+
+	// Validate Java Package and add preprocessor
+	if len(javaPackageName) > 0 {
+		mapper.Preprocessor.JavaPackageName = func(name string) string {
+			return javaPackageName + name
 		}
 	}
 
