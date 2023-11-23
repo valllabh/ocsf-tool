@@ -126,7 +126,7 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 			if !exists {
 				e = &Enum{
 					Name:    enumName,
-					Package: message.Package.NewPackage("enum"),
+					Package: message.Package.NewPackage("enums"),
 				}
 			}
 			for aek, aev := range attr.Enum {
