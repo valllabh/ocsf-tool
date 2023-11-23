@@ -48,6 +48,8 @@ func (p *Proto) Marshal() {
 	}
 	content = append(content, fmt.Sprintf("option java_package = \"%s\";", javaPackage))
 
+	content = append(content, ("option java_multiple_files = true;"))
+
 	// Proto Body >>>
 
 	// Preparing Messages for Appending
