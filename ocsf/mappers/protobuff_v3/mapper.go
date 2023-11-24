@@ -110,7 +110,7 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 					m := &Message{
 						Name:     object.Name,
 						GroupKey: "Object",
-						Package:  mapper.PackageRef("internal", "object"),
+						Package:  mapper.PackageRef("objects"),
 					}
 					mapper.populateFieldsFromAttributes(m, object.Attributes)
 
