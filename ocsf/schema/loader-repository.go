@@ -50,7 +50,18 @@ func (sl *SchemaRepositorySchemaLoader) Load() (*OCSFSchema, error) {
 
 	// Process git repository
 	println("Processing git repository")
-	return sl.processRepo()
+	ocsfSchema, processRepoError := sl.processRepo()
+
+	if processRepoError != nil {
+		return nil, processRepoError
+	}
+
+	sl.processExtensions(ocsfSchema)
+
+	return ocsfSchema, nil
+}
+
+func (sl *SchemaRepositorySchemaLoader) processExtensions(ocsfSchema *OCSFSchema) {
 
 }
 
