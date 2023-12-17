@@ -43,3 +43,7 @@ func WriteConfig() {
 
 	println("Config saved.")
 }
+
+func LoadConfig() {
+
+}

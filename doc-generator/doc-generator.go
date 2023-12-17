@@ -13,7 +13,7 @@ func main() {
 
 	// Declare variables
 	var err error
-	var docsPath = "./docs"
+	var docsPath = "./docs/"
 
 	// Remove docsPath if it exists
 	err = os.RemoveAll(docsPath)

@@ -1,6 +1,8 @@
-output
-bin
+/output
+/bin
 ocsf-schema.json
 ocsf-schema-*.json
 download/ocsf-tool/
 config.yaml
+/schema
+/schema/*

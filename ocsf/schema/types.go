@@ -36,6 +36,7 @@ type Attribute struct {
 // Event represents an event in the schema.
 type Event struct {
 	Attributes   map[string]Attribute `json:"attributes"`
+	Extends      string               `json:"extends"`
 	Name         string               `json:"name"`
 	Description  string               `json:"description"`
 	Uid          int                  `json:"uid"`
@@ -53,6 +54,7 @@ type Object struct {
 	Description string               `json:"description"`
 	Extends     string               `json:"extends"`
 	Name        string               `json:"name"`
+	Profiles    []string             `json:"profiles"`
 }
 
 // Type represents a type in the schema.
@@ -68,11 +70,99 @@ type Type struct {
 	Range       []int  `json:"range"`
 }
 
+type Profile struct {
+	Attributes  map[string]Attribute `json:"attributes"`
+	Name        string               `json:"name"`
+	Caption     string               `json:"caption"`
+	Meta        string               `json:"meta"`
+	Description string               `json:"description"`
+}
+
+type Include struct {
+	Attributes  map[string]Attribute `json:"attributes"`
+	Name        string               `json:"name"`
+	Caption     string               `json:"caption"`
+	Description string               `json:"description"`
+	Annotations map[string]string    `json:"annotations"`
+}
+
 // OCSFSchema represents the entire schema.
 type OCSFSchema struct {
-	BaseEvent Event             `json:"base_event"`
-	Classes   map[string]Event  `json:"classes"`
-	Objects   map[string]Object `json:"objects"`
-	Types     map[string]Type   `json:"types"`
-	Version   string            `json:"version"`
+	Classes    map[string]Event  `json:"classes"`
+	Objects    map[string]Object `json:"objects"`
+	Types      map[string]Type   `json:"types"`
+	Version    string            `json:"version"`
+	Dictionary Dictionary        `json:"dictionary"`
+}
+
+type SchemaLoader interface {
+	Config()
+	Init()
+	Load() (*OCSFSchema, error)
+
+	SetExtensions([]string)
+	SetProfiles([]string)
+	GetExtensions() []string
+	GetProfiles() []string
+
+	ProfileExists(string) bool
+	ExtensionExists(string) bool
+
+	GetSchemaHash() string
+}
+
+type SchemaRepositorySchemaLoader struct {
+	extensions []string
+	profiles   []string
+}
+
+type SchemaServerSchemaLoader struct {
+	extensions []string
+	profiles   []string
+}
+
+type Version struct {
+	Version string `json:"version"`
+}
+
+type RepositoryObject struct {
+	Attributes  map[string]interface{} `json:"attributes"`
+	Caption     string                 `json:"caption"`
+	Constraints Constraints            `json:"constraints"`
+	Description string                 `json:"description"`
+	Extends     string                 `json:"extends"`
+	Name        string                 `json:"name"`
+}
+
+type RepositoryEvent struct {
+	Attributes   map[string]interface{} `json:"attributes"`
+	Extends      string                 `json:"extends"`
+	Name         string                 `json:"name"`
+	Description  string                 `json:"description"`
+	Uid          int                    `json:"uid"`
+	Category     string                 `json:"category"`
+	Caption      string                 `json:"caption"`
+	Profiles     []string               `json:"profiles"`
+	CategoryName interface{}            `json:"category_name"`
+}
+
+type RepositoryTypes struct {
+	Caption     string          `json:"caption"`
+	Description string          `json:"description"`
+	Attributes  map[string]Type `json:"attributes"`
+}
+
+type Dictionary struct {
+	Caption     string               `json:"caption"`
+	Description string               `json:"description"`
+	Name        string               `json:"name"`
+	Attributes  map[string]Attribute `json:"attributes"`
+	Types       RepositoryTypes      `json:"types"`
+}
+
+type Extension struct {
+	Caption     string `json:"caption"`
+	Description string `json:"description"`
+	Name        string `json:"name"`
+	Uid         int    `json:"uid"`
 }

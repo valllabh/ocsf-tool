@@ -90,7 +90,7 @@ type CacheMap struct {
 }
 
 type mapper struct {
-	Schema       schema.OCSFSchema
+	Schema       *schema.OCSFSchema
 	Preprocessor Preprocessor
 	Messages     Messages
 	Enums        Enums

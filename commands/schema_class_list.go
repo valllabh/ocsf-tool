@@ -16,7 +16,7 @@ var SchemaClassListCmd = &cobra.Command{
 // Define the run function for the SchemaClassListCmd command
 func runSchemaClassListCmd(cmd *cobra.Command, args []string) {
 
-	ocsfSchema, _ := schema.LoadOCSFSchema()
+	ocsfSchema := schema.LoadOCSFSchema()
 	classes := ocsfSchema.Classes
 
 	// Group classes by Category

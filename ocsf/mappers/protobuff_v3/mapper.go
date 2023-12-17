@@ -12,7 +12,7 @@ import (
 
 var _mapper *mapper
 
-func NewMapper(schema schema.OCSFSchema) *mapper {
+func NewMapper(schema *schema.OCSFSchema) *mapper {
 	_mapper = &mapper{
 		Schema: schema,
 		Preprocessor: Preprocessor{
@@ -59,7 +59,6 @@ func (mapper *mapper) Marshal(events []schema.Event) {
 		mapper.populateFieldsFromAttributes(&m, event.Attributes)
 
 		AddMessage(&m)
-
 	}
 
 	mapper.RootPackage.Marshal()
@@ -103,7 +102,6 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 			field.DataType = attr.ObjectType
 			attributeIsSelfReferencing := field.DataType == message.Name
 			_, isObjectMapped := GetMessage(field.DataType)
-
 			if !isObjectMapped && !attributeIsSelfReferencing {
 				object, schemaForObjectExists := mapper.getObject(field.DataType)
 				if schemaForObjectExists {
@@ -112,9 +110,10 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 						GroupKey: "Object",
 						Package:  mapper.PackageRef("objects"),
 					}
-					mapper.populateFieldsFromAttributes(m, object.Attributes)
 
 					AddMessage(m)
+
+					mapper.populateFieldsFromAttributes(m, object.Attributes)
 				}
 			}
 

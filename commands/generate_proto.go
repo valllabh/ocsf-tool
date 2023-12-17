@@ -52,7 +52,7 @@ func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 	golangPackageName, _ := cmd.Flags().GetString("golang-root-package")
 	javaPackageName, _ := cmd.Flags().GetString("java-root-package")
 
-	ocsfSchema, _ := schema.LoadOCSFSchema()
+	ocsfSchema := schema.LoadOCSFSchema()
 	events := []schema.Event{}
 	mapper := protobuff_v3.NewMapper(ocsfSchema)
 
