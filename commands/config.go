@@ -17,23 +17,17 @@ type ConfigVariable struct {
 }
 
 var CONFIGURATIONS map[string]ConfigVariable = map[string]ConfigVariable{
-	"extensions": ConfigVariable{
-		variable: "extensions",
+	"extensions.selected": ConfigVariable{
+		variable: "extensions.selected",
 		help:     "OCSF Extensions",
 		example:  "linux win",
 		type_:    "[]string",
 	},
-	"profiles": ConfigVariable{
-		variable: "profiles",
+	"profiles.selected": ConfigVariable{
+		variable: "profiles.selected",
 		help:     "OCSF Profiles",
 		example:  "cloud linux/linux_users",
 		type_:    "[]string",
-	},
-	"schema.loading.strategy": ConfigVariable{
-		variable: "schema.loading.strategy",
-		help:     "Schema Loading Strategy. Possible values: server, repository",
-		example:  "repository",
-		type_:    "string",
 	},
 }
 

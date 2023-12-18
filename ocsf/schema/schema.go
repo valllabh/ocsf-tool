@@ -47,14 +47,18 @@ func LoadOCSFSchema() *OCSFSchema {
 // InitOCSFSchemaLoader initializes all the schema loaders
 func init() {
 
-	viper.SetDefault("profiles", []string{})
-	viper.SetDefault("extensions", []string{})
-
 	// set schema path
 	viper.SetDefault("schema.path", "$CWD/schema")
 
 	// set default schema loading strategy
 	viper.SetDefault("schema.loading.strategy", "repository")
+
+	// set default extensions
+	viper.SetDefault("extensions.discovery.paths", []string{"$CWD/extensions"})
+	viper.SetDefault("extensions.selected", []string{})
+
+	// set default profiles
+	viper.SetDefault("profiles.selected", []string{})
 
 }
 
@@ -72,8 +76,8 @@ func RegisterSchemaLoader(name string, schemaLoader SchemaLoader) {
 }
 
 func LoadCommonOptions(sl SchemaLoader) {
-	sl.SetExtensions(viper.GetStringSlice("extensions"))
-	sl.SetProfiles(viper.GetStringSlice("profiles"))
+	sl.SetExtensions(viper.GetStringSlice("extensions.selected"))
+	sl.SetProfiles(viper.GetStringSlice("profiles.selected"))
 }
 
 func GetSchemaJsonFilePath(sl SchemaLoader) string {

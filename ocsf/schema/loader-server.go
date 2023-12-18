@@ -14,6 +14,7 @@ import (
 	"github.com/valllabh/ocsf-tool/commons"
 )
 
+// Deprecated: Use SchemaRepositorySchemaLoader instead
 func init() {
 	// Discontinue server strategy
 	// RegisterSchemaLoader("server", &SchemaServerSchemaLoader{})

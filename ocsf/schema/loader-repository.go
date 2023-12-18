@@ -61,7 +61,27 @@ func (sl *SchemaRepositorySchemaLoader) Load() (*OCSFSchema, error) {
 	return ocsfSchema, nil
 }
 
-func (sl *SchemaRepositorySchemaLoader) processExtensions(ocsfSchema *OCSFSchema) {
+func (sl *SchemaRepositorySchemaLoader) processExtensions(schema *OCSFSchema) {
+
+	extensionPaths := viper.GetStringSlice("extensions.discovery.paths")
+
+	extensionPaths = append(extensionPaths, repoPath("/extensions"))
+
+	// iterate over extension paths
+	for _, extensionPath := range extensionPaths {
+
+		extensionPath = commons.PathPrepare(extensionPath)
+
+		println("Loading extensions from " + extensionPath)
+
+		extensionsLoadingError := sl.loadExtensions(extensionPath, schema)
+
+		if extensionsLoadingError != nil {
+			println("Error loading extensions from " + extensionPath)
+			println(extensionsLoadingError.Error())
+		}
+
+	}
 
 }
 
@@ -261,14 +281,6 @@ func (sl *SchemaRepositorySchemaLoader) loadSchemaFromDirectory(directory string
 		Version:    schemaVersion.Version,
 		Types:      dictionary.Types.Attributes,
 		Dictionary: dictionary,
-	}
-
-	// Load extensions defined in json files in the map from /extensions directory using schema.Extension struct
-	extensionsDirectory := repoPath("/extensions")
-	extensionsLoadingError := sl.loadExtensions(extensionsDirectory, &schema)
-
-	if extensionsLoadingError != nil {
-		return nil, extensionsLoadingError
 	}
 
 	return &schema, nil
