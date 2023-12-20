@@ -72,15 +72,21 @@ func (sl *SchemaRepositorySchemaLoader) processExtensions(schema *OCSFSchema) {
 
 		extensionPath = commons.PathPrepare(extensionPath)
 
-		println("Loading extensions from " + extensionPath)
-
-		extensionsLoadingError := sl.loadExtensions(extensionPath, schema)
+		extensionsLoadingError := sl.findExtensions(extensionPath, schema)
 
 		if extensionsLoadingError != nil {
-			println("Error loading extensions from " + extensionPath)
+			println("Error loading extension from " + extensionPath)
 			println(extensionsLoadingError.Error())
 		}
 
+	}
+
+	// Load extension from file
+	err := sl.loadExtensionFromDirectory(commons.Dir(path), ocsfSchema)
+
+	// Check for error while loading extension from file
+	if err != nil {
+		return err
 	}
 
 }
@@ -295,22 +301,16 @@ func (sl *SchemaRepositorySchemaLoader) GetSchemaHash() string {
 }
 
 // function to load extensions from directory
-func (sl *SchemaRepositorySchemaLoader) loadExtensions(directory string, ocsfSchema *OCSFSchema) error {
+func (sl *SchemaRepositorySchemaLoader) findExtensions(directory string) []string {
+
+	extensions := make([]string, 0)
 
 	// recursively load each file in extensions directory
 	err := commons.Walk(directory, func(path string, info os.FileInfo, err error) error {
 
 		// Check if file is a json file
 		if strings.HasSuffix(path, "extension.json") {
-
-			// Load extension from file
-			err := sl.loadExtensionFromDirectory(commons.Dir(path), ocsfSchema)
-
-			// Check for error while loading extension from file
-			if err != nil {
-				return err
-			}
-
+			extensions = append(extensions, path)
 		}
 
 		return nil
