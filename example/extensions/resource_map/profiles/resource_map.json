@@ -1,0 +1,11 @@
+{
+    "caption": "Resource Map",
+    "description": "The attributes that Resource Map provides.",
+    "meta": "profile",
+    "name": "resource_map",
+    "attributes": {
+        "resource": {
+            "requirement": "optional"
+        }
+    }
+}

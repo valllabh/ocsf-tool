@@ -54,7 +54,7 @@ func init() {
 	viper.SetDefault("schema.loading.strategy", "repository")
 
 	// set default extensions
-	viper.SetDefault("extensions.discovery.paths", []string{"$CWD/extensions"})
+	viper.SetDefault("extensions.discovery.paths", []string{"$CWD/example/extensions"})
 	viper.SetDefault("extensions.selected", []string{})
 
 	// set default profiles

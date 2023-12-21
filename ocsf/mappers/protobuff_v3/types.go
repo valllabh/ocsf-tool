@@ -56,6 +56,7 @@ type Field struct {
 	DataType string
 	Required bool
 	Repeated bool
+	Map      bool
 	Type     FieldType
 	message  *Message
 	Comment  Comment

@@ -74,6 +74,7 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 			DataType: getDataType(attr),
 			Required: attr.Requirement == "required",
 			Repeated: attr.IsArray,
+			Map:      attr.IsMap, // Map is not natively supported by OCSF Schema
 		}
 
 		// Add Comments

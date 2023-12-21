@@ -27,6 +27,7 @@ type Attribute struct {
 	TypeName    string   `json:"type_name"`
 	Default     any      `json:"default"`
 	IsArray     bool     `json:"is_array"`
+	IsMap       bool     `json:"is_map"` // Map is not natively supported by OCSF Schema
 	ObjectName  string   `json:"object_name"`
 	ObjectType  string   `json:"object_type"`
 	Attributes  []string `json:"attributes"`

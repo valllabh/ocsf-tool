@@ -1,0 +1,7 @@
+{
+  "caption": "Resource Details Map",
+  "description": "This enables the resource details map for the assets resource.",
+  "name": "resource_map",
+  "uid": -99998,
+  "version": "0.1.0"
+}

@@ -49,12 +49,14 @@ func (sl *SchemaRepositorySchemaLoader) Load() (*OCSFSchema, error) {
 	}
 
 	// Process git repository
-	println("Processing git repository")
+	println("\nProcessing git repository")
 	ocsfSchema, processRepoError := sl.processRepo()
 
 	if processRepoError != nil {
 		return nil, processRepoError
 	}
+
+	println("\nProcessing Extensions")
 
 	sl.processExtensions(ocsfSchema)
 
@@ -67,26 +69,31 @@ func (sl *SchemaRepositorySchemaLoader) processExtensions(schema *OCSFSchema) {
 
 	extensionPaths = append(extensionPaths, repoPath("/extensions"))
 
+	extensions := make([]string, 0)
+
 	// iterate over extension paths
 	for _, extensionPath := range extensionPaths {
 
 		extensionPath = commons.PathPrepare(extensionPath)
 
-		extensionsLoadingError := sl.findExtensions(extensionPath, schema)
+		extensionsSlice := sl.findExtensions(extensionPath)
 
-		if extensionsLoadingError != nil {
-			println("Error loading extension from " + extensionPath)
-			println(extensionsLoadingError.Error())
-		}
+		// merge extensionsSlice into extensions
+		extensions = append(extensions, extensionsSlice...)
 
 	}
 
-	// Load extension from file
-	err := sl.loadExtensionFromDirectory(commons.Dir(path), ocsfSchema)
+	// iterate over extensions
+	for _, path := range extensions {
 
-	// Check for error while loading extension from file
-	if err != nil {
-		return err
+		// Load extension from file
+		err := sl.loadExtensionFromDirectory(commons.Dir(path), schema)
+
+		// Check for error while loading extension from file
+		if err != nil {
+			println("Error loading extension from " + path)
+			println(err.Error())
+		}
 	}
 
 }
@@ -253,6 +260,8 @@ func (sl *SchemaRepositorySchemaLoader) loadSchemaFromDirectory(directory string
 		return nil, dictionaryLoadingError
 	}
 
+	println("\nLoading repo objects")
+
 	// Load objects defined in json files in the map from /objects directory using schema.Object struct
 	objectsDirectory := repoPath("/objects")
 	objectLoadingError := sl.loadObjects(objectsDirectory, &objectMap, &dictionary)
@@ -265,6 +274,8 @@ func (sl *SchemaRepositorySchemaLoader) loadSchemaFromDirectory(directory string
 	for _, object := range objectMap {
 		sl.extendAttribute(&object.Attributes, &dictionary, &objectMap)
 	}
+
+	println("\nLoading repo events")
 
 	// Load events defined in json files in the map from /events directory using schema.Event struct
 	eventsDirectory := repoPath("/events")
@@ -306,7 +317,7 @@ func (sl *SchemaRepositorySchemaLoader) findExtensions(directory string) []strin
 	extensions := make([]string, 0)
 
 	// recursively load each file in extensions directory
-	err := commons.Walk(directory, func(path string, info os.FileInfo, err error) error {
+	commons.Walk(directory, func(path string, info os.FileInfo, err error) error {
 
 		// Check if file is a json file
 		if strings.HasSuffix(path, "extension.json") {
@@ -316,7 +327,7 @@ func (sl *SchemaRepositorySchemaLoader) findExtensions(directory string) []strin
 		return nil
 	})
 
-	return err
+	return extensions
 }
 
 func (sl *SchemaRepositorySchemaLoader) loadExtension(path string) (Extension, error) {
@@ -340,7 +351,7 @@ func (sl *SchemaRepositorySchemaLoader) loadExtension(path string) (Extension, e
 }
 
 // function to load extension from file
-func (sl *SchemaRepositorySchemaLoader) loadExtensionFromDirectory(path string, ocsfSchema *OCSFSchema) error {
+func (sl *SchemaRepositorySchemaLoader) loadExtensionFromDirectory(path string, schema *OCSFSchema) error {
 
 	println("Loading extension from " + path)
 
@@ -359,7 +370,7 @@ func (sl *SchemaRepositorySchemaLoader) loadExtensionFromDirectory(path string, 
 
 	// Load dictionary from dictionary.json file
 	dictionaryFile := commons.CleanPath(path + "/" + "dictionary.json")
-	dictionaryLoadingError := sl.loadDictionary(dictionaryFile, &ocsfSchema.Dictionary)
+	dictionaryLoadingError := sl.loadDictionary(dictionaryFile, &schema.Dictionary)
 
 	if dictionaryLoadingError != nil {
 		return dictionaryLoadingError
@@ -367,24 +378,33 @@ func (sl *SchemaRepositorySchemaLoader) loadExtensionFromDirectory(path string, 
 
 	// Load objects defined in json files in the map from /objects directory using schema.Object struct
 	objectsDirectory := commons.CleanPath(path + "/" + "objects")
-	objectLoadingError := sl.loadObjects(objectsDirectory, &ocsfSchema.Objects, &ocsfSchema.Dictionary)
+	objectLoadingError := sl.loadObjects(objectsDirectory, &schema.Objects, &schema.Dictionary)
 
 	if objectLoadingError != nil {
 		return objectLoadingError
 	}
 
 	// extend object attributes
-	for _, object := range ocsfSchema.Objects {
-		sl.extendAttribute(&object.Attributes, &ocsfSchema.Dictionary, &ocsfSchema.Objects)
+	for _, object := range schema.Objects {
+		sl.extendAttribute(&object.Attributes, &schema.Dictionary, &schema.Objects)
 	}
 
 	// Load events defined in json files in the map from /events directory using schema.Event struct
 	eventsDirectory := commons.CleanPath(path + "/" + "events")
-	eventLoadingError := sl.loadEvents(eventsDirectory, &ocsfSchema.Classes, &ocsfSchema.Dictionary)
+	eventLoadingError := sl.loadEvents(eventsDirectory, &schema.Classes, &schema.Dictionary)
 
 	if eventLoadingError != nil {
 		return eventLoadingError
 	}
+
+	// extend event attributes
+	for _, event := range schema.Classes {
+
+		// TODO: ignore processed events. extend attribute is called on every extension loaded
+		sl.extendAttribute(&event.Attributes, &schema.Dictionary, &schema.Objects)
+	}
+
+	println("Loaded extension " + extension.Caption + "\n")
 
 	return nil
 }
@@ -501,8 +521,37 @@ func (sl *SchemaRepositorySchemaLoader) loadEvents(directory string, events *(ma
 				return err
 			}
 
-			// Add event to schema
-			(*events)[event.Name] = event
+			// if event.name is blank and event.extend exists and event contain event.extend then merge event.profiles and merge event.attributes
+			if event.Name == "" && event.Extends != "" {
+
+				println("Extending event " + event.Extends)
+
+				originalEvent, eventExists := (*events)[event.Extends]
+
+				if eventExists {
+					// if originalEvent.Profiles does not exist then create it
+					if originalEvent.Profiles == nil {
+						originalEvent.Profiles = make([]string, 0)
+					}
+
+					originalEvent.Profiles = append(originalEvent.Profiles, event.Profiles...)
+
+					// iterate over attributes and add them to originalEvent
+					for key, value := range event.Attributes {
+						originalEvent.Attributes[key] = value
+					}
+
+					(*events)[event.Extends] = originalEvent
+				} else {
+					println("Event " + event.Extends + " does not exist")
+				}
+			} else {
+
+				// Add event to schema
+				(*events)[event.Name] = event
+
+			}
+
 		}
 
 		return nil
