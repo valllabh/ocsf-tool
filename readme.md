@@ -64,6 +64,64 @@ Use "ocsf-tool [command] --help" for more information about a command.
 ## Command Documentation
 For detailed information on using OCSF-Tool and its commands, refer to the [Command Documentation](docs/ocsf-tool.md)
 
+## Configuration File Documentation
+
+This configuration file is written in YAML format and contains settings for extensions, profiles, and schema.
+
+`config.yaml` will be automatically generated with following default structure.
+
+```
+extensions:
+    discovery:
+        paths:
+            - $CWD/example/extensions
+    selected: []
+profiles:
+    selected: []
+schema:
+    loading:
+        strategies:
+            repository:
+                branch:
+                    name: main
+                directory:
+                    path: $CWD/schema/git
+                url: https://github.com/ocsf/ocsf-schema
+        strategy: repository
+    path: $CWD/schema
+```
+
+### Extensions
+
+The `extensions` section is used to configure the extensions for the application.
+
+- `discovery.paths`: This is an array of paths where the application should look for extensions. Refer section "Path variables"
+- `selected`: This is an array of selected extensions. If empty, all extensions will be selected.
+
+### Profiles
+
+The `profiles` section is used to configure the profiles for the application.
+
+- `selected`: This is an array of selected profiles. If empty, all profiles will be selected.
+
+### Schema
+
+The `schema` section is used to configure the schema for the application.
+
+- `loading`: This section contains settings for loading the schema.
+  - `strategies`: This section contains settings for different loading strategies.
+    - `repository`: This section contains settings for loading the schema from a repository.
+      - `branch.name`: The name of the branch to load the schema from.
+      - `directory.path`: The path where the schema should be saved. Refer section "Path variables"
+      - `url`: The URL of the repository to load the schema from.
+  - `strategy`: The loading strategy to use. In this case, it's set to `repository`.
+- `path`: The path where the schema is located. Refer section "Path variables"
+
+### Path variables
+- `$CWD` Replaces with current working directory (Recommended Option)
+- `$HOME` Replaces with user home directory
+- `$TMP` Replaces with system temporary directory
+
 ## Example Use Case
 ### Setting default OCSF Extensions to use
 The OCSF Schema is customizable through **extensions** that add new attributes, objects, and event classes, enabling vendor-specific customizations and maintaining a concise core schema.
@@ -88,7 +146,7 @@ ocsf-tool config profiles cloud container
 > All profiles will be active if no profiles are configured 
 
 ### Generate Proto
-This command generates proto files for the mentioned classes in the arguments. There are more options avaiable to the command use `--help` for more information or follow [documentation link](docs/ocsf-tool_generate-proto.md)
+This command generates proto files for the mentioned classes in the arguments. There are more options available to the command use `--help` for more information or follow [documentation link](docs/ocsf-tool_generate-proto.md)
 
 [List of all possible OCSF classes](https://schema.ocsf.io/1.1.0-dev/classes?extensions=)
 

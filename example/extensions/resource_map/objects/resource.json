@@ -1,0 +1,11 @@
+{
+    "caption": "Resource Map",
+    "name": "resource",
+    "description": "An resource map is map of Resource Details",
+    "attributes": {
+        "resource": {
+            "description": "Map of Resource Details",
+            "requirement": "optional"
+        }
+    }
+}

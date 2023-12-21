@@ -34,8 +34,8 @@ test-compile-proto: clean-output-java clean-output-golang
 	find ./output/proto -type f -name "*.proto" | xargs protoc --proto_path=./output/proto --java_out=./output/java --go_opt=paths=source_relative --go_out=./output/golang
 
 test-create-proto: clean-output-proto
-	./bin/ocsf-tool config extensions linux
-	./bin/ocsf-tool config profiles cloud container
+	# ./bin/ocsf-tool config extensions linux
+	# ./bin/ocsf-tool config profiles cloud container
 	./bin/ocsf-tool generate-proto file_activity
 
 run: build-docs build-project test-create-proto test-compile-proto

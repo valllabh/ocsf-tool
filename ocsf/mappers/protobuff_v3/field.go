@@ -20,9 +20,19 @@ func (f *Field) Marshal(index int) string {
 	switch f.Type {
 	case FIELD_TYPE_OBJECT:
 		m, _ := GetMessage(f.DataType)
-		content = append(content, m.GetReference())
+
+		if f.Map {
+			content = append(content, fmt.Sprintf("map<string, %s>", m.GetReference()))
+		} else {
+			content = append(content, m.GetReference())
+
+		}
 	case FIELD_TYPE_PRIMITIVE:
-		content = append(content, f.DataType)
+		if f.Map {
+			content = append(content, fmt.Sprintf("map<string, %s>", f.DataType))
+		} else {
+			content = append(content, f.DataType)
+		}
 	case FIELD_TYPE_ENUM:
 		e, _ := GetEnum(f.message.Name + " " + f.Name)
 		content = append(content, e.GetReference())

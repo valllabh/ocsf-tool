@@ -8,9 +8,13 @@ import (
 // Define the root command
 var rootCmd = &cobra.Command{
 	Use: "ocsf-tool",
+
 	PostRun: func(cmd *cobra.Command, args []string) {
 		// Write the config file to disk
 		config.WriteConfig()
+	},
+	PersistentPostRun: func(cmd *cobra.Command, args []string) {
+		println("--")
 	},
 }
 

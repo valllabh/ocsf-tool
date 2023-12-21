@@ -1,0 +1,13 @@
+{
+  "caption": "Attribute Dictionary",
+  "description": "The Attribute Dictionary defines schema attributes and includes references to the events and objects in which they are used.",
+  "name": "dictionary",
+  "attributes": {
+    "resource": {
+      "caption": "Resource Map",
+      "description": "Resource Map",
+      "type": "resource_details",
+      "is_map": true
+    }
+  }
+}

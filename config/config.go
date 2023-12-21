@@ -30,6 +30,7 @@ func InitConfig() {
 			panic(fmt.Errorf("fatal error config file: %s", err))
 		}
 	}
+
 }
 
 // Write config file to disk
@@ -42,4 +43,8 @@ func WriteConfig() {
 	}
 
 	println("Config saved.")
+}
+
+func LoadConfig() {
+
 }
