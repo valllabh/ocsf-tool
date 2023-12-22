@@ -6,3 +6,5 @@ download/ocsf-tool/
 config.yaml
 /schema
 /schema/*
+
+schema.json
