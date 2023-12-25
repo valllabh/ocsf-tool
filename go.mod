@@ -8,7 +8,7 @@ require (
 	github.com/jinzhu/copier v0.4.0
 	github.com/spf13/afero v1.11.0
 	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.1
+	github.com/spf13/viper v1.18.2
 	gopkg.in/src-d/go-git.v4 v4.13.1
 )
 
