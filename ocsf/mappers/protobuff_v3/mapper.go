@@ -1,6 +1,7 @@
 package protobuff_v3
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -62,6 +63,34 @@ func (mapper *mapper) Marshal(events []schema.Event) {
 	}
 
 	mapper.RootPackage.Marshal()
+
+}
+
+func (mapper *mapper) WriteEnumValueMap(path string) {
+
+	enumValueMap := make(map[string]EnumValue)
+
+	for _, enum := range mapper.Enums {
+		for _, ev := range enum.values {
+			enumValueMap[ToEnumValueName(ev.enum.Name+" "+ev.Name)] = EnumValue{
+				Name:  ev.Name,
+				Value: ev.Value,
+			}
+		}
+	}
+
+	filePath := commons.PathPrepare(path + "/enum-value-map.json")
+
+	json, jsonError := json.Marshal(enumValueMap)
+
+	if jsonError != nil {
+		fmt.Println(jsonError.Error())
+		return
+	}
+
+	println("Writing enum value map to " + filePath)
+	commons.CreateFile(filePath, json)
+
 }
 
 func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes map[string]schema.Attribute) {
@@ -138,7 +167,8 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 						Name:  aev.Caption,
 						Value: v,
 						Comment: Comment{
-							"Type": "OCSF_VALUE",
+							"Type":      "OCSF_VALUE",
+							"EnumValue": fmt.Sprintf("%d", v),
 						},
 					}
 				}

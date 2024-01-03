@@ -4,6 +4,7 @@ package schema
 type EnumAttribute struct {
 	Caption     string `json:"caption"`
 	Description string `json:"description"`
+	Uid         int    `json:"uid"`
 }
 
 // Enum represents a map of string keys to EnumAttribute values.
@@ -32,6 +33,8 @@ type Attribute struct {
 	ObjectType  string   `json:"object_type"`
 	Attributes  []string `json:"attributes"`
 	Profile     string   `json:"profile"`
+	Uid         int      `json:"uid"`
+	Include     string   `json:"$include"`
 }
 
 // Event represents an event in the schema.
@@ -44,7 +47,7 @@ type Event struct {
 	Category     string               `json:"category"`
 	Caption      string               `json:"caption"`
 	Profiles     []string             `json:"profiles"`
-	CategoryName interface{}          `json:"category_name"`
+	CategoryName string               `json:"category_name"`
 }
 
 // Object represents an object in the schema.
@@ -94,6 +97,7 @@ type OCSFSchema struct {
 	Types      map[string]Type   `json:"types"`
 	Version    string            `json:"version"`
 	Dictionary Dictionary        `json:"dictionary"`
+	Categories Categories        `json:"categories"`
 }
 
 type SchemaLoader interface {
@@ -166,4 +170,11 @@ type Extension struct {
 	Description string `json:"description"`
 	Name        string `json:"name"`
 	Uid         int    `json:"uid"`
+}
+
+type Categories struct {
+	Caption     string               `json:"caption"`
+	Name        string               `json:"name"`
+	Description string               `json:"description"`
+	Attributes  map[string]Attribute `json:"attributes"`
 }

@@ -3,7 +3,9 @@ package schema
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/jinzhu/copier"
@@ -59,6 +61,9 @@ func (sl *SchemaRepositorySchemaLoader) Load() (*OCSFSchema, error) {
 	println("\nProcessing Extensions")
 
 	sl.processExtensions(ocsfSchema)
+
+	jsonOcsfSchema, _ := json.Marshal(ocsfSchema)
+	commons.CreateFile("./schema.json", jsonOcsfSchema)
 
 	return ocsfSchema, nil
 }
@@ -248,6 +253,7 @@ func (sl *SchemaRepositorySchemaLoader) loadSchemaFromDirectory(directory string
 		return nil, schemaVersionError
 	}
 
+	println("\nLoading repo dictionary")
 	dictionary := Dictionary{}
 	objectMap := make(map[string]Object)
 	eventMap := make(map[string]Event)
@@ -258,6 +264,14 @@ func (sl *SchemaRepositorySchemaLoader) loadSchemaFromDirectory(directory string
 
 	if dictionaryLoadingError != nil {
 		return nil, dictionaryLoadingError
+	}
+
+	println("\nLoading repo categories")
+	categoriesFile := repoPath("/categories.json")
+	categories, categoriesLoadingError := sl.loadCategories(categoriesFile)
+
+	if categoriesLoadingError != nil {
+		return nil, categoriesLoadingError
 	}
 
 	println("\nLoading repo objects")
@@ -280,7 +294,7 @@ func (sl *SchemaRepositorySchemaLoader) loadSchemaFromDirectory(directory string
 	// Load events defined in json files in the map from /events directory using schema.Event struct
 	eventsDirectory := repoPath("/events")
 
-	eventLoadingError := sl.loadEvents(eventsDirectory, &eventMap, &dictionary)
+	eventLoadingError := sl.loadEvents(eventsDirectory, &eventMap, &dictionary, &categories)
 
 	if eventLoadingError != nil {
 		return nil, eventLoadingError
@@ -298,6 +312,7 @@ func (sl *SchemaRepositorySchemaLoader) loadSchemaFromDirectory(directory string
 		Version:    schemaVersion.Version,
 		Types:      dictionary.Types.Attributes,
 		Dictionary: dictionary,
+		Categories: categories,
 	}
 
 	return &schema, nil
@@ -391,7 +406,7 @@ func (sl *SchemaRepositorySchemaLoader) loadExtensionFromDirectory(path string, 
 
 	// Load events defined in json files in the map from /events directory using schema.Event struct
 	eventsDirectory := commons.CleanPath(path + "/" + "events")
-	eventLoadingError := sl.loadEvents(eventsDirectory, &schema.Classes, &schema.Dictionary)
+	eventLoadingError := sl.loadEvents(eventsDirectory, &schema.Classes, &schema.Dictionary, &schema.Categories)
 
 	if eventLoadingError != nil {
 		return eventLoadingError
@@ -431,6 +446,30 @@ func (sl *SchemaRepositorySchemaLoader) loadVersionFromDirectory() (Version, err
 	}
 
 	return version, nil
+}
+
+// func to load categories from categories.json
+func (sl *SchemaRepositorySchemaLoader) loadCategories(path string) (Categories, error) {
+
+	// Declare categories
+	var categories Categories
+
+	// Categories file path
+	categoriesFile := commons.CleanPath(path)
+
+	// Load data from file []byte
+	data, loadDataError := os.ReadFile(categoriesFile)
+
+	if loadDataError != nil {
+		return categories, loadDataError
+	}
+
+	// Unmarshal data into categories
+	if err := json.Unmarshal(data, &categories); err != nil {
+		return categories, err
+	}
+
+	return categories, nil
 }
 
 // function to load objects from directory
@@ -501,7 +540,7 @@ func (sl *SchemaRepositorySchemaLoader) loadObjects(directory string, objects *(
 }
 
 // function to load events from directory
-func (sl *SchemaRepositorySchemaLoader) loadEvents(directory string, events *(map[string]Event), dictionary *Dictionary) error {
+func (sl *SchemaRepositorySchemaLoader) loadEvents(directory string, events *(map[string]Event), dictionary *Dictionary, categories *Categories) error {
 
 	rootDir := commons.Dir(directory)
 
@@ -562,6 +601,58 @@ func (sl *SchemaRepositorySchemaLoader) loadEvents(directory string, events *(ma
 
 		// extend event
 		sl.extendEvent(&event, events)
+
+		// event schema enrichments
+		category, categoryExists := categories.Attributes[event.Category]
+
+		if categoryExists {
+			categoryUid, categoryUidExists := event.Attributes["category_uid"]
+			if categoryUidExists {
+
+				// add category_uid to event
+				categoryUid.Enum = map[string]EnumAttribute{}
+				categoryUidString := fmt.Sprintf("%d", category.Uid)
+				categoryUid.Enum[categoryUidString] = EnumAttribute{
+					Caption:     category.Caption,
+					Uid:         category.Uid,
+					Description: category.Description,
+				}
+				event.Attributes["category_uid"] = categoryUid
+
+				// add class_uid to event
+				classUid := fmt.Sprintf("%d%d", (100 * category.Uid), event.Uid)
+				attributeClassUid := event.Attributes["class_uid"]
+				attributeClassUid.Enum = Enum{}
+				attributeClassUid.Enum[classUid] = EnumAttribute{
+					Caption:     event.Caption,
+					Description: event.Description,
+				}
+				event.Attributes["class_uid"] = attributeClassUid
+
+				// add uid to event
+				classUidAsInt, classUidConversionError := strconv.Atoi(classUid)
+				if classUidConversionError == nil {
+					event.Uid = classUidAsInt
+				}
+
+				// add type_uid to event
+				if event.Attributes["activity_id"].Enum != nil {
+					typeUid, typeUidExists := event.Attributes["type_uid"]
+					if typeUidExists {
+						typeUid.Enum = Enum{}
+						for activityKey, activity := range event.Attributes["activity_id"].Enum {
+							typeUidKey := fmt.Sprintf("%d%02s", event.Uid, activityKey)
+							typeUid.Enum[typeUidKey] = EnumAttribute{
+								Caption:     event.Caption + ": " + activity.Caption,
+								Description: activity.Description,
+							}
+						}
+						event.Attributes["type_uid"] = typeUid
+					}
+				}
+
+			}
+		}
 
 	}
 
@@ -629,7 +720,10 @@ func (sl *SchemaRepositorySchemaLoader) extendEvent(item *Event, items *map[stri
 
 		// set attributes
 		for key, value := range parentItem.Attributes {
-			item.Attributes[key] = value
+			_, exists := item.Attributes[key]
+			if !exists {
+				item.Attributes[key] = value
+			}
 		}
 
 		// if item category is not null then use parent
@@ -809,21 +903,52 @@ func (sl *SchemaRepositorySchemaLoader) loadEventFromFile(path string, includeRo
 	event.Extends = e.Extends
 	event.Name = e.Name
 	event.Category = e.Category
-	event.CategoryName = e.CategoryName
+	if e.CategoryName != nil {
+		event.CategoryName = string(e.CategoryName.(string))
+	}
 	event.Profiles = e.Profiles
 	event.Uid = e.Uid
 
 	// iterate over attributes and copy each attribute to object
 	event.Attributes = make(map[string]Attribute)
 	for key, value := range e.Attributes {
-		event.Attributes[key] = value.(Attribute)
+
+		attr := value.(Attribute)
+
+		if attr.Include != "" {
+
+			enumFilePath := commons.CleanPath(includeRootPath + "/" + attr.Include)
+
+			println("Loading enum from " + enumFilePath)
+			loadAttributeEnum, loadAttributeEnumError := sl.loadAttributeEnumFromFile(enumFilePath)
+
+			if loadAttributeEnumError != nil {
+				println(loadAttributeEnumError.Error())
+			}
+
+			// Try loading enum from repo if not found in rootPath
+			if loadAttributeEnumError != nil {
+				repoEnumFilePath := repoPath(attr.Include)
+				println("Loading enum from " + repoEnumFilePath)
+				loadAttributeEnum, loadAttributeEnumError = sl.loadAttributeEnumFromFile(repoEnumFilePath)
+			}
+
+			if loadAttributeEnumError == nil {
+				attr.Enum = loadAttributeEnum.Enum
+			}
+		}
+
+		attr.Include = ""
+
+		event.Attributes[key] = attr
+
 	}
 
 	return event, nil
 
 }
 
-// func detectAndLoadInclude which accepts include file path and loads it using diffrent function based on path. Possible paths are /includes, /profiles
+// func detectAndLoadInclude which accepts include file path and loads it using different function based on path. Possible paths are /includes, /profiles
 func (sl *SchemaRepositorySchemaLoader) includeFile(path string) (map[string]Attribute, error) {
 
 	// switch based on path prefix
@@ -837,6 +962,27 @@ func (sl *SchemaRepositorySchemaLoader) includeFile(path string) (map[string]Att
 	default:
 		return nil, errors.New("Invalid include path " + path)
 	}
+
+}
+
+// func includeEnum which accepts include file path
+func (sl *SchemaRepositorySchemaLoader) loadAttributeEnumFromFile(path string) (Attribute, error) {
+
+	// declare include
+	var attribute Attribute
+
+	data, loadDataError := os.ReadFile(path)
+
+	if loadDataError != nil {
+		return attribute, loadDataError
+	}
+
+	// unmarshal data into include
+	if err := json.Unmarshal(data, &attribute); err != nil {
+		return attribute, err
+	}
+
+	return attribute, nil
 
 }
 

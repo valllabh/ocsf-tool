@@ -36,6 +36,6 @@ test-compile-proto: clean-output-java clean-output-golang
 test-create-proto: clean-output-proto
 	# ./bin/ocsf-tool config extensions linux
 	# ./bin/ocsf-tool config profiles cloud container
-	./bin/ocsf-tool generate-proto file_activity
+	./bin/ocsf-tool generate-proto file_activity security_finding
 
 run: build-docs build-project test-create-proto test-compile-proto
