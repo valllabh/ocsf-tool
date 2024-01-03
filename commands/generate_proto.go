@@ -98,10 +98,11 @@ func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 	// Produce Output
 	mapper.Marshal(events)
 
-	mapper.WriteEnumValueMap(protoOutput)
+	enumValueMapPath := mapper.RootPackage.GetDirPath()
+	mapper.WriteEnumValueMap(enumValueMapPath)
 
 	// Print a console message indicating where the output is generated
-	fmt.Printf("Proto files are generated in %s\n", protoOutput)
+	fmt.Printf("Proto files are generated in %s\n", enumValueMapPath)
 }
 
 // Convert version to package name
