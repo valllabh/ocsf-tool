@@ -93,7 +93,7 @@ func (p *Pkg) GetEnums() []*Enum {
 	msgs := maps.Values(GetMapper().Enums)
 
 	filterFunc := func(e *Enum) bool {
-		return e.Package.GetName() == p.GetName()
+		return e.Package.GetFullName() == p.GetFullName()
 	}
 
 	return commons.Filter(msgs, filterFunc)

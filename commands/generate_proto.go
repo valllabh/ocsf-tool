@@ -98,6 +98,8 @@ func runGenerateProtoCmd(cmd *cobra.Command, args []string) {
 	// Produce Output
 	mapper.Marshal(events)
 
+	mapper.WriteEnumValueMap(protoOutput)
+
 	// Print a console message indicating where the output is generated
 	fmt.Printf("Proto files are generated in %s\n", protoOutput)
 }

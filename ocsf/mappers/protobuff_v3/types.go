@@ -69,9 +69,9 @@ type Enum struct {
 }
 
 type EnumValue struct {
-	Name    string
-	Value   int64
-	Comment Comment
+	Name    string  `json:"name"`
+	Value   int64   `json:"value"`
+	Comment Comment `json:",omitempty"`
 	enum    *Enum
 }
 
