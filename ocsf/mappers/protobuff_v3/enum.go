@@ -42,7 +42,7 @@ func (e *Enum) GetValues() []*EnumValue {
 
 	// Sort values by name (with UNKNOWN coming first)
 	sort.Slice(values, func(i, j int) bool {
-		return valueSorter(values, i, j)
+		return values[i].Value < values[j].Value
 	})
 
 	return values
@@ -94,21 +94,6 @@ func (e *Enum) HasUnknown() bool {
 		}
 	}
 	return false
-}
-
-// Sorts EnumValues by name, with "UNKNOWN" coming first
-func valueSorter(values []*EnumValue, i int, j int) bool {
-
-	// if string ends with UNKNOWN, it should be first
-	if strings.HasSuffix(strings.ToUpper(values[i].Name), "UNKNOWN") {
-		return true
-	}
-
-	if strings.HasSuffix(strings.ToUpper(values[j].Name), "UNKNOWN") {
-		return false
-	}
-
-	return values[i].Name < values[j].Name
 }
 
 // ToEnumName converts a string to a valid Enum Name

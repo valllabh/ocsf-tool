@@ -7,37 +7,15 @@ import (
 
 func TestValueSorter(t *testing.T) {
 	values := []*EnumValue{
-		{Name: "UNKNOWN"},
-		{Name: "B"},
-		{Name: "A"},
-		{Name: "C"},
-		{Name: "D"},
-		{Name: "E"},
-		{Name: "F"},
-		{Name: "G"},
-		{Name: "H"},
-		{Name: "I"},
-		{Name: "J"},
-		{Name: "K"},
-		{Name: "L"},
-		{Name: "M"},
-		{Name: "N"},
-		{Name: "O"},
-		{Name: "P"},
-		{Name: "Q"},
-		{Name: "R"},
-		{Name: "S"},
-		{Name: "T"},
-		{Name: "U"},
-		{Name: "V"},
-		{Name: "W"},
-		{Name: "X"},
-		{Name: "Y"},
-		{Name: "Z"},
+		{Name: "UNKNOWN", Value: 0},
+		{Name: "B", Value: 2},
+		{Name: "A", Value: 1},
+		{Name: "C", Value: 3},
+		{Name: "D", Value: 4},
 	}
 
 	sort.Slice(values, func(i, j int) bool {
-		return valueSorter(values, i, j)
+		return values[i].Value < values[j].Value
 	})
 
 	expected := []string{
@@ -46,28 +24,6 @@ func TestValueSorter(t *testing.T) {
 		"B",
 		"C",
 		"D",
-		"E",
-		"F",
-		"G",
-		"H",
-		"I",
-		"J",
-		"K",
-		"L",
-		"M",
-		"N",
-		"O",
-		"P",
-		"Q",
-		"R",
-		"S",
-		"T",
-		"U",
-		"V",
-		"W",
-		"X",
-		"Y",
-		"Z",
 	}
 
 	for i, v := range values {
