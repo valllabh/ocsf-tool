@@ -27,10 +27,10 @@ func (e *Enum) GetValue(name string) (*EnumValue, bool) {
 // Get enum values sorted by name (with UNKNOWN coming first)
 func (e *Enum) GetValues() []*EnumValue {
 
-	// Add UNKNOWN if not present
-	if !e.HasUnknown() {
+	// Add UNSPECIFIED if not present
+	if !e.HasUNSPECIFIED() {
 		e.AddValue(&EnumValue{
-			Name:  "UNKNOWN",
+			Name:  "UNSPECIFIED",
 			Value: 0,
 			Comment: Comment{
 				"Type": "NON_OCSF_VALUE",
@@ -86,10 +86,10 @@ func (e *Enum) GetPackage() string {
 	return e.Package.GetFullName()
 }
 
-// Enum has at least one value ending with UNKNOWN
-func (e *Enum) HasUnknown() bool {
+// Enum has at least one value ending with HasUNSPECIFIED
+func (e *Enum) HasUNSPECIFIED() bool {
 	for _, v := range e.values {
-		if strings.HasSuffix(strings.ToUpper(v.Name), "UNKNOWN") && v.Value == 0 {
+		if v.Value == 0 {
 			return true
 		}
 	}

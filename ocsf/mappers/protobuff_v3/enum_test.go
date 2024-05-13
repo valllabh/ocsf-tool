@@ -7,7 +7,7 @@ import (
 
 func TestValueSorter(t *testing.T) {
 	values := []*EnumValue{
-		{Name: "UNKNOWN", Value: 0},
+		{Name: "UNSPECIFIED", Value: 0},
 		{Name: "B", Value: 2},
 		{Name: "A", Value: 1},
 		{Name: "C", Value: 3},
@@ -19,7 +19,7 @@ func TestValueSorter(t *testing.T) {
 	})
 
 	expected := []string{
-		"UNKNOWN",
+		"UNSPECIFIED",
 		"A",
 		"B",
 		"C",
