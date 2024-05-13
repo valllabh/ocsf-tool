@@ -124,6 +124,16 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 
 		if len(attr.Enum) > 0 {
 			field.Type = FIELD_TYPE_ENUM
+			if field.DataType == "string_t" {
+				// there are a couple string enums that are not really strings
+				// and not really enums, but we treat them as string primatives
+				field.Type = FIELD_TYPE_PRIMITIVE
+				validKeys := make([]string, 0, len(attr.Enum))
+				for aek := range attr.Enum {
+					validKeys = append(validKeys, aek)
+				}
+				field.Comment["AllowedValues"] = strings.Join(validKeys, ", ")
+			}
 		}
 
 		// Processing Based on Type
