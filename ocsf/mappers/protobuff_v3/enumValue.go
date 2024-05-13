@@ -2,6 +2,7 @@ package protobuff_v3
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/iancoleman/strcase"
@@ -10,7 +11,15 @@ import (
 func (ev *EnumValue) Marshal() string {
 	content := []string{}
 
-	content = append(content, ToEnumValueName(ev.enum.Name+" "+ev.Name))
+	var baseName string
+	// some OCSF Values have non-Zero UNKNOKWN values, while protos want a zero value unknown.
+	// <code>class_uid * 100 + activity_id</code>.
+	if strings.HasSuffix(strings.ToUpper(ev.Name), "UNKNOWN") && ev.Value != 0 {
+		baseName = ev.enum.Name + " " + ev.Name + " OCSF " + strconv.FormatInt(int64(ev.Value), 10)
+	} else {
+		baseName = ev.enum.Name + " " + ev.Name
+	}
+	content = append(content, ToEnumValueName(baseName))
 
 	content = append(content, fmt.Sprintf("= %d;", ev.Value))
 
@@ -30,7 +39,7 @@ func ToEnumValueName(input string) string {
 	value, exists := GetMapper().Cache.EnumValues.Get(input)
 
 	if exists {
-		return fmt.Sprint(value)
+		return value.(string)
 	}
 
 	output := input

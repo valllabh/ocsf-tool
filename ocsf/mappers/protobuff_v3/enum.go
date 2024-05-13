@@ -89,7 +89,7 @@ func (e *Enum) GetPackage() string {
 // Enum has at least one value ending with UNKNOWN
 func (e *Enum) HasUnknown() bool {
 	for _, v := range e.values {
-		if strings.HasSuffix(strings.ToUpper(v.Name), "UNKNOWN") {
+		if strings.HasSuffix(strings.ToUpper(v.Name), "UNKNOWN") && v.Value == 0 {
 			return true
 		}
 	}
