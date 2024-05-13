@@ -7,12 +7,12 @@ import (
 	"github.com/iancoleman/strcase"
 )
 
-func (ev *EnumValue) Marshal(index int) string {
+func (ev *EnumValue) Marshal() string {
 	content := []string{}
 
 	content = append(content, ToEnumValueName(ev.enum.Name+" "+ev.Name))
 
-	content = append(content, fmt.Sprintf("= %d;", index))
+	content = append(content, fmt.Sprintf("= %d;", ev.Value))
 
 	if len(ev.Comment) > 0 {
 		content = append(content, "//")

@@ -30,7 +30,8 @@ func (e *Enum) GetValues() []*EnumValue {
 	// Add UNKNOWN if not present
 	if !e.HasUnknown() {
 		e.AddValue(&EnumValue{
-			Name: "UNKNOWN",
+			Name:  "UNKNOWN",
+			Value: 0,
 			Comment: Comment{
 				"Type": "NON_OCSF_VALUE",
 			},
@@ -59,8 +60,8 @@ func (e *Enum) Marshal() string {
 	values := e.GetValues()
 
 	// Marshal values and add to content
-	for i, v := range values {
-		content = append(content, "\t"+v.Marshal(i))
+	for _, v := range values {
+		content = append(content, "\t"+v.Marshal())
 	}
 
 	// Close Enum
