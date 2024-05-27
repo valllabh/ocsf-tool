@@ -7,12 +7,16 @@ import (
 	"github.com/iancoleman/strcase"
 )
 
-func (ev *EnumValue) Marshal(index int) string {
+func (ev *EnumValue) Marshal() string {
 	content := []string{}
 
-	content = append(content, ToEnumValueName(ev.enum.Name+" "+ev.Name))
+	// NOTE: some OCSF Values have non-Zero UNKNOKWN values, while protos want a zero value unknown.
+	// <code>class_uid * 100 + activity_id</code>. -> These are OCSF values, and we still emit a UNSPECIFRIED=0 enum
+	// value
+	baseName := ev.enum.Name + " " + ev.Name
+	content = append(content, ToEnumValueName(baseName))
 
-	content = append(content, fmt.Sprintf("= %d;", index))
+	content = append(content, fmt.Sprintf("= %d;", ev.Value))
 
 	if len(ev.Comment) > 0 {
 		content = append(content, "//")
@@ -30,7 +34,7 @@ func ToEnumValueName(input string) string {
 	value, exists := GetMapper().Cache.EnumValues.Get(input)
 
 	if exists {
-		return fmt.Sprint(value)
+		return value.(string)
 	}
 
 	output := input

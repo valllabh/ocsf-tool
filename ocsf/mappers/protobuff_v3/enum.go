@@ -27,10 +27,11 @@ func (e *Enum) GetValue(name string) (*EnumValue, bool) {
 // Get enum values sorted by name (with UNKNOWN coming first)
 func (e *Enum) GetValues() []*EnumValue {
 
-	// Add UNKNOWN if not present
-	if !e.HasUnknown() {
+	// Add UNSPECIFIED if not present
+	if !e.HasUNSPECIFIED() {
 		e.AddValue(&EnumValue{
-			Name: "UNKNOWN",
+			Name:  "UNSPECIFIED",
+			Value: 0,
 			Comment: Comment{
 				"Type": "NON_OCSF_VALUE",
 			},
@@ -41,7 +42,7 @@ func (e *Enum) GetValues() []*EnumValue {
 
 	// Sort values by name (with UNKNOWN coming first)
 	sort.Slice(values, func(i, j int) bool {
-		return valueSorter(values, i, j)
+		return values[i].Value < values[j].Value
 	})
 
 	return values
@@ -59,8 +60,8 @@ func (e *Enum) Marshal() string {
 	values := e.GetValues()
 
 	// Marshal values and add to content
-	for i, v := range values {
-		content = append(content, "\t"+v.Marshal(i))
+	for _, v := range values {
+		content = append(content, "\t"+v.Marshal())
 	}
 
 	// Close Enum
@@ -85,29 +86,14 @@ func (e *Enum) GetPackage() string {
 	return e.Package.GetFullName()
 }
 
-// Enum has at least one value ending with UNKNOWN
-func (e *Enum) HasUnknown() bool {
+// Enum has at least one value ending with HasUNSPECIFIED
+func (e *Enum) HasUNSPECIFIED() bool {
 	for _, v := range e.values {
-		if strings.HasSuffix(strings.ToUpper(v.Name), "UNKNOWN") {
+		if v.Value == 0 {
 			return true
 		}
 	}
 	return false
-}
-
-// Sorts EnumValues by name, with "UNKNOWN" coming first
-func valueSorter(values []*EnumValue, i int, j int) bool {
-
-	// if string ends with UNKNOWN, it should be first
-	if strings.HasSuffix(strings.ToUpper(values[i].Name), "UNKNOWN") {
-		return true
-	}
-
-	if strings.HasSuffix(strings.ToUpper(values[j].Name), "UNKNOWN") {
-		return false
-	}
-
-	return values[i].Name < values[j].Name
 }
 
 // ToEnumName converts a string to a valid Enum Name
