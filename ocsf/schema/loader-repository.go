@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-git/go-git/v5"
 	"github.com/jinzhu/copier"
 	"github.com/spf13/viper"
 	"github.com/valllabh/ocsf-tool/commons"
-	"gopkg.in/src-d/go-git.v4"
 )
 
 func init() {
