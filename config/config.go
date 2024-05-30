@@ -6,36 +6,17 @@ import (
 	"github.com/spf13/viper"
 )
 
-func getConfigFilePath() string {
-	return "config.yaml"
-}
-
 // initConfig reads in config file and ENV variables if set.
-func InitConfig() {
-
-	viper.SetConfigName("config")
+func InitConfig(configFile string) error {
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
+	viper.SetConfigFile(configFile)
 
-	// Read in environment variables that match
-	err := viper.ReadInConfig()
-
-	// Handle errors reading the config file
-	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			// Config file not found; create it with default values
-			viper.WriteConfigAs(getConfigFilePath()) // handle error
-		} else {
-			// Config file was found but another error was produced
-			panic(fmt.Errorf("fatal error config file: %s", err))
-		}
-	}
-
+	return viper.ReadInConfig()
 }
 
 // Write config file to disk
 func WriteConfig() {
-	err := viper.WriteConfigAs(getConfigFilePath())
+	err := viper.WriteConfigAs("config.yaml")
 
 	// Handle errors writing the config file
 	if err != nil {
@@ -43,8 +24,4 @@ func WriteConfig() {
 	}
 
 	println("Config saved.")
-}
-
-func LoadConfig() {
-
 }

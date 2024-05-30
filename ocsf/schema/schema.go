@@ -12,7 +12,6 @@ var ocsfSchema *OCSFSchema
 var schemaLoaders map[string]SchemaLoader = map[string]SchemaLoader{}
 
 func LoadOCSFSchema() *OCSFSchema {
-
 	// if ocsfSchema is already loaded, return it
 	if ocsfSchema != nil {
 		return ocsfSchema

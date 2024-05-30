@@ -2,6 +2,7 @@ package commands
 
 import (
 	"encoding/json"
+	"sort"
 
 	"github.com/spf13/cobra"
 	"github.com/valllabh/ocsf-tool/commons"
@@ -38,6 +39,10 @@ func runSchemaClassListCmd(cmd *cobra.Command, args []string) {
 	classesByCategory := make(map[string][]string)
 	for _, class := range classes {
 		classesByCategory[class.Category] = append(classesByCategory[class.Category], class.Name)
+	}
+
+	for _, classes := range classesByCategory {
+		sort.Strings(classes)
 	}
 
 	if outputFilePath != "" {

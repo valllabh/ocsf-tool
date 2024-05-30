@@ -5,17 +5,13 @@ import (
 	"os"
 
 	"github.com/valllabh/ocsf-tool/commands"
-	"github.com/valllabh/ocsf-tool/config"
 )
 
 // Main function
 func main() {
-
-	// Initialize the config
-	config.InitConfig()
-
+	rootCmd := commands.GetRootCmd()
 	// Execute the root command
-	if err := commands.GetRootCmd().Execute(); err != nil {
+	if err := rootCmd.Execute(); err != nil {
 		fmt.Println("Error executing command:", err)
 		os.Exit(1)
 	}

@@ -3,6 +3,7 @@ package protobuff_v3
 import (
 	"fmt"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/valllabh/ocsf-tool/commons"
@@ -24,6 +25,13 @@ func (p *Proto) Marshal() {
 	if len(messages) == 0 && len(enums) == 0 {
 		return
 	}
+
+	sort.Slice(messages, func(i, j int) bool {
+		return messages[i].Name < messages[j].Name
+	})
+	sort.Slice(enums, func(i, j int) bool {
+		return enums[i].Name < enums[j].Name
+	})
 
 	content := []string{}
 

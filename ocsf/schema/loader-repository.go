@@ -8,10 +8,10 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-git/go-git/v5"
 	"github.com/jinzhu/copier"
 	"github.com/spf13/viper"
 	"github.com/valllabh/ocsf-tool/commons"
-	"gopkg.in/src-d/go-git.v4"
 )
 
 func init() {
@@ -175,39 +175,7 @@ func (sl *SchemaRepositorySchemaLoader) downloadRepo() error {
 	url := viper.GetString("schema.loading.strategies.repository.url")
 
 	// Check if directory exists using commons
-	if commons.PathExists(directory) {
-		// check if directory is a git repository
-		if commons.GitIsValidGitRepository(directory) {
-
-			// reset uncommitted changes
-			println("Resetting uncommitted changes")
-			errGitResetUncommittedChanges := commons.GitResetUncommittedChanges(directory)
-			if errGitResetUncommittedChanges != nil {
-				return errGitResetUncommittedChanges
-			}
-
-			// checkout branch
-			branch := viper.GetString("schema.loading.strategies.repository.branch.name")
-			println("Checking out branch: " + branch)
-			errGitCheckoutBranch := commons.GitCheckoutBranch(directory, branch)
-
-			if errGitCheckoutBranch != nil {
-				return errGitCheckoutBranch
-			}
-
-			// pull latest changes
-			println("Pulling latest changes")
-			errGitPullRepository := commons.GitPullRepository(directory)
-
-			// if schema is already up to date
-			if errGitPullRepository == git.NoErrAlreadyUpToDate {
-				println("Schema is already up to date")
-				return nil
-			}
-
-		}
-	} else {
-
+	if !commons.PathExists(directory) {
 		// Clone git repository
 		println("Cloning git repository from " + url + " to " + directory)
 		errGitCloneRepository := commons.GitCloneRepository(url, directory)
@@ -215,6 +183,38 @@ func (sl *SchemaRepositorySchemaLoader) downloadRepo() error {
 			return errGitCloneRepository
 		}
 
+	}
+
+	// check if directory is a git repository
+	if !commons.GitIsValidGitRepository(directory) {
+		println("Not a valid git repository at " + directory)
+		return fmt.Errorf("not a valid git repository at %s", directory)
+	}
+
+	// reset uncommitted changes
+	println("Resetting uncommitted changes")
+	errGitResetUncommittedChanges := commons.GitResetUncommittedChanges(directory)
+	if errGitResetUncommittedChanges != nil {
+		return errGitResetUncommittedChanges
+	}
+
+	// checkout branch
+	branch := viper.GetString("schema.loading.strategies.repository.branch.name")
+	println("Checking out branch: " + branch)
+	errGitCheckoutBranch := commons.GitCheckoutBranch(directory, branch)
+
+	if errGitCheckoutBranch != nil {
+		return errGitCheckoutBranch
+	}
+
+	// pull latest changes
+	println("Pulling latest changes")
+	errGitPullRepository := commons.GitPullRepository(directory)
+
+	// if schema is already up to date
+	if errGitPullRepository == git.NoErrAlreadyUpToDate {
+		println("Schema is already up to date")
+		return nil
 	}
 
 	return nil

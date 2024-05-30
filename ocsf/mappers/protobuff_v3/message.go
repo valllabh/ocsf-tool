@@ -2,6 +2,7 @@ package protobuff_v3
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/iancoleman/strcase"
@@ -24,7 +25,11 @@ func (m *Message) Marshal() string {
 	}
 
 	content = append(content, fmt.Sprintf("message %s {", ToMessageName(m.Name)))
+	sort.Slice(m.fields, func(i, j int) bool {
+		return m.fields[i].Name < m.fields[j].Name
+	})
 	for i, f := range m.fields {
+		// TOOD(pquerna): stable indexes?
 		content = append(content, "\t"+f.Marshal(i+1))
 	}
 	content = append(content, "}")
