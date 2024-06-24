@@ -2,7 +2,7 @@ package protobuff_v3
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"strings"
 
 	"github.com/iancoleman/strcase"
@@ -25,8 +25,8 @@ func (m *Message) Marshal() string {
 	}
 
 	content = append(content, fmt.Sprintf("message %s {", ToMessageName(m.Name)))
-	sort.Slice(m.fields, func(i, j int) bool {
-		return m.fields[i].Name < m.fields[j].Name
+	slices.SortFunc(m.fields, func(a *Field, b *Field) int {
+		return strings.Compare(a.Name, b.Name)
 	})
 	for i, f := range m.fields {
 		// TOOD(pquerna): stable indexes?
@@ -85,9 +85,10 @@ func (m *Message) GetImports() Imports {
 		case FIELD_TYPE_OBJECT:
 			m, _ := GetMessage(f.DataType)
 			p = m.Package.Proto.GetProtoFilePath()
+		case FIELD_TYPE_STRUCT:
+			p = "google/protobuf/struct.proto"
 		case FIELD_TYPE_ENUM:
 			e, _ := GetEnum(f.message.Name + " " + f.Name)
-
 			p = e.Package.Proto.GetProtoFilePath()
 		}
 

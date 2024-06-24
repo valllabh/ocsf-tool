@@ -17,6 +17,7 @@ type FieldType int16
 
 const (
 	FIELD_TYPE_OBJECT    FieldType = 100
+	FIELD_TYPE_STRUCT    FieldType = 101 // arbitrary object or json_t
 	FIELD_TYPE_PRIMITIVE FieldType = 110
 	FIELD_TYPE_ENUM      FieldType = 120
 )
