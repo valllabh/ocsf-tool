@@ -3,7 +3,7 @@ package protobuff_v3
 import (
 	"fmt"
 	"regexp"
-	"sort"
+	"slices"
 	"strings"
 
 	"github.com/valllabh/ocsf-tool/commons"
@@ -26,11 +26,11 @@ func (p *Proto) Marshal() {
 		return
 	}
 
-	sort.Slice(messages, func(i, j int) bool {
-		return messages[i].Name < messages[j].Name
+	slices.SortFunc(messages, func(a *Message, b *Message) int {
+		return strings.Compare(a.Name, b.Name)
 	})
-	sort.Slice(enums, func(i, j int) bool {
-		return enums[i].Name < enums[j].Name
+	slices.SortFunc(enums, func(a *Enum, b *Enum) int {
+		return strings.Compare(a.Name, b.Name)
 	})
 
 	content := []string{}
@@ -74,8 +74,14 @@ func (p *Proto) Marshal() {
 		}
 	}
 
+	importKeys := []string{}
+	for k := range imports {
+		importKeys = append(importKeys, k)
+	}
+	slices.Sort(importKeys)
 	// Appending imports
-	for _, i := range imports {
+	for _, i := range importKeys {
+		i := imports[i]
 		if protoPath != i.Name {
 			content = append(content, i.Marshal())
 		}

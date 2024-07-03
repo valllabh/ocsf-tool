@@ -25,7 +25,12 @@ func (f *Field) Marshal(index int) string {
 			content = append(content, fmt.Sprintf("map<string, %s>", m.GetReference()))
 		} else {
 			content = append(content, m.GetReference())
-
+		}
+	case FIELD_TYPE_STRUCT:
+		if f.Map {
+			content = append(content, "map<string, google.protobuf.Struct>")
+		} else {
+			content = append(content, "google.protobuf.Struct")
 		}
 	case FIELD_TYPE_PRIMITIVE:
 		if f.Map {

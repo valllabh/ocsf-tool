@@ -118,8 +118,14 @@ func (mapper *mapper) populateFieldsFromAttributes(message *Message, attributes 
 		// Detect Type
 		field.Type = FIELD_TYPE_PRIMITIVE
 
-		if field.DataType == "object" {
+		switch field.DataType {
+		case "object":
 			field.Type = FIELD_TYPE_OBJECT
+		case "google.protobuf.Struct":
+			field.Type = FIELD_TYPE_STRUCT
+		}
+		if field.Type == FIELD_TYPE_OBJECT && attr.ObjectType == "object" {
+			field.Type = FIELD_TYPE_STRUCT
 		}
 
 		if len(attr.Enum) > 0 && attr.Type == "string_t" {
@@ -215,7 +221,7 @@ func getDataType(attr schema.Attribute) string {
 	case "long_t":
 		t = "int64"
 	case "string_t", "bytestring_t", "datetime_t", "email_t", "file_hash_t",
-		"file_name_t", "hostname_t", "ip_t", "json_t", "mac_t", "process_name_t",
+		"file_name_t", "hostname_t", "ip_t", "mac_t", "process_name_t",
 		"resource_uid_t", "subnet_t", "url_t", "username_t", "uuid_t":
 		t = "string"
 	case "float_t":
@@ -224,6 +230,8 @@ func getDataType(attr schema.Attribute) string {
 		t = "int32"
 	case "timestamp_t":
 		t = "int64"
+	case "json_t":
+		t = "google.protobuf.Struct"
 	case "object_t":
 		t = "object"
 	default:
