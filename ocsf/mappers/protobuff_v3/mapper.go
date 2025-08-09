@@ -220,9 +220,22 @@ func getDataType(attr schema.Attribute) string {
 		t = "int32"
 	case "long_t":
 		t = "int64"
-	case "string_t", "bytestring_t", "datetime_t", "email_t", "file_hash_t",
-		"file_name_t", "hostname_t", "ip_t", "mac_t", "process_name_t",
-		"resource_uid_t", "subnet_t", "url_t", "username_t", "uuid_t":
+	case "bytestring_t",
+		"datetime_t",
+		"email_t",
+		"file_hash_t",
+		"file_name_t",
+		"file_path_t",
+		"hostname_t",
+		"ip_t",
+		"mac_t",
+		"process_name_t",
+		"resource_uid_t",
+		"string_t",
+		"subnet_t",
+		"url_t",
+		"username_t",
+		"uuid_t":
 		t = "string"
 	case "float_t":
 		t = "float"
